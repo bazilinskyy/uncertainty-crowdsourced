@@ -42,22 +42,6 @@
   <cml:radio label="Other" id="" value="other"/>
   <cml:radio label="I prefer not to respond" id="" value="i_prefer_not_to_respond"/>
 </cml:radios>
-<cml:radios label="What is your knowledge of English?" class="" validates="required">
-  <cml:radio label="No proficiency" value="no_proficiency"/>
-  <cml:radio label="Limited working proficiency" value="limited_working_proficiency"/>
-  <cml:radio label="Professional working proficiency" value="professional_working_proficiency"/>
-  <cml:radio label="Full professional proficiency" id="" value="full_professional_proficiency"/>
-  <cml:radio label="Native or bilingual proficiency" id="" value="native_or_bilingual_proficiency"/>
-  <cml:radio label="I prefer not to respond" id="" value="i_prefer_not_to_respond"/>
-</cml:radios>
-<cml:radios label="What is your knowledge of Spanish?" class="" validates="required">
-  <cml:radio label="No proficiency" value="no_proficiency"/>
-  <cml:radio label="Limited working proficiency" value="limited_working_proficiency"/>
-  <cml:radio label="Professional working proficiency" value="professional_working_proficiency"/>
-  <cml:radio label="Full professional proficiency" id="" value="full_professional_proficiency"/>
-  <cml:radio label="Native or bilingual proficiency" id="" value="native_or_bilingual_proficiency"/>
-  <cml:radio label="I prefer not to respond" id="" value="i_prefer_not_to_respond"/>
-</cml:radios>
 <cml:radios label="On average, how often did you drive a vehicle in the last 12 months?" class="" validates="required">
   <cml:radio label="Every day" value="every_day"/>
   <cml:radio label="4 to 6 days a week" value="4_to_6_days_a_week"/>
@@ -145,34 +129,6 @@
   <cml:radio label="7 to 9 times per month" id="" value="7_to_9_times_per_month"/>
   <cml:radio label="10 or more times per month" id="" value="10_or_more_times_per_month"/>
   <cml:radio label="I prefer not to respond" id="" value="i_prefer_not_to_respond"/>
-</cml:radios>
-<p class="header">
-  <strong>For the questions below, please choose the best option to complete the conversation</strong>
-</p>
-<cml:radios label="Can I park here?" class="" validates="required">
-  <cml:radio label="Sorry, I did that." value="a0"/>
-  <cml:radio label="It's the same place." value="a1"/>
-  <cml:radio label="Only for half an hour." value="a2"/>
-</cml:radios>
-<cml:radios label="What colour will you paint the children's bedroom?" class="" validates="required">
-  <cml:radio label="I hope it was right." value="a0"/>
-  <cml:radio label="We can't decide." value="a1"/>
-  <cml:radio label="It wasn't very difficult." value="a2"/>
-</cml:radios>
-<cml:radios label="I can't understand this email." class="" validates="required">
-  <cml:radio label="Would you like some help?" value="a0"/>
-  <cml:radio label="Don't you know?" value="a1"/>
-  <cml:radio label="I suppose you can." value="a2"/>
-</cml:radios>
-<cml:radios label="I'd like two tickets for tomorrow night." class="" validates="required">
-  <cml:radio label="How much did you pay?" value="a0"/>
-  <cml:radio label="Afternoon and evening." value="a1"/>
-  <cml:radio label="I'll just check for you." value="a2"/>
-</cml:radios>
-<cml:radios label="Shall we go to the gym now?" class="" validates="required">
-  <cml:radio label="I'm too tired." value="a0"/>
-  <cml:radio label="It's very good." value="a1"/>
-  <cml:radio label="Not at all." value="a2"/>
 </cml:radios>
 <p class="header">
   <strong>Experiment to measure clarity of textual external Human Machine Interfaces for automated vehicles</strong>
