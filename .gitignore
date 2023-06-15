@@ -124,5 +124,5 @@ secret
 !__init__.py
 
 # Pickle files
-multiped/analysis/*.p
-multiped/*.p
+uncert/analysis/*.p
+uncert/*.p
