@@ -131,16 +131,16 @@
   <cml:radio label="I prefer not to respond" id="" value="i_prefer_not_to_respond"/>
 </cml:radios>
 <p class="header">
-  <strong>Experiment to measure clarity of textual external Human Machine Interfaces for automated vehicles</strong>
+  <strong>Experiment to measure the relationship between perceived psychological certainty and perceived psychological uncertainty</strong>
   In this experiment, you will see multiple images of a vehicle with a textual message on a display on the front bumper. You will be asked to leave Appen to participate in the experiment. You will need to open the link below. Do not close this tab. At the end of the experiment, you will be given a code to input in the next question on this tab. Please take a note of the code. Without the code, you will not be able to receive money for your participation. All images will be downloaded before the start of the experiment. It may take a few minutes. Please do not close your browser during that time.
   <br/>
 </p>
 <p class="header2">Open 
   <strong>
-    <a target="_blank" href="https://certainty-uncertainty.herokuapp.com">this link</a>
+    <a target="_blank" href="https://uncertainty-crowdsourced-fc75d40fe544.herokuapp.com">this link</a>
   </strong> to start the experiment.
 </p>
-<cml:text label="Type the code that you received at the end of the experiment." class="" validates="required regex" data-validates-regex="^M2\d+\s?RL\d+\s?8M\s?$" data-validates-regex-message="Please enter the correct code to receive your money."/>
+<cml:text label="Type the code that you received at the end of the experiment." class="" validates="required regex" data-validates-regex="^L4\d+\s?HF\d+\s?7B\s?$" data-validates-regex-message="Please enter the correct code to receive your money."/>
 
 <p class="header">
   <strong>Miscellaneous questions</strong>
