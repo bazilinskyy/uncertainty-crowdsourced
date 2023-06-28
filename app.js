@@ -22,6 +22,7 @@ var Entry = mongoose.model('Entry', emptySchema);
 // --- STATIC MIDDLEWARE 
 app.use(express.static(process.env.PWD + '/public'));
 app.use('/jspsych', express.static(process.env.PWD + "/jspsych"));
+app.use('/jquery-csv', express.static(process.env.PWD + "/jquery-csv"));
 
 // --- BODY PARSING MIDDLEWARE
 app.use(body_parser.json()); // to support JSON-encoded bodies

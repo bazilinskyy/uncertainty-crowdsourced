@@ -4,6 +4,7 @@
     <title>Experiment page</title>
     <!-- jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="jquery-csv/jquery-csv.js"></script>
     <!-- jspsych -->
     <script src="jspsych/jspsych.js"></script>
     <link href="jspsych/jspsych.css" rel="stylesheet" type="text/css" />
@@ -113,33 +114,34 @@ if (isNaN(br_major_version)) {
 /**
  * Read CSV file.
  */
-$(document).ready(function() {
-    $.ajax({
-        type: "GET",
-        url: "views/questions.csv",
-        dataType: "text",
-        success: function(data) {processData(data);}
-     });
+var questions_images = [];
+var questions_videos = [];
+
+function getDataFromCSV(callback) {
+  $.ajax({
+    url: 'views/questions_images.csv',
+    type: 'GET',
+    async: false,
+    success: callback
+  })
+}
+getDataFromCSV(function(response) {
+  questions_images = $.csv.toObjects(response);
+  console.log(questions_images);
 });
 
-function processData(allText) {
-    var allTextLines = allText.split(/\r\n|\n/);
-    var headers = allTextLines[0].split(',');
-    var lines = [];
-
-    for (var i=1; i<allTextLines.length; i++) {
-        var data = allTextLines[i].split(',');
-        if (data.length == headers.length) {
-
-            var tarr = [];
-            for (var j=0; j<headers.length; j++) {
-                tarr.push(headers[j]+":"+data[j]);
-            }
-            lines.push(tarr);
-        }
-    }
-    console.log(lines);
+function getDataFromCSV(callback) {
+  $.ajax({
+    url: 'views/questions_videos.csv',
+    type: 'GET',
+    async: false,
+    success: callback
+  })
 }
+getDataFromCSV(function(response) {
+  questions_videos = $.csv.toObjects(response);
+  console.log(questions_images);
+});
 
 /**
 * Returns a random integer between min (inclusive) and max (inclusive).
@@ -320,6 +322,7 @@ for (var i = 0; i < n_videos; i++) {
 // build array with videos with stimuli
 video_preload = []; // array for preloading of videos
 for (var i = 0; i < n_videos; i++) {
+    console.log(i);
     video_preload.push(video_pfefix + video_ids[i] + '.mp4');
     video_stimuli.push([{ // stimulus
         type: jsPsychVideoKeyboardResponse,
@@ -331,11 +334,11 @@ for (var i = 0; i < n_videos; i++) {
     }, { // slider response
         type: jsPsychHtmlSliderResponse,
         require_movement: true,
+        stimulus: questions_videos[i].question,
+        labels: [questions_videos[i].label_0, questions_videos[i].label_99],
         min: 0,
         max: 99, // TODO: check if 0-100
-        stimulus: "question",
-        labels: ["Absolutely not certain", "Absolutely certain "],
-        prompt: "<p>Provide your answers by moving the slider. You will not be able to continue before moving the sliders.</p>"
+        prompt: "<p style=\"text-align: center; font-size: 80%;\">Provide your answer by moving the slider. You will not be able to continue before moving the sliders.</p>"
     }]);
 }
 
@@ -347,6 +350,7 @@ for (var i = 0; i < n_images; i++) {
 // build array with videos with stimuli
 image_preload = []; // array for preloading of images
 for (var i = 0; i < n_images; i++) {
+    console.log(questions_images[i]);
     image_preload.push(image_pfefix + image_ids[i] + '.jpg');
     image_stimuli.push([{ // stimulus
         type: jsPsychImageKeyboardResponse,
@@ -358,11 +362,11 @@ for (var i = 0; i < n_images; i++) {
     }, { // slider response
         type: jsPsychHtmlSliderResponse,
         require_movement: true,
-        stimulus: "question",
+        stimulus: questions_images[i].question,
+        labels: [questions_images[i].label_0, questions_images[i].label_99],
         min: 0,
         max: 99, // TODO: check if 0-100
-        labels: ["Absolutely not certain", "Absolutely certain "],
-        prompt: "<p>Provide your answers by moving the slider. You will not be able to continue before moving the sliders.</p>"
+        prompt: "<p style=\"text-align: center; font-size: 80%;\">Provide your answer by moving the slider. You will not be able to continue before moving the sliders.</p>"
     }]);
 }
 
