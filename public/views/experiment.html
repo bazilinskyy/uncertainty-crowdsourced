@@ -15,6 +15,8 @@
     <script src="jspsych/plugin-preload.js"></script>
     <script src="jspsych/plugin-image-slider-response.js"></script>
     <script src="jspsych/plugin-video-slider-response.js"></script>
+    <script src="jspsych/plugin-image-keyboard-response.js"></script>
+    <script src="jspsych/plugin-video-keyboard-response.js"></script>
     <!-- bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
@@ -31,16 +33,15 @@
 
 // Constants
 var n_videos = 20;  // number of videos
-var n_videos_per_participant = 20; // number of videos per participant
 var n_images = 11;  // number of images
-var n_images_per_participant = 11; // number of images per participant
-var n_stimuli_repeat = 1; // number of repeats of each stimulus
+var n_stimuli_per_participant = n_videos + n_images; // number of stimuli per participant
 var n_stimuli_break = 10; // number of images between each break
-var image_pfefix = 'img/'; // prefix for images
+var image_pfefix = 'img/image_'; // prefix for images
 // var video_pfefix = 'https://multiped-crowdsourced.s3.eu-central-1.amazonaws.com/video_'; // prefix for videos
 var video_pfefix = 'videos/video_'; // prefix for videos
 var SHOW_DEBUG = false; // switch for debugging output
 var SAVE_DATA = true; // save data or not
+var IMAGE_EXPOSURE = 2000; // how many ms the image stimulus is shown for
 
 // Arrays
 var video_ids = [];
@@ -292,11 +293,12 @@ if (debug) {
 var between_blocks = []; // instructions between blocks
 var image_stimuli = []; // blocks with images
 var video_stimuli = []; // blocks with videos
+var stimuli = []; // blocks with all stimuli
 
 // define instructions block
 var instructions_block = {
     type: jsPsychHtmlKeyboardResponse,
-    stimulus: '<div class="jumbotron jumbotron-fluid" style="text-align: left;"><div class="container"><h1 class="display-4">Instructions</h1><p class="lead">You will see ' + n_videos_per_participant * n_stimuli_repeat + ' videos and ' + n_images_per_participant * n_stimuli_repeat + ' images. Be sure to pay attention to what is shown to you, so you can answer the questions accordingly. Some videos will contain scenarios with an automated car. The automated driving car controls both speed and steering. The automated car is recognizable by the transparent blue overlay in the front window. All other cars are manual cars.</p><p class="lead">The window of your browser should be at least 1300px wide and 800px tall.</p><hr><p>Press \'C\' to proceed to the questions.</p></div></div>',
+    stimulus: '<div class="jumbotron jumbotron-fluid" style="text-align: left;"><div class="container"><h1 class="display-4">Instructions</h1><p class="lead">You will see ' + n_videos + ' videos and ' + n_images + ' images. Be sure to pay attention to what is shown to you, so you can answer the questions accordingly. Some videos will contain scenarios with an automated car. The automated driving car controls both speed and steering. The automated car is recognizable by the transparent blue overlay in the front window. All other cars are manual cars.</p><p class="lead">The window of your browser should be at least 1300px wide and 800px tall.</p><hr><p>Press \'C\' to proceed to the questions.</p></div></div>',
     choices: ['C'],
     data: {
         browser_name: br_name,
@@ -304,9 +306,7 @@ var instructions_block = {
         browser_major_version: br_major_version,
         browser_app_name: navigator.appName,
         browser_user_agent: navigator.userAgent,
-        image_ids: image_ids,
-        video_ids: video_ids,
-        stimuli_ids: stimuli_ids,
+        stimuli: stimuli,
         window_height_init: window_height,
         window_width_init: window_width
     }
@@ -314,47 +314,60 @@ var instructions_block = {
 
 // populate array with video IDs
 for (var i = 0; i < n_videos; i++) {
-    for (var j = 0; j < n_stimuli_repeat; j++) {
-        video_ids.push(i);
-    }
+    video_ids.push(i);
 }
-video_ids = shuffle(video_ids);  // shuffle ids
 
 // build array with videos with stimuli
 video_preload = []; // array for preloading of videos
-for (var i = 0; i < n_videos_per_participant * n_stimuli_repeat; i++) {
+for (var i = 0; i < n_videos; i++) {
     video_preload.push(video_pfefix + video_ids[i] + '.mp4');
-    video_stimuli.push({
-        type: jsPsychVideoSliderResponse,
+    video_stimuli.push([{ // stimulus
+        type: jsPsychVideoKeyboardResponse,
         autoplay: true,
         width: 1280,
         stimulus: [video_pfefix + video_ids[i] + '.mp4'],
+        choices: "NO_KEYS",
+        trial_ends_after_video: true
+    }, { // slider response
+        type: jsPsychHtmlSliderResponse,
+        require_movement: true,
+        min: 0,
+        max: 99, // TODO: check if 0-100
+        stimulus: "question",
         labels: ["Absolutely not certain", "Absolutely certain "],
-        prompt: '<p>PRESS \'F\' when you DO NOT feel comfortable as a driver. RELEASE the key when you feel comfortable again.</p>',
-    });
+        prompt: "<p>Provide your answers by moving the slider. You will not be able to continue before moving the sliders.</p>"
+    }]);
 }
 
 // populate array with image IDs
 for (var i = 0; i < n_images; i++) {
-    for (var j = 0; j < n_stimuli_repeat; j++) {
-        image_ids.push(i);
-    }
+    image_ids.push(i);
 }
-image_ids = shuffle(image_ids);  // shuffle ids
 
 // build array with videos with stimuli
 image_preload = []; // array for preloading of images
-for (var i = 0; i < n_images_per_participant * n_stimuli_repeat; i++) {
+for (var i = 0; i < n_images; i++) {
     image_preload.push(image_pfefix + image_ids[i] + '.jpg');
-    image_stimuli.push({
-        type: jsPsychImageSliderResponse,
-        autoplay: true,
-        width: 1280,
+    image_stimuli.push([{ // stimulus
+        type: jsPsychImageKeyboardResponse,
+        stimulus_duration: IMAGE_EXPOSURE,
+        trial_duration: IMAGE_EXPOSURE,
+        stimulus_width: 1280,
         stimulus: [image_pfefix + image_ids[i] + '.jpg'],
+        choices: "NO_KEYS",
+    }, { // slider response
+        type: jsPsychHtmlSliderResponse,
+        require_movement: true,
+        stimulus: "question",
+        min: 0,
+        max: 99, // TODO: check if 0-100
         labels: ["Absolutely not certain", "Absolutely certain "],
-        prompt: '<p>PRESS \'F\' when you DO NOT feel comfortable as a driver. RELEASE the key when you feel comfortable again.</p>',
-    });
+        prompt: "<p>Provide your answers by moving the slider. You will not be able to continue before moving the sliders.</p>"
+    }]);
 }
+
+stimuli = image_stimuli.concat(video_stimuli); // join stimuli with images and videos
+stimuli = shuffle(stimuli);  // shuffle stimuli
 
 // continue before showing the image
 var continue_block = {
@@ -364,11 +377,11 @@ var continue_block = {
 };
 
 // build between blocks
-for (var i = 1; i < n_videos_per_participant * n_stimuli_repeat / n_stimuli_break; i++) {
-    var videos_done = n_stimuli_break * i;
+for (var i = 1; i < n_stimuli_per_participant / n_stimuli_break; i++) {
+    var stimuli_done = n_stimuli_break * i;
     between_blocks.push({
         type: jsPsychHtmlKeyboardResponse,
-        stimulus: '<div class="alert alert-primary" role="alert" style="text-align: left;"><h4 class="alert-heading">Break</h4><p>You have now completed ' + videos_done + ' videos out of ' + n_videos_per_participant * n_stimuli_repeat + '.</p><hr><p class="mb-0">When ready press \'N\' to proceed to the next batch.</p></div>',
+        stimulus: '<div class="alert alert-primary" role="alert" style="text-align: left;"><h4 class="alert-heading">Break</h4><p>You have now completed ' + stimuli_done + ' videos out of ' + n_stimuli_per_participant + '.</p><hr><p class="mb-0">When ready press \'N\' to proceed to the next batch.</p></div>',
         choices: ['N']
     });
 }
@@ -438,14 +451,12 @@ var between_blocks_count = 0;  // counter of shown between blocks
 timeline.push(fullscreen_enter);  // enter full screen
 timeline.push(instructions_block);
 // iterate over blocks
-for (var i = 0; i < n_videos_per_participant * n_stimuli_repeat; i++) {
-    timeline.push(continue_block);
-    timeline.push(video_stimuli[i]);  // page with the stimulus
-    timeline.push(qs_video);
-    // save data
-    timeline.push(save_data_block);
+for (var i = 0; i < n_stimuli_per_participant; i++) {
+    timeline.push(stimuli[i][0]);  // page with the stimulus
+    timeline.push(stimuli[i][1]);  // page with the slider
+    timeline.push(save_data_block);  // save data
     // don't add the between block after the last trial
-    if ((i + 1) % n_stimuli_break == 0 && i != 0 && i != n_videos_per_participant * n_stimuli_repeat - 1) {
+    if ((i + 1) % n_stimuli_break == 0 && i != 0 && i != n_stimuli_per_participant - 1) {
         if (debug) {
             console.log('added break', i, between_blocks[between_blocks_count], i % n_stimuli_break, i / n_stimuli_break);
         }
@@ -459,10 +470,7 @@ timeline.push(save_data_block);  // save data
 
 if (debug) {
     console.log('timeline', timeline);
-    console.log('video_ids', video_ids);
-    console.log('video_stimuli', video_stimuli);
-    console.log('image_stimuli', image_stimuli);
-    console.log('qs_video', qs_video);
+    console.log('stimuli', stimuli);
     console.log('between_blocks', between_blocks);
 }
 
