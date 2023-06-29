@@ -9,6 +9,8 @@ import uncert as uc
 df = pd.read_csv('process_videos_info.csv')
 
 for index, row in df.iterrows():
+    print(row['in'])
+    print(row['out'])
     in_file = os.path.join(uc.common.get_configs('path_source'), row['in'])  # noqa: E501
     out_file = os.path.join(uc.common.get_configs('path_stimuli'), row['out'])  # noqa: E501
     os.system("ffmpeg -r 30" +
