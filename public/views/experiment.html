@@ -33,8 +33,8 @@
 // by Pavlo Bazilinskyy <p.bazilinskyy@tue.nl>
 
 // Constants
-var n_videos = 20;  // number of videos
-var n_images = 11;  // number of images
+var n_videos = 80;  // number of videos
+var n_images = 20;  // number of images
 var n_stimuli_per_participant = n_videos + n_images; // number of stimuli per participant
 var n_stimuli_break = 10; // number of images between each break
 var image_pfefix = 'img/image_'; // prefix for images
@@ -117,7 +117,7 @@ if (isNaN(br_major_version)) {
 var questions_images = [];
 var questions_videos = [];
 
-function getDataFromCSV(callback) {
+function getDataFromCSVImages(callback) {
   $.ajax({
     url: 'views/questions_images.csv',
     type: 'GET',
@@ -125,12 +125,11 @@ function getDataFromCSV(callback) {
     success: callback
   })
 }
-getDataFromCSV(function(response) {
+getDataFromCSVImages(function(response) {
   questions_images = $.csv.toObjects(response);
-  console.log(questions_images);
 });
 
-function getDataFromCSV(callback) {
+function getDataFromCSVVideos(callback) {
   $.ajax({
     url: 'views/questions_videos.csv',
     type: 'GET',
@@ -138,9 +137,8 @@ function getDataFromCSV(callback) {
     success: callback
   })
 }
-getDataFromCSV(function(response) {
+getDataFromCSVVideos(function(response) {
   questions_videos = $.csv.toObjects(response);
-  console.log(questions_images);
 });
 
 /**
@@ -319,16 +317,15 @@ for (var i = 0; i < n_videos; i++) {
     video_ids.push(i);
 }
 
-// build array with videos with stimuli
+// build array with videos as stimuli
 video_preload = []; // array for preloading of videos
 for (var i = 0; i < n_videos; i++) {
-    console.log(i);
-    video_preload.push(video_pfefix + video_ids[i] + '.mp4');
+    video_preload.push(questions_videos[i].stimulus);
     video_stimuli.push([{ // stimulus
         type: jsPsychVideoKeyboardResponse,
         autoplay: true,
         width: 1280,
-        stimulus: [video_pfefix + video_ids[i] + '.mp4'],
+        stimulus: [questions_videos[i].stimulus],
         choices: "NO_KEYS",
         trial_ends_after_video: true
     }, { // slider response
@@ -347,17 +344,16 @@ for (var i = 0; i < n_images; i++) {
     image_ids.push(i);
 }
 
-// build array with videos with stimuli
+// build array with images as stimuli
 image_preload = []; // array for preloading of images
 for (var i = 0; i < n_images; i++) {
-    console.log(questions_images[i]);
-    image_preload.push(image_pfefix + image_ids[i] + '.jpg');
+    image_preload.push(questions_images[i].stimulus);
     image_stimuli.push([{ // stimulus
         type: jsPsychImageKeyboardResponse,
         stimulus_duration: IMAGE_EXPOSURE,
         trial_duration: IMAGE_EXPOSURE,
         stimulus_width: 1280,
-        stimulus: [image_pfefix + image_ids[i] + '.jpg'],
+        stimulus: questions_images[i].stimulus,
         choices: "NO_KEYS",
     }, { // slider response
         type: jsPsychHtmlSliderResponse,
@@ -439,7 +435,7 @@ var fullscreen_exit = {
 // create experiment timeline array
 var timeline = [];
 
-/* preload images */
+/* preload videos and images */
 var preload = {
   type: jsPsychPreload,
   show_progress_bar: true,
