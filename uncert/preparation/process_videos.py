@@ -19,5 +19,6 @@ for index, row in df.iterrows():
               " -vf scale=1280:720" +
               " -ss " + str(row['start']) +
               " -t " + str(row['end']) +
+              " -an " +
               " -crf 20 " +
               out_file)
