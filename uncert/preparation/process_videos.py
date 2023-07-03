@@ -13,9 +13,13 @@ for index, row in df.iterrows():
     print(row['out'])
     in_file = os.path.join(uc.common.get_configs('path_source'), row['in'])  # noqa: E501
     out_file = os.path.join(uc.common.get_configs('path_stimuli'), row['out'])  # noqa: E501
+    # using https://superuser.com/a/859075/52383
     os.system("ffmpeg -r 30" +
               " -i " + in_file +
               " -vcodec libx265" +
+              " -c:v libx264 -crf 23 -profile:v baseline -level 3.0 -pix_fmt yuv420p" +
+              " -c:a aac -ac 2 -b:a 128k" +
+              " -movflags faststart" +
               " -vf scale=1280:720" +
               " -ss " + str(row['start']) +
               " -t " + str(row['end']) +
