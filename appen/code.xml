@@ -7,6 +7,10 @@
   <cml:radio label="Yes" id="" value="yes"/>
   <cml:radio label="No" id="" value="no"/>
 </cml:radios>
+<cml:radios label="I consent to participate in this study in the way described in the information above?" class="" validates="required">
+  <cml:radio label="Yes" id="" value="yes"/>
+  <cml:radio label="No" id="" value="no"/>
+</cml:radios>
 <cml:radios label="What is your gender?" class="" validates="required">
   <cml:radio label="Male" value="male"/>
   <cml:radio label="Female" value="female"/>
