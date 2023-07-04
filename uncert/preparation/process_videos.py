@@ -15,14 +15,14 @@ for index, row in df.iterrows():
     out_file = os.path.join(uc.common.get_configs('path_stimuli'), row['out'])  # noqa: E501
     # using https://superuser.com/a/859075/52383
     os.system("ffmpeg -r 30" +
+              " -ss " + str(row['start']) +
+              " -to " + str(row['end']) +
               " -i " + in_file +
               " -vcodec libx265" +
               " -c:v libx264 -crf 23 -profile:v baseline -level 3.0 -pix_fmt yuv420p" +
               " -c:a aac -ac 2 -b:a 128k" +
               " -movflags faststart" +
               " -vf scale=1280:720" +
-              " -ss " + str(row['start']) +
-              " -t " + str(row['end']) +
               " -an " +
               " -crf 20 " +
               out_file)
