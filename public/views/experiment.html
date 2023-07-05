@@ -435,7 +435,9 @@ var preload = {
   video: video_preload
 };
 timeline.push(preload);
-console.log('finished with preloading');
+if (debug) {
+    console.log('finished with preloading');
+}
 
 var between_blocks_count = 0;  // counter of shown between blocks
 timeline.push(fullscreen_enter);  // enter full screen
