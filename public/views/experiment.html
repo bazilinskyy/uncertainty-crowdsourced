@@ -296,7 +296,7 @@ var stimuli = []; // blocks with all stimuli
 // define instructions block
 var instructions_block = {
     type: jsPsychHtmlKeyboardResponse,
-    stimulus: '<div class="jumbotron jumbotron-fluid" style="text-align: left;"><div class="container"><h1 class="display-4">Instructions</h1><p class="lead">You will see ' + n_videos + ' videos and ' + n_images + ' images. Be sure to pay attention to what is shown to you, so you can answer the questions accordingly. Some videos will contain scenarios with an automated car. The automated driving car controls both speed and steering. The automated car is recognizable by the transparent blue overlay in the front window. All other cars are manual cars.</p><p class="lead">The window of your browser should be at least 1300px wide and 800px tall.</p><hr><p>Press \'C\' to proceed to the questions.</p></div></div>',
+    stimulus: '<div class="jumbotron jumbotron-fluid" style="text-align: left;"><div class="container"><h1 class="display-4">Instructions</h1><p class="lead">You will see ' + n_videos + ' videos and ' + n_images + ' images. Be sure to pay attention to what is shown to you, so you can answer the questions accordingly. Some videos will contain scenarios with an automated car. The automated driving car controls both speed and steering. The automated car is recognizable by the transparent blue overlay in the front window. All other cars are manual cars.</p><hr><p>Press \'C\' to proceed to the questions.</p></div></div>',
     choices: ['C'],
     data: {
         browser_name: br_name,
@@ -370,7 +370,7 @@ stimuli = shuffle(stimuli);  // shuffle stimuli
 // continue before showing the image
 var continue_block = {
     type: jsPsychHtmlKeyboardResponse,
-    stimulus: '<p>Press \'C\' to continue to the next video.</p>',
+    stimulus: '<p>Press \'C\' to continue to the next page with a video or an image.</p>',
     choices: ['C']
 };
 
@@ -442,6 +442,7 @@ timeline.push(fullscreen_enter);  // enter full screen
 timeline.push(instructions_block);
 // iterate over blocks
 for (var i = 0; i < n_stimuli_per_participant; i++) {
+    timeline.push(continue_block);
     timeline.push(stimuli[i][0]);  // page with the stimulus
     timeline.push(stimuli[i][1]);  // page with the slider
     timeline.push(save_data_block);  // save data
