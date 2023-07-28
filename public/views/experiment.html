@@ -368,9 +368,16 @@ stimuli = image_stimuli.concat(video_stimuli); // join stimuli with images and v
 stimuli = shuffle(stimuli);  // shuffle stimuli
 
 // continue before showing the image
-var continue_block = {
+var continue_block_image = {
     type: jsPsychHtmlKeyboardResponse,
-    stimulus: '<p>Press \'C\' to continue to the next page with a video or an image.</p>',
+    stimulus: '<p>Press \'C\' to continue to the next page with an image.</p>',
+    choices: ['C']
+};
+
+// continue before showing the video
+var continue_block_video = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: '<p>Press \'C\' to continue to the next page with a video.</p>',
     choices: ['C']
 };
 
@@ -442,7 +449,14 @@ timeline.push(fullscreen_enter);  // enter full screen
 timeline.push(instructions_block);
 // iterate over blocks
 for (var i = 0; i < n_stimuli_per_participant; i++) {
-    timeline.push(continue_block);
+    // decide which text to show for continuing to next trial
+    if (stimuli[i][0].stimulus[0].includes(video_pfefix)) {
+        // video stimulus
+        timeline.push(continue_block_video);
+    } else {
+        // image stimulus
+        timeline.push(continue_block_image);
+    }
     timeline.push(stimuli[i][0]);  // page with the stimulus
     timeline.push(stimuli[i][1]);  // page with the slider
     timeline.push(save_data_block);  // save data
