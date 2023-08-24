@@ -16,9 +16,9 @@ id,question,label_0,label_99,stimulus
 14,How certain are you that you can change the car safely to the left lane at the end of the scenario?,Absolutely not certain,Absolutely certain,/videos/video_14.mp4
 15,How certain are you that you can change the car safely to the left lane at the end of the scenario?,Absolutely not certain,Absolutely certain,/videos/video_15.mp4
 16,How certain are you that you can change the car safely to the left lane at the end of the scenario?,Absolutely not certain,Absolutely certain,/videos/video_16.mp4
-17,How certain are you that you can change the car safely to the left lane at the end of the scenario?,Absolutely not certain,Absolutely certain,/videos/video_17.mp4
-18,How certain are you that you can change the car safely to the left lane at the end of the scenario?,Absolutely not certain,Absolutely certain,/videos/video_18.mp4
-19,How certain are you that you can change the car safely to the left lane at the end of the scenario?,Absolutely not certain,Absolutely certain,/videos/video_19.mp4
+17,How certain are you that the autonomous car can change itself safely to the left lane at the end of the scenario?,Absolutely not certain,Absolutely certain,/videos/video_17.mp4
+18,How certain are you that the autonomous car can change itself safely to the left lane at the end of the scenario?,Absolutely not certain,Absolutely certain,/videos/video_18.mp4
+19,How certain are you that the autonomous car can change itself safely to the left lane at the end of the scenario?,Absolutely not certain,Absolutely certain,/videos/video_19.mp4
 20,How certain are you that the autonomous car can change itself safely to the left lane at the end of the scenario?,Absolutely not certain,Absolutely certain,/videos/video_20.mp4
 21,How certain are you that the autonomous car can change itself safely to the left lane at the end of the scenario?,Absolutely not certain,Absolutely certain,/videos/video_21.mp4
 22,How certain are you that the autonomous car can change itself safely to the left lane at the end of the scenario?,Absolutely not certain,Absolutely certain,/videos/video_22.mp4
@@ -33,12 +33,6 @@ id,question,label_0,label_99,stimulus
 31,How certain are you that the autonomous car can change itself safely to the left lane at the end of the scenario?,Absolutely not certain,Absolutely certain,/videos/video_31.mp4
 32,How certain are you that the autonomous car can change itself safely to the left lane at the end of the scenario?,Absolutely not certain,Absolutely certain,/videos/video_32.mp4
 33,How certain are you that the autonomous car can change itself safely to the left lane at the end of the scenario?,Absolutely not certain,Absolutely certain,/videos/video_33.mp4
-34,How certain are you that the autonomous car can change itself safely to the left lane at the end of the scenario?,Absolutely not certain,Absolutely certain,/videos/video_34.mp4
-35,How certain are you that the autonomous car can change itself safely to the left lane at the end of the scenario?,Absolutely not certain,Absolutely certain,/videos/video_35.mp4
-36,How certain are you that the autonomous car can change itself safely to the left lane at the end of the scenario?,Absolutely not certain,Absolutely certain,/videos/video_36.mp4
-37,How certain are you that the autonomous car can change itself safely to the left lane at the end of the scenario?,Absolutely not certain,Absolutely certain,/videos/video_37.mp4
-38,How certain are you that the autonomous car can change itself safely to the left lane at the end of the scenario?,Absolutely not certain,Absolutely certain,/videos/video_38.mp4
-39,How certain are you that the autonomous car can change itself safely to the left lane at the end of the scenario?,Absolutely not certain,Absolutely certain,/videos/video_39.mp4
 40,How uncertain are you that you can change the car safely to the left lane at the end of the scenario?,Absolutely not uncertain,Absolutely uncertain,/videos/video_0.mp4
 41,How uncertain are you that you can change the car safely to the left lane at the end of the scenario?,Absolutely not uncertain,Absolutely uncertain,/videos/video_1.mp4
 42,How uncertain are you that you can change the car safely to the left lane at the end of the scenario?,Absolutely not uncertain,Absolutely uncertain,/videos/video_2.mp4
@@ -56,9 +50,9 @@ id,question,label_0,label_99,stimulus
 54,How uncertain are you that you can change the car safely to the left lane at the end of the scenario?,Absolutely not uncertain,Absolutely uncertain,/videos/video_14.mp4
 55,How uncertain are you that you can change the car safely to the left lane at the end of the scenario?,Absolutely not uncertain,Absolutely uncertain,/videos/video_15.mp4
 56,How uncertain are you that you can change the car safely to the left lane at the end of the scenario?,Absolutely not uncertain,Absolutely uncertain,/videos/video_16.mp4
-57,How uncertain are you that you can change the car safely to the left lane at the end of the scenario?,Absolutely not uncertain,Absolutely uncertain,/videos/video_17.mp4
-58,How uncertain are you that you can change the car safely to the left lane at the end of the scenario?,Absolutely not uncertain,Absolutely uncertain,/videos/video_18.mp4
-59,How uncertain are you that you can change the car safely to the left lane at the end of the scenario?,Absolutely not uncertain,Absolutely uncertain,/videos/video_19.mp4
+57,How uncertain are you that the autonomous car can change itself safely to the left lane at the end of the scenario?,Absolutely not uncertain,Absolutely uncertain,/videos/video_17.mp4
+58,How uncertain are you that the autonomous car can change itself safely to the left lane at the end of the scenario?,Absolutely not uncertain,Absolutely uncertain,/videos/video_18.mp4
+59,How uncertain are you that the autonomous car can change itself safely to the left lane at the end of the scenario?,Absolutely not uncertain,Absolutely uncertain,/videos/video_19.mp4
 60,How uncertain are you that the autonomous car can change itself safely to the left lane at the end of the scenario?,Absolutely not uncertain,Absolutely uncertain,/videos/video_20.mp4
 61,How uncertain are you that the autonomous car can change itself safely to the left lane at the end of the scenario?,Absolutely not uncertain,Absolutely uncertain,/videos/video_21.mp4
 62,How uncertain are you that the autonomous car can change itself safely to the left lane at the end of the scenario?,Absolutely not uncertain,Absolutely uncertain,/videos/video_22.mp4
@@ -73,9 +67,4 @@ id,question,label_0,label_99,stimulus
 71,How uncertain are you that the autonomous car can change itself safely to the left lane at the end of the scenario?,Absolutely not uncertain,Absolutely uncertain,/videos/video_31.mp4
 72,How uncertain are you that the autonomous car can change itself safely to the left lane at the end of the scenario?,Absolutely not uncertain,Absolutely uncertain,/videos/video_32.mp4
 73,How uncertain are you that the autonomous car can change itself safely to the left lane at the end of the scenario?,Absolutely not uncertain,Absolutely uncertain,/videos/video_33.mp4
-74,How uncertain are you that the autonomous car can change itself safely to the left lane at the end of the scenario?,Absolutely not uncertain,Absolutely uncertain,/videos/video_34.mp4
-75,How uncertain are you that the autonomous car can change itself safely to the left lane at the end of the scenario?,Absolutely not uncertain,Absolutely uncertain,/videos/video_35.mp4
-76,How uncertain are you that the autonomous car can change itself safely to the left lane at the end of the scenario?,Absolutely not uncertain,Absolutely uncertain,/videos/video_36.mp4
-77,How uncertain are you that the autonomous car can change itself safely to the left lane at the end of the scenario?,Absolutely not uncertain,Absolutely uncertain,/videos/video_37.mp4
-78,How uncertain are you that the autonomous car can change itself safely to the left lane at the end of the scenario?,Absolutely not uncertain,Absolutely uncertain,/videos/video_38.mp4
-79,How uncertain are you that the autonomous car can change itself safely to the left lane at the end of the scenario?,Absolutely not uncertain,Absolutely uncertain,/videos/video_39.mp4
+74,How uncertain are you that the autonomous car can change itself safely to the left lane at 
