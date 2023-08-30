@@ -1,4 +1,4 @@
-id,video_id,video_time,MDV or AV?,description,goal_or_requirement,comments
+id,video_id,video_time,vehicle_type,description,goal_or_requirement,comments
 0,video_0,00:00:05:000,MDV,,,
 1,video_1,00:00:05:000,MDV,,,
 2,video_2,00:00:05:000,MDV,,,
@@ -33,6 +33,3 @@ id,video_id,video_time,MDV or AV?,description,goal_or_requirement,comments
 31,video_31,00:00:05:000,AV,,,
 32,video_32,00:00:05:000,AV,,,
 33,video_33,00:00:05:000,AV,,,
-,,,,,,
-,MDV = Manual driven vehicle,,,,,
-,AV = Automated vehicle,,,,,
