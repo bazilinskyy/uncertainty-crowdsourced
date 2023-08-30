@@ -9,8 +9,8 @@ in,out,start,end
 4_7_cut_off_roleIdx-0_target_labeled-false_ego_labeled-false_23-08-22_09-56.mp4,video_7.mp4,00:00:05.000,00:00:10.000
 4_7_cut_off_roleIdx-0_target_labeled-false_ego_labeled-false_23-08-22_09-56.mp4,video_8.mp4,00:00:09.000,00:00:14.000
 4_7_cut_off_roleIdx-0_target_labeled-false_ego_labeled-false_23-08-22_09-56.mp4,video_9.mp4,00:00:15.000,00:00:20.000
-5_8_cut_up_roleIdx-0_target_labeled-false_ego_labeled-false_23-08-22_10-00,video_10.mp4,00:00:05.000,00:00:10.000
-5_8_cut_up_roleIdx-0_target_labeled-false_ego_labeled-false_23-08-22_10-00,video_11.mp4,00:00:11.000,00:00:16.000
+5_8_cut_up_roleIdx-0_target_labeled-false_ego_labeled-false_23-08-22_10-00.mp4,video_10.mp4,00:00:05.000,00:00:10.000
+5_8_cut_up_roleIdx-0_target_labeled-false_ego_labeled-false_23-08-22_10-00.mp4,video_11.mp4,00:00:11.000,00:00:16.000
 6_10_platoon_roleIdx-0_target_labeled-false_ego_labeled-false_23-08-22_10-04.mp4,video_12.mp4,00:00:05.000,00:00:10.000
 7_19_speed_limit_roleIdx-0_target_labeled-false_ego_labeled-false_23-08-22_10-08.mp4,video_13.mp4,00:00:11.000,00:00:16.000
 8_20_target_breaks_roleIdx-0_target_labeled-false_ego_labeled-false_23-08-22_10-12.mp4,video_14.mp4,00:00:01.000,00:00:06.000
@@ -23,9 +23,9 @@ in,out,start,end
 11_1_overtake_roleIdx-0_target_labeled-false_ego_labeled-true_23-08-22_10-24.mp4,video_21.mp4,00:00:13.000,00:00:18.000
 12_2_small_gap_roleIdx-0_target_labeled-false_ego_labeled-true_23-08-22_10-27.mp4,video_22.mp4,00:00:15.000,00:00:20.000
 13_3_abrupt_break_roleIdx-0_target_labeled-false_ego_labeled-true_23-08-22_10-31.mp4,video_23.mp4,00:00:15.000,00:00:20.000
-14_7_cut_off_roleIdx-0_target_labeled-false_ego_labeled-true_23-08-22_10-35,video_24.mp4,00:00:05.000,00:00:10.000
-14_7_cut_off_roleIdx-0_target_labeled-false_ego_labeled-true_23-08-22_10-35,video_25.mp4,00:00:09.000,00:00:14.000
-14_7_cut_off_roleIdx-0_target_labeled-false_ego_labeled-true_23-08-22_10-35,video_26.mp4,00:00:15.000,00:00:20.000
+14_7_cut_off_roleIdx-0_target_labeled-false_ego_labeled-true_23-08-22_10-35.mp4,video_24.mp4,00:00:05.000,00:00:10.000
+14_7_cut_off_roleIdx-0_target_labeled-false_ego_labeled-true_23-08-22_10-35.mp4,video_25.mp4,00:00:09.000,00:00:14.000
+14_7_cut_off_roleIdx-0_target_labeled-false_ego_labeled-true_23-08-22_10-35.mp4,video_26.mp4,00:00:15.000,00:00:20.000
 15_8_cut_up_roleIdx-0_target_labeled-false_ego_labeled-true_23-08-22_10-39.mp4,video_27.mp4,00:00:05.000,00:00:10.000
 15_8_cut_up_roleIdx-0_target_labeled-false_ego_labeled-true_23-08-22_10-39.mp4,video_28.mp4,00:00:11.000,00:00:16.000
 16_10_platoon_roleIdx-0_target_labeled-false_ego_labeled-true_23-08-22_10-43.mp4,video_29.mp4,00:00:05.000,00:00:10.000
