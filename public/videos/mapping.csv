@@ -1,21 +1,21 @@
 id,video_id,video_time,vehicle_type,description,goal_or_requirement,comments
-0,video_0,00:00:05:000,MDV,,,
-1,video_1,00:00:05:000,MDV,,,
-2,video_2,00:00:05:000,MDV,,,
-3,video_3,00:00:05:000,MDV,,,
-4,video_4,00:00:05:000,MDV,,,
-5,video_5,00:00:05:000,MDV,,,
-6,video_6,00:00:05:000,MDV,,,
-7,video_7,00:00:05:000,MDV,,,
-8,video_8,00:00:05:000,MDV,,,
-9,video_9,00:00:05:000,MDV,,,
-10,video_10,00:00:05:000,AV,,,
-11,video_11,00:00:05:000,AV,,,
-12,video_12,00:00:05:000,AV,,,
-13,video_13,00:00:05:000,AV,,,
-14,video_14,00:00:05:000,AV,,,
-15,video_15,00:00:05:000,AV,,,
-16,video_16,00:00:05:000,AV,,,
-17,video_17,00:00:05:000,AV,,,
-18,video_18,00:00:05:000,AV,,,
-19,video_19,00:00:05:000,AV,,,
+0,video_0,00:00:05:000,MDV,Basic traffic,,Safe to change lane to the left lane
+1,video_1,00:00:05:000,MDV,Car approaching in the left lane,,Safe to change lane to the left lane
+2,video_2,00:00:05:000,MDV,Car approaching in the left lane,,Debatable if it is safe to change lane to the left lane
+3,video_3,00:00:05:000,MDV,Basic traffic,,Safe to change lane to the left lane
+4,video_4,00:00:05:000,MDV,Car behind is tailgating,,Safe to change lane to the left lane
+5,video_5,00:00:05:000,MDV,Cars in front break abruptly,,Safe to change lane to the left lane
+6,video_6,00:00:05:000,MDV,Car overtakes from the right,,Safe to change lane to the left lane
+7,video_7,00:00:05:000,MDV,Car overtakes from the right,,Debatable if it is safe to change lane to the left lane
+8,video_8,00:00:05:000,MDV,Car approaching in the left lane,,Debatable if it is safe to change lane to the left lane
+9,video_9,00:00:05:000,MDV,Car overtaking in the left lane,,Not safe to change lane to the left lane
+10,video_10,00:00:05:000,AV,Basic traffic,,Safe to change lane to the left lane
+11,video_11,00:00:05:000,AV,Car approaching in the left lane,,Safe to change lane to the left lane
+12,video_12,00:00:05:000,AV,Car approaching in the left lane,,Debatable if it is safe to change lane to the left lane
+13,video_13,00:00:05:000,AV,Basic traffic,,Safe to change lane to the left lane
+14,video_14,00:00:05:000,AV,Car behind is tailgating,,Safe to change lane to the left lane
+15,video_15,00:00:05:000,AV,Cars in front break abruptly,,Safe to change lane to the left lane
+16,video_16,00:00:05:000,AV,Car overtakes from the right,,Safe to change lane to the left lane
+17,video_17,00:00:05:000,AV,Car overtakes from the right,,Debatable if it is safe to change lane to the left lane
+18,video_18,00:00:05:000,AV,Car approaching in the left lane,,Debatable if it is safe to change lane to the left lane
+19,video_19,00:00:05:000,AV,Car overtaking in the left lane,,Not safe to change lane to the left lane
