@@ -35,7 +35,8 @@
 // Constants
 var n_videos = 40;  // number of videos
 var n_images = 10;  // number of images
-var n_stimuli_per_participant = n_videos + n_images; // number of stimuli per participant
+var n_stimuli_repeated = 20; // number of stimuli per participant
+var n_stimuli_per_participant = n_videos + n_images + n_stimuli_repeated; // number of stimuli per participant
 var n_stimuli_break = 10; // number of images between each break
 var image_pfefix = 'img/image_'; // prefix for images
 // var video_pfefix = 'https://multiped-crowdsourced.s3.eu-central-1.amazonaws.com/video_'; // prefix for videos
@@ -366,6 +367,8 @@ for (var i = 0; i < n_images; i++) {
 
 stimuli = image_stimuli.concat(video_stimuli); // join stimuli with images and videos
 stimuli = shuffle(stimuli);  // shuffle stimuli
+stimuli = stimuli.concat(stimuli.slice(0, n_stimuli_repeated)) // show n_stimuli_repeated twice
+stimuli = shuffle(stimuli);  // shuffle again
 
 // continue before showing the image
 var continue_block_image = {
