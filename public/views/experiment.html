@@ -297,7 +297,7 @@ var stimuli = []; // blocks with all stimuli
 // define instructions block
 var instructions_block = {
     type: jsPsychHtmlKeyboardResponse,
-    stimulus: '<div class="jumbotron jumbotron-fluid" style="text-align: left;"><div class="container"><h1 class="display-4">Instructions</h1><p class="lead">You will see 2 example videos and 70 stimuli existing out of still images and videos. Be sure to pay attention to what is shown to you, so you can answer the questions accordingly. Some videos will contain scenarios with an autonomous car. The autonomous car controls both speed and steering. The autonomous car is recognizable by the transparent blue overlay in the front window. All other cars are manual cars.</p><hr><p>Press \'C\' to proceed to the two example videos.</p></div></div>',
+    stimulus: '<div class="jumbotron jumbotron-fluid" style="text-align: left;"><div class="container"><h1 class="display-4">Instructions</h1><p class="lead">You will see two example videos and 70 stimuli existing out of still images and videos. Be sure to pay attention to what is shown to you, so you can answer the questions accordingly. Some videos will contain scenarios with an autonomous car. The autonomous car controls both speed and steering. The autonomous car is recognizable by the transparent blue overlay in the front window. All other cars are manual cars.</p><hr><p>Press \'C\' to proceed to the two example videos.</p></div></div>',
     choices: ['C'],
     data: {
         browser_name: br_name,
@@ -309,6 +309,32 @@ var instructions_block = {
         window_height_init: window_height,
         window_width_init: window_width
     }
+};
+
+var AV_demo = {
+  type: jsPsychVideoButtonResponse,
+  stimulus: [
+    'video_instruction_AV.mp4'
+  ],
+  choices: ['Yes', 'No'],
+  prompt: "<p>This video contains an autonomous car, the car is recognizable by having a blue overlay on the window.</p><p>Do you understand that the video contained the autonomous car?</p>",
+  response_allowed_while_playing: false
+};
+
+var MDC_demo = {
+  type: jsPsychVideoButtonResponse,
+  stimulus: [
+    'video_instruction_MDC.mp4'
+  ],
+  choices: ['Yes', 'No'],
+  prompt: "<p>This video contains a manually driven car, the car is recognizable by having no overlay on the window.</p><p>Do you understand that the video contained the manually driven car?</p>",
+  response_allowed_while_playing: false
+};
+
+var continue_to_experiment = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: '<p>Press \'C\' to continue to the next page where the experiment will start.</p>',
+    choices: ['C']
 };
 
 // populate array with video IDs
