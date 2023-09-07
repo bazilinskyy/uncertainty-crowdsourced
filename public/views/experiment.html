@@ -18,7 +18,6 @@
     <script src="jspsych/plugin-video-slider-response.js"></script>
     <script src="jspsych/plugin-image-keyboard-response.js"></script>
     <script src="jspsych/plugin-video-keyboard-response.js"></script>
-    <script src="jspsych/plugin-video-button-response.js"></script>
     <!-- bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
@@ -314,20 +313,36 @@ var instructions_block = {
 
 // define AV demo block
 var av_demo = {
-    type: jsPsychVideoButtonResponse,
+    type: jsPsychVideoKeyboardResponse,
+    autoplay: true,
+    width: 1280,
     stimulus: [video_pfefix + 'instruction_av.mp4'],
-    choices: ['Yes', 'No'],
-    prompt: "This video contains an autonomous car. The car is recognisable by having a blue overlay on the window.</br><strong>Do you understand that the video contained the autonomous car?</strong>",
-    response_allowed_while_playing: false
+    choices: "NO_KEYS",
+    trial_ends_after_video: true
+};
+
+// define 'continue to experiment' block
+var av_demo_q = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: '<p><strong>Do you understand that the video contained contained the autonomous car?</strong></br>Press \'Y\' if you understood it and press \'N\' if you did not understand it.</p>',
+    choices: ['Y', 'N']
 };
 
 // define MDC demo block
 var mv_demo = {
-    type: jsPsychVideoButtonResponse,
+    type: jsPsychVideoKeyboardResponse,
+    autoplay: true,
+    width: 1280,
     stimulus: [video_pfefix + 'instruction_mv.mp4'],
-    choices: ['Yes', 'No'],
-    prompt: "<p>This video contains a manually driven car. The car is recognisable by having no overlay on the window.</br><strong>Do you understand that the video contained the manually driven car?</strong>",
-    response_allowed_while_playing: false
+    choices: "NO_KEYS",
+    trial_ends_after_video: true
+};
+
+// define 'continue to experiment' block
+var mv_demo_q = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: '<p><strong>Do you understand that the video contained the manually driven car?</strong></br>Press \'Y\' if you understood it and press \'N\' if you did not understand it.</p>',
+    choices: ['Y', 'N']
 };
 
 // define 'continue to experiment' block
@@ -482,13 +497,17 @@ if(getRandomInt(0,1)) {
         console.log('presenting av_demo, mv_demo');
     }
     timeline.push(av_demo);
+    timeline.push(av_demo_q);
     timeline.push(mv_demo);
+    timeline.push(mv_demo_q);
 } else {
     if (debug) {
         console.log('presenting mv_demo, av_demo');
     }
     timeline.push(mv_demo);
+    timeline.push(mv_demo_q);
     timeline.push(av_demo);
+    timeline.push(av_demo_q);
 }
 // iterate over blocks
 for (var i = 0; i < n_stimuli_per_participant; i++) {
