@@ -321,6 +321,13 @@ var av_demo = {
     trial_ends_after_video: true
 };
 
+// continue before showing the video
+var continue_block_demo = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: '<p>Press \'C\' to continue to the next page with another example video.</p>',
+    choices: ['C']
+};
+
 // define 'continue to experiment' block
 var av_demo_q = {
     type: jsPsychHtmlKeyboardResponse,
@@ -498,16 +505,20 @@ if(getRandomInt(0,1)) {
     }
     timeline.push(av_demo);
     timeline.push(av_demo_q);
+    timeline.push(continue_block_demo);
     timeline.push(mv_demo);
     timeline.push(mv_demo_q);
+    timeline.push(continue_to_experiment);
 } else {
     if (debug) {
         console.log('presenting mv_demo, av_demo');
     }
     timeline.push(mv_demo);
     timeline.push(mv_demo_q);
+    timeline.push(continue_block_demo);
     timeline.push(av_demo);
     timeline.push(av_demo_q);
+    timeline.push(continue_to_experiment);
 }
 // iterate over blocks
 for (var i = 0; i < n_stimuli_per_participant; i++) {
