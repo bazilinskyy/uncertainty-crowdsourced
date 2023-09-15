@@ -149,5 +149,9 @@
 <p class="header">
   <strong>Miscellaneous questions</strong>
 </p>
+<cml:radios label="Do you think an autonomous car is more capable of conducting driving tasks than a human driver operating a manually driven car?" class="" validates="required">
+  <cml:radio label="Yes" id="" value="yes"/>
+  <cml:radio label="No" id="" value="no"/>
+</cml:radios>
 <cml:text label="In which year do you think that most cars will be able to drive fully automatically in your country of residence?" class="" validates="required"/>
 <cml:textarea label="Please provide any suggestions that could help engineers to build safe and enjoyable automated cars." class=""/>
