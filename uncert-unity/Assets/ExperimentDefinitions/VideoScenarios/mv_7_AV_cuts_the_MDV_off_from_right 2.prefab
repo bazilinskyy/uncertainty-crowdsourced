@@ -3244,7 +3244,7 @@ PrefabInstance:
     - target: {fileID: 6692014269374732414, guid: 16055abd5fa62354bbfa3c45a1fd16eb,
         type: 3}
       propertyPath: m_Name
-      value: MF_7_AV_cuts_the_MDV_off_from_right 1
+      value: mv_7_AV_cuts_the_MDV_off_from_right 2
       objectReference: {fileID: 0}
     - target: {fileID: 7506156050185607217, guid: 16055abd5fa62354bbfa3c45a1fd16eb,
         type: 3}
@@ -3379,7 +3379,7 @@ PrefabInstance:
     - target: {fileID: 8692043556341430772, guid: 16055abd5fa62354bbfa3c45a1fd16eb,
         type: 3}
       propertyPath: ShortName
-      value: MF_7_cut_off
+      value: mv_7_cut_off
       objectReference: {fileID: 0}
     - target: {fileID: 8692043556341430772, guid: 16055abd5fa62354bbfa3c45a1fd16eb,
         type: 3}

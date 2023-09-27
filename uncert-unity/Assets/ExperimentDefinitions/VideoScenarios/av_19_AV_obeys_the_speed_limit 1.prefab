@@ -5349,7 +5349,7 @@ PrefabInstance:
     - target: {fileID: 6692014269374732414, guid: 16055abd5fa62354bbfa3c45a1fd16eb,
         type: 3}
       propertyPath: m_Name
-      value: MF_19_AV_obeys_the_speed_limit 1
+      value: av_19_AV_obeys_the_speed_limit 1
       objectReference: {fileID: 0}
     - target: {fileID: 7506156050185607217, guid: 16055abd5fa62354bbfa3c45a1fd16eb,
         type: 3}
@@ -5474,7 +5474,7 @@ PrefabInstance:
     - target: {fileID: 8692043556341430772, guid: 16055abd5fa62354bbfa3c45a1fd16eb,
         type: 3}
       propertyPath: ShortName
-      value: MF_19_speed_limit
+      value: av_19_speed_limit
       objectReference: {fileID: 0}
     - target: {fileID: 8692043556341430772, guid: 16055abd5fa62354bbfa3c45a1fd16eb,
         type: 3}
