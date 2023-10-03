@@ -25,7 +25,9 @@ app.use('/jspsych', express.static(process.env.PWD + "/jspsych"));
 app.use('/jquery-csv', express.static(process.env.PWD + "/jquery-csv"));
 
 // --- BODY PARSING MIDDLEWARE
-app.use(body_parser.json()); // to support JSON-encoded bodies
+app.use(body_parser.json({limit: '50mb'}));
+app.use(body_parser.urlencoded({limit: '50mb', extended: true}));
+app.use(express.json());
 
 // --- VIEW LOCATION, SET UP SERVING STATIC HTML
 app.set('views', __dirname + '/public/views');
