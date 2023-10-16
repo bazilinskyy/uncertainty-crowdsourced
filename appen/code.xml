@@ -37,11 +37,7 @@
   <cml:radio label="I prefer not to respond" id="" value="i_prefer_not_to_respond"/>
 </cml:radios>
 <cml:text label="If you answered 'Other' in the previous question, please describe your input device below."/>
-<cml:radios label="Do you currenlty have a license for driving a car?" class="" validates="required">
-  <cml:radio label="Yes" id="" value="yes"/>
-  <cml:radio label="No" id="" value="no"/>
-</cml:radios>
-<cml:text label="At which age did you obtain your first license for driving a car?" class="" validates="positiveInteger"/>
+<cml:text label="At which age did you obtain your first license for driving a car or motorcycle?" class="" validates="positiveInteger"/>
 <cml:radios label="What is your primary mode of transportation?" class="" validates="required">
   <cml:radio label="Private vehicle" value="private_vehicle"/>
   <cml:radio label="Public transportation" value="public_transportation"/>
@@ -50,7 +46,7 @@
   <cml:radio label="Other" id="" value="other"/>
   <cml:radio label="I prefer not to respond" id="" value="i_prefer_not_to_respond"/>
 </cml:radios>
-<cml:radios label="On average, how often did you drive a car in the last 12 months?" class="" validates="required">
+<cml:radios label="On average, how often did you drive a vehicle in the last 12 months?" class="" validates="required">
   <cml:radio label="Every day" value="every_day"/>
   <cml:radio label="4 to 6 days a week" value="4_to_6_days_a_week"/>
   <cml:radio label="1 to 3 days a week" value="1_to_3_days_a_week"/>
@@ -82,10 +78,7 @@
   <cml:radio label="More than 5" id="" value="more_than_5"/>
   <cml:radio label="I prefer not to respond" id="" value="i_prefer_not_to_respond"/>
 </cml:radios>
-<p class="header">
-  <strong>How often do you do the following?:</strong>
-</p>
-<cml:radios label="Becoming angered by a particular type of driver, and indicate your hostility by whatever means you can." class="" id="" validates="required">
+<cml:radios label="How often do you do the following?: Becoming angered by a particular type of driver, and indicate your hostility by whatever means you can." class="" id="" validates="required">
   <cml:radio label="0 times per month" id="" value="0_times_per_month"/>
   <cml:radio label="1 to 3 times per month" id="" value="1_to_3_times_per_month"/>
   <cml:radio label="4 to 6 times per month" id="" value="4_to_6_times_per_month"/>
@@ -93,7 +86,7 @@
   <cml:radio label="10 or more times per month" id="" value="10_or_more_times_per_month"/>
   <cml:radio label="I prefer not to respond" id="" value="i_prefer_not_to_respond"/>
 </cml:radios>
-<cml:radios label="Disregarding the speed limit on a motorway." class="" id="" validates="required">
+<cml:radios label="How often do you do the following?: Disregarding the speed limit on a motorway." class="" id="" validates="required">
   <cml:radio label="0 times per month" id="" value="0_times_per_month"/>
   <cml:radio label="1 to 3 times per month" id="" value="1_to_3_times_per_month"/>
   <cml:radio label="4 to 6 times per month" id="" value="4_to_6_times_per_month"/>
@@ -101,7 +94,7 @@
   <cml:radio label="10 or more times per month" id="" value="10_or_more_times_per_month"/>
   <cml:radio label="I prefer not to respond" id="" value="i_prefer_not_to_respond"/>
 </cml:radios>
-<cml:radios label="Disregarding the speed limit on a residential road." class="" id="" validates="required">
+<cml:radios label="How often do you do the following?: Disregarding the speed limit on a residential road." class="" id="" validates="required">
   <cml:radio label="0 times per month" id="" value="0_times_per_month"/>
   <cml:radio label="1 to 3 times per month" id="" value="1_to_3_times_per_month"/>
   <cml:radio label="4 to 6 times per month" id="" value="4_to_6_times_per_month"/>
@@ -109,7 +102,7 @@
   <cml:radio label="10 or more times per month" id="" value="10_or_more_times_per_month"/>
   <cml:radio label="I prefer not to respond" id="" value="i_prefer_not_to_respond"/>
 </cml:radios>
-<cml:radios label="Driving so close to the car in front that it would be difficult to stop in an emergency." class="" id="" validates="required">
+<cml:radios label="How often do you do the following?: Driving so close to the car in front that it would be difficult to stop in an emergency." class="" id="" validates="required">
   <cml:radio label="0 times per month" id="" value="0_times_per_month"/>
   <cml:radio label="1 to 3 times per month" id="" value="1_to_3_times_per_month"/>
   <cml:radio label="4 to 6 times per month" id="" value="4_to_6_times_per_month"/>
@@ -117,7 +110,7 @@
   <cml:radio label="10 or more times per month" id="" value="10_or_more_times_per_month"/>
   <cml:radio label="I prefer not to respond" id="" value="i_prefer_not_to_respond"/>
 </cml:radios>
-<cml:radios label="Racing away from traffic lights with the intention of beating the driver next to you." class="" id="" validates="required">
+<cml:radios label="How often do you do the following?: Racing away from traffic lights with the intention of beating the driver next to you." class="" id="" validates="required">
   <cml:radio label="0 times per month" id="" value="0_times_per_month"/>
   <cml:radio label="1 to 3 times per month" id="" value="1_to_3_times_per_month"/>
   <cml:radio label="4 to 6 times per month" id="" value="4_to_6_times_per_month"/>
@@ -125,7 +118,7 @@
   <cml:radio label="10 or more times per month" id="" value="10_or_more_times_per_month"/>
   <cml:radio label="I prefer not to respond" id="" value="i_prefer_not_to_respond"/>
 </cml:radios>
-<cml:radios label="Sounding your horn to indicate your annoyance with another road user." class="" id="" validates="required">
+<cml:radios label="How often do you do the following?: Sounding your horn to indicate your annoyance with another road user." class="" id="" validates="required">
   <cml:radio label="0 times per month" id="" value="0_times_per_month"/>
   <cml:radio label="1 to 3 times per month" id="" value="1_to_3_times_per_month"/>
   <cml:radio label="4 to 6 times per month" id="" value="4_to_6_times_per_month"/>
@@ -133,17 +126,21 @@
   <cml:radio label="10 or more times per month" id="" value="10_or_more_times_per_month"/>
   <cml:radio label="I prefer not to respond" id="" value="i_prefer_not_to_respond"/>
 </cml:radios>
-<cml:radios label="Using a smartphone in your hands while driving." class="" id="" validates="required">
+<cml:radios label="How often do you do the following?: Using a mobile phone without a hands free kit." class="" id="" validates="required">
   <cml:radio label="0 times per month" id="" value="0_times_per_month"/>
   <cml:radio label="1 to 3 times per month" id="" value="1_to_3_times_per_month"/>
   <cml:radio label="4 to 6 times per month" id="" value="4_to_6_times_per_month"/>
   <cml:radio label="7 to 9 times per month" id="" value="7_to_9_times_per_month"/>
   <cml:radio label="10 or more times per month" id="" value="10_or_more_times_per_month"/>
   <cml:radio label="I prefer not to respond" id="" value="i_prefer_not_to_respond"/>
+</cml:radios>
+<cml:radios label="Do you think an automated car is more capable of conducting driving tasks than a human driver that is operating a manually driven car?" class="" validates="required">
+  <cml:radio label="Yes" id="" value="yes"/>
+  <cml:radio label="No" id="" value="no"/>
 </cml:radios>
 <p class="header">
   <strong>Experiment to measure the relationship between perceived psychological certainty and perceived psychological uncertainty</strong>
-  In this experiment, you will see multiple images and videos and are asked to answer questions on your "perceived psychological certainty" or "perceived psychological uncertainty". Be sure to pay attention to the videos, because each video lasts 5 seconds.  During the experiment, the videos will contain manually driven cars, except for the car that you are a passenger of. The car that you are a passenger of can either be a manually driven car or an autonomous car. The autonomous car controls both speed and steering. A human driver operates the manually driven car. The autonomous car is displayed with a blue overlay on the front window. An example of this will be given in the introduction page of the experiment. You will be asked to leave Appen to participate in the experiment. You will need to open the link below. Do not close this tab. At the end of the experiment, you will be given a code to input in the next question on this tab. Please take a note of the code. Without the code, you will not be able to receive money for your participation. All images and videos will be downloaded before the start of the experiment. It may take a few minutes. Please do not close your browser during that time.
+  In this experiment, you will see multiple images and videos and are asked to answer questions on your "perceived psychological certainty" or "perceived psychological uncertainty". Be sure to pay attention to the videos, because each video lasts 5 seconds.  During the experiment, the videos will contain manually driven cars, except for the car that you are a passenger of. The car that you are a passenger of can either be a manually driven car or an fully automated car. The automated car controls both speed and steering. A human driver operates the manually driven car. The automated car is displayed with a blue overlay on the front window. An example of this will be given in the introduction page of the experiment. You will be asked to leave Appen to participate in the experiment. You will need to open the link below. Do not close this tab. At the end of the experiment, you will be given a code to input in the next question on this tab. Please take a note of the code. Without the code, you will not be able to receive money for your participation. All images and videos will be downloaded before the start of the experiment. It may take a few minutes. Please do not close your browser during that time.
   <br/>
 </p>
 <p class="header2">Open 
@@ -156,9 +153,5 @@
 <p class="header">
   <strong>Miscellaneous questions</strong>
 </p>
-<cml:radios label="Do you think an autonomous car is more capable of conducting driving tasks than a human driver that is operating a manually driven car?" class="" validates="required">
-  <cml:radio label="Yes" id="" value="yes"/>
-  <cml:radio label="No" id="" value="no"/>
-</cml:radios>
 <cml:text label="In which year do you think that most cars will be able to drive fully automatically in your country of residence?" class="" validates="required"/>
 <cml:textarea label="Please provide any suggestions that could help engineers to build safe and enjoyable automated cars." class=""/>
