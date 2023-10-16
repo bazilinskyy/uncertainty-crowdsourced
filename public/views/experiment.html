@@ -296,7 +296,7 @@ var stimuli = []; // blocks with all stimuli
 // define instructions block
 var instructions_block = {
     type: jsPsychHtmlKeyboardResponse,
-    stimulus: '<div class="jumbotron jumbotron-fluid" style="text-align: left;"><div class="container"><h1 class="display-4">Instructions</h1><p class="lead">You will see 2 example videos and 70 stimuli existing out of still images and videos. Be sure to pay attention to what is shown to you, so you can answer the questions accordingly. Each video lasts 5 seconds. During the experiment, the videos will contain manually driven cars, except for the car that you are a passenger of. The car that you are a passenger of can either be a manually driven car or an autonomous car. A human driver operates the manually driven car. The autonomous car controls both speed and steering. The autonomous car is displayed with a blue overlay on the front window. An example of the autonomous car and manually driven car will be given in the two introduction videos of the experiment, that will start on the next page. </p><p class="lead">The window of your browser should be at least 1300px wide and 800px tall.</p><hr><p>Press \'C\' to proceed to the two example videos.</p></div></div>',
+    stimulus: '<div class="jumbotron jumbotron-fluid" style="text-align: left;"><div class="container"><h1 class="display-4">Instructions</h1><p class="lead">You will see 2 example videos and 70 stimuli existing out of still images and videos. Be sure to pay attention to what is shown to you, so you can answer the questions accordingly. Each video lasts 5 seconds. During the experiment, the videos will contain manually driven cars, except for the car that you are a passenger of. The car that you are a passenger of can either be a manually driven car or an fully automated car. A human driver operates the manually driven car. The fully automated car controls both speed and steering. The fully automated car is displayed with a blue overlay on the front window. An example of the fully automated car and manually driven car will be given in the two introduction videos of the experiment, that will start on the next page. </p><p class="lead">The window of your browser should be at least 1300px wide and 800px tall.</p><hr><p>Press \'C\' to proceed to the two example videos.</p></div></div>',
     choices: ['C'],
     data: {
         browser_name: br_name,
@@ -330,7 +330,7 @@ var continue_block_demo = {
 // define 'continue to experiment' block
 var av_demo_q = {
     type: jsPsychHtmlKeyboardResponse,
-    stimulus: '<p>The autonomous car is displayed <strong>with</strong> a blue overlay on the front window.</p><p><strong>Do you understand that the video contained the autonomous car?</strong></br>Press \'Y\' if you understood it or press \'N\' if you did not understand it.</p>',
+    stimulus: '<p>The fully automated car is displayed <strong>with</strong> a blue overlay on the front window.</p><p><strong>Do you understand that the video contained the fully automated car?</strong></br>Press \'Y\' if you understood it or press \'N\' if you did not understand it.</p>',
     choices: ['Y', 'N']
 };
 
