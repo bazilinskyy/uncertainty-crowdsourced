@@ -37,6 +37,10 @@
   <cml:radio label="I prefer not to respond" id="" value="i_prefer_not_to_respond"/>
 </cml:radios>
 <cml:text label="If you answered 'Other' in the previous question, please describe your input device below."/>
+<cml:radios label="Do you currently have a valid driver's license?" class="" validates="required">
+  <cml:radio label="Yes" id="" value="yes"/>
+  <cml:radio label="No" id="" value="no"/>
+</cml:radios>
 <cml:text label="At which age did you obtain your first license for driving a car?" class="" validates="positiveInteger"/>
 <cml:radios label="What is your primary mode of transportation?" class="" validates="required">
   <cml:radio label="Private vehicle" value="private_vehicle"/>
@@ -145,32 +149,32 @@
   <strong>Please indicate how much you agree with the following statements about uncertainty:</strong>
 </p>
 <cml:radios label="In my day-to-day life, I often experience the feeling of uncertainty." class="" id="" validates="required">
-  <cml:radio label="Strongly Disagree" id="" value="Strongly_Disagree"/>
-  <cml:radio label="Disagree" id="" value="Disagree"/>
-  <cml:radio label="Neither Agree nor Disagree" id="" value="Neither_Agree_nor_Disagree"/>
-  <cml:radio label="Agree" id="" value="Agree"/>
-  <cml:radio label="Strongly Agree" id="" value="Strongly_Agree"/>
+  <cml:radio label="Strongly Disagree" id="" value="strongly_disagree"/>
+  <cml:radio label="Disagree" id="" value="disagree"/>
+  <cml:radio label="Neither Agree nor Disagree" id="" value="neither_agree_nor_disagree"/>
+  <cml:radio label="Agree" id="" value="agree"/>
+  <cml:radio label="Strongly Agree" id="" value="strongly_agree"/>
 </cml:radios>
 <cml:radios label="I often have feelings of uncertainty about myself." class="" id="" validates="required">
-  <cml:radio label="Strongly Disagree" id="" value="Strongly_Disagree"/>
-  <cml:radio label="Disagree" id="" value="Disagree"/>
-  <cml:radio label="Neither Agree nor Disagree" id="" value="Neither_Agree_nor_Disagree"/>
-  <cml:radio label="Agree" id="" value="Agree"/>
-  <cml:radio label="Strongly Agree" id="" value="Strongly_Agree"/>
+  <cml:radio label="Strongly Disagree" id="" value="strongly_disagree"/>
+  <cml:radio label="Disagree" id="" value="disagree"/>
+  <cml:radio label="Neither Agree nor Disagree" id="" value="neither_agree_nor_disagree"/>
+  <cml:radio label="Agree" id="" value="agree"/>
+  <cml:radio label="Strongly Agree" id="" value="strongly_agree"/>
 </cml:radios>
 <cml:radios label="I often experience the feeling of uncertainty whilst making decisions." class="" id="" validates="required">
-  <cml:radio label="Strongly Disagree" id="" value="Strongly_Disagree"/>
-  <cml:radio label="Disagree" id="" value="Disagree"/>
-  <cml:radio label="Neither Agree nor Disagree" id="" value="Neither_Agree_nor_Disagree"/>
-  <cml:radio label="Agree" id="" value="Agree"/>
-  <cml:radio label="Strongly Agree" id="" value="Strongly_Agree"/>
+  <cml:radio label="Strongly Disagree" id="" value="strongly_disagree"/>
+  <cml:radio label="Disagree" id="" value="disagree"/>
+  <cml:radio label="Neither Agree nor Disagree" id="" value="neither_agree_nor_disagree"/>
+  <cml:radio label="Agree" id="" value="agree"/>
+  <cml:radio label="Strongly Agree" id="" value="strongly_agree"/>
 </cml:radios>
 <cml:radios label="During new experiences, I often experience the feeling of uncertainty." class="" id="" validates="required">
-  <cml:radio label="Strongly Disagree" id="" value="Strongly_Disagree"/>
-  <cml:radio label="Disagree" id="" value="Disagree"/>
-  <cml:radio label="Neither Agree nor Disagree" id="" value="Neither_Agree_nor_Disagree"/>
-  <cml:radio label="Agree" id="" value="Agree"/>
-  <cml:radio label="Strongly Agree" id="" value="Strongly_Agree"/>
+  <cml:radio label="Strongly Disagree" id="" value="strongly_disagree"/>
+  <cml:radio label="Disagree" id="" value="disagree"/>
+  <cml:radio label="Neither Agree nor Disagree" id="" value="neither_agree_nor_disagree"/>
+  <cml:radio label="Agree" id="" value="agree"/>
+  <cml:radio label="Strongly Agree" id="" value="strongly_agree"/>
 </cml:radios>
 <p class="header">
   <strong>Please indicate how much you agree with the following statements about certainty:</strong>
