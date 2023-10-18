@@ -37,7 +37,7 @@
   <cml:radio label="I prefer not to respond" id="" value="i_prefer_not_to_respond"/>
 </cml:radios>
 <cml:text label="If you answered 'Other' in the previous question, please describe your input device below."/>
-<cml:text label="At which age did you obtain your first license for driving a car or motorcycle?" class="" validates="positiveInteger"/>
+<cml:text label="At which age did you obtain your first license for driving a car?" class="" validates="positiveInteger"/>
 <cml:radios label="What is your primary mode of transportation?" class="" validates="required">
   <cml:radio label="Private vehicle" value="private_vehicle"/>
   <cml:radio label="Public transportation" value="public_transportation"/>
@@ -109,7 +109,7 @@
   <cml:radio label="10 or more times per month" id="" value="10_or_more_times_per_month"/>
   <cml:radio label="I prefer not to respond" id="" value="i_prefer_not_to_respond"/>
 </cml:radios>
-<cml:radios label="How often do you do the following?: Driving so close to the car in front that it would be difficult to stop in an emergency." class="" id="" validates="required">
+<cml:radios label="Driving so close to the car in front that it would be difficult to stop in an emergency." class="" id="" validates="required">
   <cml:radio label="0 times per month" id="" value="0_times_per_month"/>
   <cml:radio label="1 to 3 times per month" id="" value="1_to_3_times_per_month"/>
   <cml:radio label="4 to 6 times per month" id="" value="4_to_6_times_per_month"/>
@@ -117,7 +117,7 @@
   <cml:radio label="10 or more times per month" id="" value="10_or_more_times_per_month"/>
   <cml:radio label="I prefer not to respond" id="" value="i_prefer_not_to_respond"/>
 </cml:radios>
-<cml:radios label="How often do you do the following?: Racing away from traffic lights with the intention of beating the driver next to you." class="" id="" validates="required">
+<cml:radios label="Racing away from traffic lights with the intention of beating the driver next to you." class="" id="" validates="required">
   <cml:radio label="0 times per month" id="" value="0_times_per_month"/>
   <cml:radio label="1 to 3 times per month" id="" value="1_to_3_times_per_month"/>
   <cml:radio label="4 to 6 times per month" id="" value="4_to_6_times_per_month"/>
@@ -133,7 +133,7 @@
   <cml:radio label="10 or more times per month" id="" value="10_or_more_times_per_month"/>
   <cml:radio label="I prefer not to respond" id="" value="i_prefer_not_to_respond"/>
 </cml:radios>
-<cml:radios label="Using a mobile phone without a hands free kit." class="" id="" validates="required">
+<cml:radios label="Using a smartphone in your hands while driving." class="" id="" validates="required">
   <cml:radio label="0 times per month" id="" value="0_times_per_month"/>
   <cml:radio label="1 to 3 times per month" id="" value="1_to_3_times_per_month"/>
   <cml:radio label="4 to 6 times per month" id="" value="4_to_6_times_per_month"/>
