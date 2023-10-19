@@ -109,7 +109,7 @@ class Appen:
             df['end'] = pd.to_datetime(df['end'])
             df['time'] = (df['end'] - df['start']) / pd.Timedelta(seconds=1)
             # remove underscores in the beginning of column name
-            df.columns = df.columns.str.lstrip('_')
+            df.columns = df.columns.suc.lstrip('_')
             # clean data
             if clean_data:
                 df = self.clean_data(df)
@@ -174,7 +174,7 @@ class Appen:
             df_5.to_csv(uc.settings.output_dir + '/' + self.file_cheaters_csv)
             logger.info('Filter-a5. Saved list of cheaters to csv file {}',
                         self.file_cheaters_csv)
-        # concatanate dfs with filtered data
+        # concatenate dfs with filtered data
         old_size = df.shape[0]
         df_filtered = pd.concat([df_1, df_2, df_3, df_4, df_5])
         # check if there are people to filter
@@ -351,7 +351,7 @@ class Appen:
                                       right_index=True,
                                       how='left')
         # drop not needed columns
-        df_country.drop(['unit_id', 'id', 'tainted', 'worker_id'], 1)
+        df_country = df_country.drop(columns=['unit_id', 'id'])
         # assign to attribute
         self.countries_data = df_country
         # save to csv
