@@ -523,7 +523,7 @@ class Analysis:
                                       y=1.02,
                                       xanchor='right',
                                       x=0.78
-                                      ))        
+                                      ))
         results = px.get_trendline_results(fig)
         for i in range(len(x)):
             print(results.px_fit_results.iloc[i].summary())

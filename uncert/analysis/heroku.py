@@ -280,7 +280,7 @@ class Heroku:
                         qo_str = qo_str[1:]
                         qo_str = qo_str[:-1]
                         # unpack to int
-                        question_order = [int(x) for x in qo_suc.split(',')]
+                        question_order = [int(x) for x in qo_str.split(',')]
                         logger.debug('Found question order for final ' +
                                      'questions {}.',
                                      question_order)
