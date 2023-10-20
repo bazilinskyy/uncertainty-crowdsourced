@@ -37,7 +37,7 @@
   <cml:radio label="I prefer not to respond" id="" value="i_prefer_not_to_respond"/>
 </cml:radios>
 <cml:text label="If you answered 'Other' in the previous question, please describe your input device below."/>
-<cml:radios label="Do you currently have a valid driver's license?" class="" validates="required">
+<cml:radios label="Do you currently have a valid license for driving a car?" class="" validates="required">
   <cml:radio label="Yes" id="" value="yes"/>
   <cml:radio label="No" id="" value="no"/>
 </cml:radios>
