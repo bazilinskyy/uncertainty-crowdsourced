@@ -239,16 +239,5 @@
 <p class="header">
   <strong>Miscellaneous questions</strong>
 </p>
-<cml:ratings label="Please reindicate your general attitude towards automated vehicles." class="" id="" validates="required">
-  <cml:rating label="Very Negative" id="" value="very_negative"/>
-  <cml:rating label="Negative" id="" value="negative"/>
-  <cml:rating label="Neutral" id="" value="neutral"/>
-  <cml:rating label="Positive" id="" value="positive"/>
-  <cml:rating label="Very Positive" id="" value="very_positive"/>
-</cml:ratings>
-<cml:radios label="Do you now think an automated car is more capable of conducting driving tasks than a human driver that is operating a manually driven car?" class="" validates="required">
-  <cml:radio label="Yes" id="" value="yes"/>
-  <cml:radio label="No" id="" value="no"/>
-</cml:radios>
 <cml:text label="In which year do you think that most cars will be able to drive fully automatically in your country of residence?" class="" validates="required"/>
 <cml:textarea label="Please provide any suggestions that could help engineers to build safe and enjoyable automated cars." class=""/>
