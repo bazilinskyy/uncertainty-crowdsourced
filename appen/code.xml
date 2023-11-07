@@ -84,7 +84,7 @@
 </cml:radios>
 <cml:checkboxes label="Which option(s) best describe(s) your experience with automated vehicles?" class="" id="" validates="required">
   <cml:checkbox label="I have never used or been in automated vehicles" value="i_have_never_used_or_been_in_automated_vehicles"/>
-  <cml:checkbox label="I own or have owned a car with automated functions (e.g., adaptive cruise control, lane-keeping system)" value="i_own_or_have_owned_a_car_with_automated_functions"/>
+  <cml:checkbox label="I have experience with driving a car with automated functions (e.g., adaptive cruise control, lane-keeping system)" value="i_have_experience_with_driving_a_car_with_automated_functions"/>
   <cml:checkbox label="I have had a ride in an automated vehicle as a passenger (robotaxi or automated shuttle)" value="i_have_had_a_ride_in_an_automated_vehicle_as_a_passenger"/>
   <cml:checkbox label=" I have encountered automated vehicles while driving (encountered robotaxis or automated shuttles)" id="" value="i_have_encountered_automated_vehicles_while_driving"/>
   <cml:checkbox label="I work in a related field (e.g., automated vehicle development, driver support technology, research on automated vehicle functions or regulation for automated driving technologies)" id="" value="i_work_in_a_related_field"/>
