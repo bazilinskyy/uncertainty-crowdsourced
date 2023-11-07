@@ -33,9 +33,9 @@
 // by Pavlo Bazilinskyy <p.bazilinskyy@tue.nl>
 
 // Constants
-var n_videos = 20;  // number of videos
+var n_videos = 40;  // number of videos
 var n_images = 10;  // number of images
-var n_stimuli_repeated = 20; // number of stimuli per participant
+var n_stimuli_repeated = 5; // number of stimuli per participant, 10%
 var n_stimuli_per_participant = n_videos + n_images + n_stimuli_repeated; // number of stimuli per participant
 var n_stimuli_break = 10; // number of images between each break
 var image_pfefix = 'img/image_'; // prefix for images
@@ -296,7 +296,7 @@ var stimuli = []; // blocks with all stimuli
 // define instructions block
 var instructions_block = {
     type: jsPsychHtmlKeyboardResponse,
-    stimulus: '<div class="jumbotron jumbotron-fluid" style="text-align: left;"><div class="container"><h1 class="display-4">Instructions</h1><p class="lead">You will see 2 example videos and 70 stimuli existing out of still images and videos. Be sure to pay attention to what is shown to you, so you can answer the questions accordingly. Each video lasts 10 seconds. During the experiment, the videos will show manually driven cars (cars with a human driver), except for the car that you are a passenger in. The car that you are a passenger in can either be a manually driven car (a car with a human driver) or a fully automated car (a robotaxi that you are a passenger in). The fully automated car controls all driving-related tasks without input from a human driver. A human driver operates the manually driven car. The fully automated car is displayed with a blue overlay on the front window. An example of the fully automated car and manually driven car will be given in the two introduction videos of the experiment, that will start on the next page. </p><p class="lead">The window of your browser should be at least 1300px wide and 800px tall.</p><hr><p>Press \'C\' to proceed to the two example videos.</p></div></div>',
+    stimulus: '<div class="jumbotron jumbotron-fluid" style="text-align: left;"><div class="container"><h1 class="display-4">Instructions</h1><p class="lead">You will see 2 example videos and ' + n_stimuli_per_participant + ' stimuli existing out of still images and videos. Be sure to pay attention to what is shown to you, so you can answer the questions accordingly. Each video lasts 10 seconds. During the experiment, the videos will show manually driven cars (cars with a human driver), except for the car that you are a passenger in. The car that you are a passenger in can either be a manually driven car (a car with a human driver) or a fully automated car (a robotaxi that you are a passenger in). The fully automated car controls all driving-related tasks without input from a human driver. A human driver operates the manually driven car. The fully automated car is displayed with a blue overlay on the windows. An example of the fully automated car and manually driven car will be given in the two introduction videos of the experiment, that will start on the next page. </p><p class="lead">The window of your browser should be at least 1300px wide and 800px tall.</p><hr><p>Press \'C\' to proceed to the two example videos.</p></div></div>',
     choices: ['C'],
     data: {
         browser_name: br_name,
@@ -330,7 +330,7 @@ var continue_block_demo = {
 // define 'continue to experiment' block
 var av_demo_q = {
     type: jsPsychHtmlKeyboardResponse,
-    stimulus: '<p>The fully automated cars is displayed <strong>with</strong> a blue overlay on the front window.</p><p><strong>Do you understand that in the video you are a passenger in a fully automated car?</strong></br>Press \'Y\' if you understood it or press \'N\' if you did not understand it.</p>',
+    stimulus: '<p>The fully automated cars are displayed <strong>with</strong> a blue overlay on the windows.</p><p><strong>Do you understand that in the video you are a passenger in a fully automated car?</strong></br>Press \'Y\' if you understood it or press \'N\' if you did not understand it.</p>',
     choices: ['Y', 'N']
 };
 
@@ -347,7 +347,7 @@ var mv_demo = {
 // define 'continue to experiment' block
 var mv_demo_q = {
     type: jsPsychHtmlKeyboardResponse,
-    stimulus: '<p>Manually driven cars are displayed <strong>without</strong> a blue overlay on the front window</p><p><strong>Do you understand that in the video you are a passenger in a manually driven car?</strong></br>Press \'Y\' if you understood it or press \'N\' if you did not understand it.</p>',
+    stimulus: '<p>Manually driven cars are displayed <strong>without</strong> a blue overlay on the windows.</p><p><strong>Do you understand that in the video you are a passenger in a manually driven car?</strong></br>Press \'Y\' if you understood it or press \'N\' if you did not understand it.</p>',
     choices: ['Y', 'N']
 };
 
@@ -378,9 +378,9 @@ for (var i = 0; i < n_videos; i++) {
         type: jsPsychHtmlSliderResponse,
         require_movement: true,
         stimulus: questions_videos[i].question,
-        labels: [questions_videos[i].label_0, questions_videos[i].label_99],
+        labels: [questions_videos[i].label_0, questions_videos[i].label_100],
         min: 0,
-        max: 99, // TODO: check if 0-100
+        max: 100,
         slider_width: 1000,
         prompt: "<p style=\"text-align: center; font-size: 80%;\">Provide your answer by moving the slider. You will not be able to continue before moving the slider.</p>"
     }]);
@@ -406,9 +406,9 @@ for (var i = 0; i < n_images; i++) {
         type: jsPsychHtmlSliderResponse,
         require_movement: true,
         stimulus: questions_images[i].question,
-        labels: [questions_images[i].label_0, questions_images[i].label_99],
+        labels: [questions_images[i].label_0, questions_images[i].label_100],
         min: 0,
-        max: 99, // TODO: check if 0-100
+        max: 100,
         slider_width: 1000,
         prompt: "<p style=\"text-align: center; font-size: 80%;\">Provide your answer by moving the slider. You will not be able to continue before moving the sliders.</p>"
     }]);
@@ -524,7 +524,6 @@ for (var i = 0; i < n_stimuli_per_participant; i++) {
             // video stimulus with an MV
             timeline.push(continue_block_video_mv);
         } else {
-            console.log('av');
             // video stimulus with an AV
             timeline.push(continue_block_video_av);
         }
