@@ -1,4 +1,4 @@
-id,video_id,video_time,vehicle_type,description,goal_or_requirement,comments
+id,video_id,video_time,vehicle_type,description,speed ,comments
 0,video_0,00:00:10:000,MDV,Basic traffic,,Safe to change lane to the left lane
 1,video_1,00:00:10:000,MDV,Car approaching in the left lane,,Safe to change lane to the left lane
 2,video_2,00:00:10:000,MDV,Car approaching in the left lane,,Debatable if it is safe to change lane to the left lane
