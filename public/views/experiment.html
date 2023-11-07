@@ -33,7 +33,7 @@
 // by Pavlo Bazilinskyy <p.bazilinskyy@tue.nl>
 
 // Constants
-var n_videos = 40;  // number of videos
+var n_videos = 20;  // number of videos
 var n_images = 10;  // number of images
 var n_stimuli_repeated = 20; // number of stimuli per participant
 var n_stimuli_per_participant = n_videos + n_images + n_stimuli_repeated; // number of stimuli per participant
@@ -426,10 +426,17 @@ var continue_block_image = {
     choices: ['C']
 };
 
-// continue before showing the video
-var continue_block_video = {
+// continue before showing the video with an MV
+var continue_block_video_mv = {
     type: jsPsychHtmlKeyboardResponse,
-    stimulus: '<p>Press \'C\' to continue to the next page with a video.</p>',
+    stimulus: '<p>Press \'C\' to continue to the next page with a video where you are a passenger in a manually driven car.</p>',
+    choices: ['C']
+};
+
+// continue before showing the video with an AV
+var continue_block_video_av = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: '<p>Press \'C\' to continue to the next page with a video where you are a passenger in a fully automated car.</p>',
     choices: ['C']
 };
 
@@ -510,8 +517,17 @@ timeline.push(save_data_block);  // save data
 for (var i = 0; i < n_stimuli_per_participant; i++) {
     // decide which text to show for continuing to next trial
     if (stimuli[i][0].stimulus[0].includes(video_pfefix)) {
-        // video stimulus
-        timeline.push(continue_block_video);
+        // extract id of video
+        video_id = stimuli[i][0].stimulus[0].match(/\d+/)[0] // "3"
+        // check if it is an AV or an MV
+        if (video_id < n_videos / 2) {
+            // video stimulus with an MV
+            timeline.push(continue_block_video_mv);
+        } else {
+            console.log('av');
+            // video stimulus with an AV
+            timeline.push(continue_block_video_av);
+        }
     } else {
         // image stimulus
         timeline.push(continue_block_image);
