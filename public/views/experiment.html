@@ -269,7 +269,7 @@ function saveData() {
             })
             .fail(function() {
                 alert('A problem occurred while writing to the database. Please contact the researcher for more information.')
-                window.location.href = '/';
+                window.location = '/';
             })
         if (debug) {
             console.log('data saved');
