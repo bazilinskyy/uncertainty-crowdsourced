@@ -99,13 +99,11 @@
   <cml:rating label="Positive" id="" value="positive"/>
   <cml:rating label="Very Positive" id="" value="very_positive"/>
 </cml:ratings>
-<cml:radios label="Do you think a fully automated car is more capable of conducting driving tasks than a human driver that is operating a manually driven car?" class="" validates="required">
-  <cml:radio label="Yes" id="" value="yes"/>
-  <cml:radio label="No" id="" value="no"/>
-</cml:radios>
-<cml:radios label="Do you think a human driver that is operating a manually driven car is more capable of conducting driving tasks than a fully automated car?" class="" validates="required">
-  <cml:radio label="Yes" id="" value="yes"/>
-  <cml:radio label="No" id="" value="no"/>
+<cml:radios label="Who do you think is more capable of conducting driving-related tasks?" class="" validates="required">
+  <cml:radio label="A fully automated car" id="" value="a_fully_automated_car"/>
+  <cml:radio label="A human driver" id="" value="a_human_driver"/>
+  <cml:radio label="The fully automated car and the human driver are equally capable " id="" value="the_fully_automated_car_and_the_human_driver_are_equally_capable"/>
+  <cml:radio label="I don't know" id="" value="i_dont_know"/>
 </cml:radios>
 <p class="header">
   <strong>How often do you do the following?:</strong>
