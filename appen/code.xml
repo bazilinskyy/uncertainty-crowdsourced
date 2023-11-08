@@ -14,6 +14,7 @@
 <cml:radios label="What is your gender?" class="" validates="required">
   <cml:radio label="Male" value="male"/>
   <cml:radio label="Female" value="female"/>
+  <cml:radio label="Other" id="" value="other"/>
   <cml:radio label="I prefer not to respond" id="" value="i_prefer_not_to_respond"/>
 </cml:radios>
 <cml:text label="What is your age?" class="" validates="required positiveInteger"/>
