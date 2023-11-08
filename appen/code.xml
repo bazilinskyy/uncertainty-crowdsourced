@@ -103,6 +103,10 @@
   <cml:radio label="Yes" id="" value="yes"/>
   <cml:radio label="No" id="" value="no"/>
 </cml:radios>
+<cml:radios label="Do you think a human driver that is operating a manually driven car is more capable of conducting driving tasks than a fully automated car?" class="" validates="required">
+  <cml:radio label="Yes" id="" value="yes"/>
+  <cml:radio label="No" id="" value="no"/>
+</cml:radios>
 <p class="header">
   <strong>How often do you do the following?:</strong>
 </p>
