@@ -14,6 +14,7 @@
 <cml:radios label="What is your gender?" class="" validates="required">
   <cml:radio label="Male" value="male"/>
   <cml:radio label="Female" value="female"/>
+  <cml:radio label="Other" id="" value="other"/>
   <cml:radio label="I prefer not to respond" id="" value="i_prefer_not_to_respond"/>
 </cml:radios>
 <cml:text label="What is your age?" class="" validates="required positiveInteger"/>
@@ -232,7 +233,7 @@
   In this experiment, you will see multiple images and videos and are asked to answer questions on your "perceived psychological certainty" or "perceived psychological uncertainty". Please pay attention to the videos and images, because they last 10 seconds. 
   <br/>
   <br/>
-  <strong>Important:</strong> During the experiment, the videos will show manually driven cars (cars with human drivers), except for the car that you are a passenger in. The car that you are a passenger in can either be a manually driven car (a car with a human driver) or a fully automated car (a robotaxi that you are a passenger in). The fully automated car controls all driving-related tasks without input from a human driver. A human driver operates the manually driven car. The fully automated car is displayed with a blue overlay on the windows. An example of this will be given in the introduction page of the experiment.
+  <strong>Important:</strong> During the experiment, the videos will show manually driven cars (cars with human drivers), except for the car that you are a passenger in. The car that you are a passenger in can either be a manually driven car (a car with a human driver) or a fully automated car (a robotaxi that you are a passenger in). The fully automated car controls all driving-related tasks without input from a human driver. A human driver operates the manually driven car. The fully automated car is displayed <strong>with</strong> a blue overlay on the windows. Manually driven cars are displayed <strong>without</strong> a blue overlay on the windows. An example of this will be given in the introduction page of the experiment.
   <br/>
   <br/>
   You will be asked to leave Appen to participate in the experiment. You will need to open the link below. Do not close this Appen tab. At the end of the experiment, you will be given a code to input in the next question on this Appen tab. Please take a note of the code. Without the code, you will not be able to receive money for your participation. All images and videos will be downloaded before the start of the experiment. It may take a few minutes. Please do not close your browser during that time.
