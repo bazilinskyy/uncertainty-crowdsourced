@@ -82,24 +82,24 @@
   <cml:radio label="More than 5" id="" value="more_than_5"/>
   <cml:radio label="I prefer not to respond" id="" value="i_prefer_not_to_respond"/>
 </cml:radios>
-<cml:checkboxes label="Which option(s) best describe(s) your experience with automated vehicles?" class="" id="" validates="required">
-  <cml:checkbox label="I have never used or been in automated vehicles" value="i_have_never_used_or_been_in_automated_vehicles"/>
+<cml:checkboxes label="Which option(s) best describe(s) your experience with automated cars?" class="" id="" validates="required">
+  <cml:checkbox label="I have never used or been in automated cars" value="i_have_never_used_or_been_in_automated_cars"/>
   <cml:checkbox label="I have experience with driving a car with automated functions (e.g., adaptive cruise control, lane-keeping system)" value="i_have_experience_with_driving_a_car_with_automated_functions"/>
-  <cml:checkbox label="I have had a ride in an automated vehicle (e.g., robotaxi or automated shuttle) as a passenger" value="i_have_had_a_ride_in_an_automated_vehicle_as_a_passenger"/>
-  <cml:checkbox label=" I have encountered automated vehicles (e.g., robotaxi or automated shuttle) while driving" id="" value="i_have_encountered_automated_vehicles_while_driving"/>
-  <cml:checkbox label="I work in a related field (e.g., automated vehicle development, driver support technology, research on automated vehicle functions or regulation for automated driving technologies)" id="" value="i_work_in_a_related_field"/>
+  <cml:checkbox label="I have had a ride in an automated car (e.g. robotaxi) as a passenger" value="i_have_had_a_ride_in_an_automated_car_as_a_passenger"/>
+  <cml:checkbox label=" I have encountered automated cars (e.g. robotaxi) while driving" id="" value="i_have_encountered_automated_cars_while_driving"/>
+  <cml:checkbox label="I work in a related field (e.g. automated car development, driver support technology, research on automated car functions or regulation for automated driving technologies)" id="" value="i_work_in_a_related_field"/>
   <cml:checkbox label="Other" id="" value="other"/>
   <cml:checkbox label="I prefer not to respond" id="" value="i_prefer_not_to_respond"/>
 </cml:checkboxes>
 <cml:text label="If you answered 'Other' in the previous question, please describe your experience(s) below."/>
-<cml:ratings label="Please indicate your general attitude towards automated vehicles." class="" id="" validates="required">
+<cml:ratings label="Please indicate your general attitude towards automated cars." class="" id="" validates="required">
   <cml:rating label="Very Negative" id="" value="very_negative"/>
   <cml:rating label="Negative" id="" value="negative"/>
   <cml:rating label="Neutral" id="" value="neutral"/>
   <cml:rating label="Positive" id="" value="positive"/>
   <cml:rating label="Very Positive" id="" value="very_positive"/>
 </cml:ratings>
-<cml:radios label="Do you think an automated car is more capable of conducting driving tasks than a human driver that is operating a manually driven car?" class="" validates="required">
+<cml:radios label="Do you think a fully automated car is more capable of conducting driving tasks than a human driver that is operating a manually driven car?" class="" validates="required">
   <cml:radio label="Yes" id="" value="yes"/>
   <cml:radio label="No" id="" value="no"/>
 </cml:radios>
