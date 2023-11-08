@@ -92,7 +92,7 @@
   <cml:checkbox label="I prefer not to respond" id="" value="i_prefer_not_to_respond"/>
 </cml:checkboxes>
 <cml:text label="If you answered 'Other' in the previous question, please describe your experience(s) below."/>
-<cml:ratings label="Please indicate your general attitude towards automated cars." class="" id="" validates="required">
+<cml:ratings label="Please indicate your general attitude towards fully automated cars." class="" id="" validates="required">
   <cml:rating label="Very Negative" id="" value="very_negative"/>
   <cml:rating label="Negative" id="" value="negative"/>
   <cml:rating label="Neutral" id="" value="neutral"/>
