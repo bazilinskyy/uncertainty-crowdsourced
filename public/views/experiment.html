@@ -490,59 +490,59 @@ if (debug) {
 var between_blocks_count = 0;  // counter of shown between blocks
 timeline.push(fullscreen_enter);  // enter full screen
 timeline.push(instructions_block);
-// randomise order of videos of AV and MV
-if(getRandomInt(0,1)) {
-    if (debug) {
-        console.log('presenting av_demo, mv_demo');
-    }
-    timeline.push(av_demo);
-    timeline.push(av_demo_q);
-    timeline.push(continue_block_demo);
-    timeline.push(mv_demo);
-    timeline.push(mv_demo_q);
-    timeline.push(continue_to_experiment);
-} else {
-    if (debug) {
-        console.log('presenting mv_demo, av_demo');
-    }
-    timeline.push(mv_demo);
-    timeline.push(mv_demo_q);
-    timeline.push(continue_block_demo);
-    timeline.push(av_demo);
-    timeline.push(av_demo_q);
-    timeline.push(continue_to_experiment);
-}
-timeline.push(save_data_block);  // save data
-// iterate over blocks
-for (var i = 0; i < n_stimuli_per_participant; i++) {
-    // decide which text to show for continuing to next trial
-    if (stimuli[i][0].stimulus[0].includes(video_pfefix)) {
-        // extract id of video
-        video_id = stimuli[i][0].stimulus[0].match(/\d+/)[0] // "3"
-        // check if it is an AV or an MV
-        if (video_id < n_videos / 2) {
-            // video stimulus with an MV
-            timeline.push(continue_block_video_mv);
-        } else {
-            // video stimulus with an AV
-            timeline.push(continue_block_video_av);
-        }
-    } else {
-        // image stimulus
-        timeline.push(continue_block_image);
-    }
-    timeline.push(stimuli[i][0]);  // page with the stimulus
-    timeline.push(stimuli[i][1]);  // page with the slider
-    timeline.push(save_data_block);  // save data
-    // don't add the between block after the last trial
-    if ((i + 1) % n_stimuli_break == 0 && i != 0 && i != n_stimuli_per_participant - 1) {
-        if (debug) {
-            console.log('added break', i, between_blocks[between_blocks_count], i % n_stimuli_break, i / n_stimuli_break);
-        }
-        timeline.push(between_blocks[between_blocks_count]);
-        between_blocks_count++;
-    } 
-}
+// // randomise order of videos of AV and MV
+// if(getRandomInt(0,1)) {
+//     if (debug) {
+//         console.log('presenting av_demo, mv_demo');
+//     }
+//     timeline.push(av_demo);
+//     timeline.push(av_demo_q);
+//     timeline.push(continue_block_demo);
+//     timeline.push(mv_demo);
+//     timeline.push(mv_demo_q);
+//     timeline.push(continue_to_experiment);
+// } else {
+//     if (debug) {
+//         console.log('presenting mv_demo, av_demo');
+//     }
+//     timeline.push(mv_demo);
+//     timeline.push(mv_demo_q);
+//     timeline.push(continue_block_demo);
+//     timeline.push(av_demo);
+//     timeline.push(av_demo_q);
+//     timeline.push(continue_to_experiment);
+// }
+// timeline.push(save_data_block);  // save data
+// // iterate over blocks
+// for (var i = 0; i < n_stimuli_per_participant; i++) {
+//     // decide which text to show for continuing to next trial
+//     if (stimuli[i][0].stimulus[0].includes(video_pfefix)) {
+//         // extract id of video
+//         video_id = stimuli[i][0].stimulus[0].match(/\d+/)[0] // "3"
+//         // check if it is an AV or an MV
+//         if (video_id < n_videos / 2) {
+//             // video stimulus with an MV
+//             timeline.push(continue_block_video_mv);
+//         } else {
+//             // video stimulus with an AV
+//             timeline.push(continue_block_video_av);
+//         }
+//     } else {
+//         // image stimulus
+//         timeline.push(continue_block_image);
+//     }
+//     timeline.push(stimuli[i][0]);  // page with the stimulus
+//     timeline.push(stimuli[i][1]);  // page with the slider
+//     timeline.push(save_data_block);  // save data
+//     // don't add the between block after the last trial
+//     if ((i + 1) % n_stimuli_break == 0 && i != 0 && i != n_stimuli_per_participant - 1) {
+//         if (debug) {
+//             console.log('added break', i, between_blocks[between_blocks_count], i % n_stimuli_break, i / n_stimuli_break);
+//         }
+//         timeline.push(between_blocks[between_blocks_count]);
+//         between_blocks_count++;
+//     } 
+// }
 timeline.push(fullscreen_exit);  // exit full screen
 timeline.push(save_data_block);  // save data
 
