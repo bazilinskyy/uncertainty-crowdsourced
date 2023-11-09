@@ -33,9 +33,9 @@
 // by Pavlo Bazilinskyy <p.bazilinskyy@tue.nl>
 
 // Constants
-var n_videos = 1;  // number of videos
-var n_images = 1;  // number of images
-var n_stimuli_repeated = 1; // number of stimuli per participant, 10%
+var n_videos = 40;  // number of videos
+var n_images = 10;  // number of images
+var n_stimuli_repeated = 5; // number of stimuli per participant, 10%
 var n_stimuli_per_participant = n_videos + n_images + n_stimuli_repeated; // number of stimuli per participant
 var n_stimuli_break = 10; // number of images between each break
 var image_pfefix = 'img/image_'; // prefix for images
@@ -322,21 +322,21 @@ var av_demo = {
     trial_ends_after_video: true
 };
 
-// continue before showing the video
-var continue_block_demo = {
+// continue before showing the video with an AV
+var continue_block_av_demo = {
     type: jsPsychHtmlKeyboardResponse,
-    stimulus: '<p>Press \'C\' to continue to the next page with another example video.</p>',
+    stimulus: '<p>Press \'C\' to continue to the next page with an example video where you are a passenger in a <strong>fully automated car</strong>.</p>',
     choices: ['C']
 };
 
-// define 'continue to experiment' block
+// questions after the demo with an AV
 var av_demo_q = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus: '<p>The fully automated car is displayed <strong>with</strong> a blue overlay on the windows.</p><p><strong>Do you understand that in the video you are a passenger in a fully automated car?</strong></br>Press \'Y\' if you understood it or press \'N\' if you did not understand it.</p>',
     choices: ['Y', 'N']
 };
 
-// define MDC demo block
+// define MV demo block
 var mv_demo = {
     type: jsPsychVideoKeyboardResponse,
     autoplay: true,
@@ -346,7 +346,14 @@ var mv_demo = {
     trial_ends_after_video: true
 };
 
-// define 'continue to experiment' block
+// continue before showing the video with an MV
+var continue_block_mv_demo = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: '<p>Press \'C\' to continue to the next page with an example video where you are a passenger in a <strong>manually driven car</strong>.</p>',
+    choices: ['C']
+};
+
+// questions after the demo with an MV
 var mv_demo_q = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus: '<p>Manually driven cars are displayed <strong>without</strong> a blue overlay on the windows.</p><p><strong>Do you understand that in the video you are a passenger in a manually driven car?</strong></br>Press \'Y\' if you understood it or press \'N\' if you did not understand it.</p>',
@@ -486,65 +493,67 @@ var preload = {
 };
 timeline.push(preload);
 if (debug) {
-    console.log('finished with preloading');
+    console.log('preloading finished');
 }
 
 var between_blocks_count = 0;  // counter of shown between blocks
 timeline.push(fullscreen_enter);  // enter full screen
 timeline.push(instructions_block);
-// // randomise order of videos of AV and MV
-// if(getRandomInt(0,1)) {
-//     if (debug) {
-//         console.log('presenting av_demo, mv_demo');
-//     }
-//     timeline.push(av_demo);
-//     timeline.push(av_demo_q);
-//     timeline.push(continue_block_demo);
-//     timeline.push(mv_demo);
-//     timeline.push(mv_demo_q);
-//     timeline.push(continue_to_experiment);
-// } else {
-//     if (debug) {
-//         console.log('presenting mv_demo, av_demo');
-//     }
-//     timeline.push(mv_demo);
-//     timeline.push(mv_demo_q);
-//     timeline.push(continue_block_demo);
-//     timeline.push(av_demo);
-//     timeline.push(av_demo_q);
-//     timeline.push(continue_to_experiment);
-// }
-// timeline.push(save_data_block);  // save data
-// // iterate over blocks
-// for (var i = 0; i < n_stimuli_per_participant; i++) {
-//     // decide which text to show for continuing to next trial
-//     if (stimuli[i][0].stimulus[0].includes(video_pfefix)) {
-//         // extract id of video
-//         video_id = stimuli[i][0].stimulus[0].match(/\d+/)[0] // "3"
-//         // check if it is an AV or an MV
-//         if (video_id < n_videos / 2) {
-//             // video stimulus with an MV
-//             timeline.push(continue_block_video_mv);
-//         } else {
-//             // video stimulus with an AV
-//             timeline.push(continue_block_video_av);
-//         }
-//     } else {
-//         // image stimulus
-//         timeline.push(continue_block_image);
-//     }
-//     timeline.push(stimuli[i][0]);  // page with the stimulus
-//     timeline.push(stimuli[i][1]);  // page with the slider
-//     timeline.push(save_data_block);  // save data
-//     // don't add the between block after the last trial
-//     if ((i + 1) % n_stimuli_break == 0 && i != 0 && i != n_stimuli_per_participant - 1) {
-//         if (debug) {
-//             console.log('added break', i, between_blocks[between_blocks_count], i % n_stimuli_break, i / n_stimuli_break);
-//         }
-//         timeline.push(between_blocks[between_blocks_count]);
-//         between_blocks_count++;
-//     } 
-// }
+// randomise order of videos of AV and MV
+if(getRandomInt(0,1)) {
+    if (debug) {
+        console.log('presenting av_demo, mv_demo');
+    }
+    timeline.push(continue_block_av_demo);
+    timeline.push(av_demo);
+    timeline.push(av_demo_q);
+    timeline.push(continue_block_mv_demo);
+    timeline.push(mv_demo);
+    timeline.push(mv_demo_q);
+    timeline.push(continue_to_experiment);
+} else {
+    if (debug) {
+        console.log('presenting mv_demo, av_demo');
+    }
+    timeline.push(continue_block_mv_demo);
+    timeline.push(mv_demo);
+    timeline.push(mv_demo_q);
+    timeline.push(continue_block_av_demo);
+    timeline.push(av_demo);
+    timeline.push(av_demo_q);
+    timeline.push(continue_to_experiment);
+}
+timeline.push(save_data_block);  // save data
+// iterate over blocks
+for (var i = 0; i < n_stimuli_per_participant; i++) {
+    // decide which text to show for continuing to next trial
+    if (stimuli[i][0].stimulus[0].includes(video_pfefix)) {
+        // extract id of video
+        video_id = stimuli[i][0].stimulus[0].match(/\d+/)[0] // "3"
+        // check if it is an AV or an MV
+        if (video_id < n_videos / 2) {
+            // video stimulus with an MV
+            timeline.push(continue_block_video_mv);
+        } else {
+            // video stimulus with an AV
+            timeline.push(continue_block_video_av);
+        }
+    } else {
+        // image stimulus
+        timeline.push(continue_block_image);
+    }
+    timeline.push(stimuli[i][0]);  // page with the stimulus
+    timeline.push(stimuli[i][1]);  // page with the slider
+    timeline.push(save_data_block);  // save data
+    // don't add the between block after the last trial
+    if ((i + 1) % n_stimuli_break == 0 && i != 0 && i != n_stimuli_per_participant - 1) {
+        if (debug) {
+            console.log('added break', i, between_blocks[between_blocks_count], i % n_stimuli_break, i / n_stimuli_break);
+        }
+        timeline.push(between_blocks[between_blocks_count]);
+        between_blocks_count++;
+    } 
+}
 timeline.push(save_data_block);  // save data
 timeline.push(fullscreen_exit);  // exit full screen
 
