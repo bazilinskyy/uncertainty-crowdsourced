@@ -531,7 +531,7 @@ for (var i = 0; i < n_stimuli_per_participant; i++) {
         // extract id of video
         video_id = stimuli[i][0].stimulus[0].match(/\d+/)[0] // "3"
         // check if it is an AV or an MV
-        if (video_id < n_videos / 2) {
+        if (video_id < n_videos / 4) {
             // video stimulus with an MV
             timeline.push(continue_block_video_mv);
         } else {
