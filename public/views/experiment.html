@@ -268,8 +268,10 @@ function saveData() {
                 jsPsych.data.reset();
             })
             .fail(function() {
-                alert('A problem occurred while writing to the database. Please contact the researcher for more information.')
-                window.location = '/';
+                // TODO: last save of data did not work
+                // alert('A problem occurred while writing to the database. Please contact the researcher for more information.')
+                // window.location = '/';
+                console.log('failed to save data ' + jsPsych.data.get().json());
             })
         if (debug) {
             console.log('data saved');
