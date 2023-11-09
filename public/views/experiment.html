@@ -266,6 +266,9 @@ function saveData() {
             })
             .done(function() {
                 jsPsych.data.reset();
+                if (debug) {
+                    console.log('data saved');
+                }
             })
             .fail(function() {
                 // TODO: last save of data did not work
@@ -273,9 +276,6 @@ function saveData() {
                 // window.location = '/';
                 console.log('failed to save data ' + jsPsych.data.get().json());
             })
-        if (debug) {
-            console.log('data saved');
-        }
     }
 }
 
