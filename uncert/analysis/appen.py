@@ -26,16 +26,16 @@ class Appen:
     columns_mapping = {'_started_at': 'start',
                        '_created_at': 'end',
                        'about_how_many_kilometers_miles_did_you_drive_in_the_last_12_months': 'milage',  # noqa: E501
-                       'at_which_age_did_you_obtain_your_first_license_for_driving_a_car_or_motorcycle': 'year_license',  # noqa: E501
+                       'at_which_age_did_you_obtain_your_first_license_for_driving_a_car': 'year_license',  # noqa: E501
                        'have_you_read_and_understood_the_above_instructions': 'instructions',  # noqa: E501
                        'how_many_accidents_were_you_involved_in_when_driving_a_car_in_the_last_3_years_please_include_all_accidents_regardless_of_how_they_were_caused_how_slight_they_were_or_where_they_happened': 'accidents',  # noqa: E501
-                       'how_often_do_you_do_the_following_becoming_angered_by_a_particular_type_of_driver_and_indicate_your_hostility_by_whatever_means_you_can': 'dbq1_anger',  # noqa: E501
-                       'how_often_do_you_do_the_following_disregarding_the_speed_limit_on_a_motorway': 'dbq2_speed_motorway',  # noqa: E501
-                       'how_often_do_you_do_the_following_disregarding_the_speed_limit_on_a_residential_road': 'dbq3_speed_residential',  # noqa: E501
-                       'how_often_do_you_do_the_following_driving_so_close_to_the_car_in_front_that_it_would_be_difficult_to_stop_in_an_emergency': 'dbq4_headway',  # noqa: E501
-                       'how_often_do_you_do_the_following_racing_away_from_traffic_lights_with_the_intention_of_beating_the_driver_next_to_you': 'dbq5_traffic_lights',  # noqa: E501
-                       'how_often_do_you_do_the_following_sounding_your_horn_to_indicate_your_annoyance_with_another_road_user': 'dbq6_horn',  # noqa: E501
-                       'how_often_do_you_do_the_following_using_a_mobile_phone_without_a_hands_free_kit': 'dbq7_mobile',  # noqa: E501
+                       'becoming_angered_by_a_particular_type_of_driver_and_indicate_your_hostility_by_whatever_means_you_can': 'dbq1_anger',  # noqa: E501
+                       'disregarding_the_speed_limit_on_a_motorway': 'dbq2_speed_motorway',  # noqa: E501
+                       'disregarding_the_speed_limit_on_a_residential_road': 'dbq3_speed_residential',  # noqa: E501
+                       'driving_so_close_to_the_car_in_front_that_it_would_be_difficult_to_stop_in_an_emergency': 'dbq4_headway',  # noqa: E501
+                       'racing_away_from_traffic_lights_with_the_intention_of_beating_the_driver_next_to_you': 'dbq5_traffic_lights',  # noqa: E501
+                       'sounding_your_horn_to_indicate_your_annoyance_with_another_road_user': 'dbq6_horn',  # noqa: E501
+                       'using_a_phone_in_your_hands_while_driving': 'dbq7_mobile',  # noqa: E501
                        'if_you_answered_other_in_the_previous_question_please_decribe_the_place_where_you_located_now_below': 'place_other',  # noqa: E501
                        'if_you_answered_other_in_the_previous_question_please_decribe_your_input_device_below': 'device_other',  # noqa: E501
                        'in_which_type_of_place_are_you_located_now': 'place',
@@ -84,7 +84,7 @@ class Appen:
             clean_data (bool, optional): clean data.
 
         Returns:
-            dataframe: udpated dataframe.
+            dataframe: updated dataframe.
         """
         # load data
         if self.load_p:
@@ -95,8 +95,8 @@ class Appen:
             logger.info('Reading appen data from {}.', self.file_data)
             # load from csv
             df = pd.read_csv(self.file_data)
-            # drop legcy worker code column
-            df = df.drop('worker_code', axis=1)
+            # drop column value used to go around the step of adding data
+            df = df.drop('value', axis=1)
             # drop _gold columns
             df = df.drop((x for x in df.columns.tolist() if '_gold' in x),
                          axis=1)
@@ -109,7 +109,7 @@ class Appen:
             df['end'] = pd.to_datetime(df['end'])
             df['time'] = (df['end'] - df['start']) / pd.Timedelta(seconds=1)
             # remove underscores in the beginning of column name
-            df.columns = df.columns.suc.lstrip('_')
+            df.columns = df.columns.str.lstrip('_')
             # clean data
             if clean_data:
                 df = self.clean_data(df)
@@ -135,7 +135,7 @@ class Appen:
         return df
 
     def filter_data(self, df):
-        """Filter data based on the folllowing criteria:
+        """Filter data based on the following criteria:
             1. People who did not read instructions.
             2. People that are under 18 years of age.
             3. People who completed the study in under 5 min.
@@ -250,7 +250,7 @@ class Appen:
         return df
 
     def mask_ips_ids(self, df, mask_ip=True, mask_id=True):
-        """Anonymyse IPs and IDs. IDs are anonymised by subtracting the
+        """Anonymise IPs and IDs. IDs are anonymised by subtracting the
         given ID from uc.common.get_configs('mask_id').
         """
         # loop through rows of the file
@@ -374,7 +374,7 @@ class Appen:
         logger.info('Gender: {}', count.most_common())
         # info on most represted countries in minutes
         count = Counter(self.appen_data['country'])
-        logger.info('Countires: {}', count.most_common())
+        logger.info('Countries: {}', count.most_common())
         # info on duration in minutes
         logger.info('Time of participation: mean={:,.2f} min, '
                     + 'median={:,.2f} min, std={:,.2f} min.',
