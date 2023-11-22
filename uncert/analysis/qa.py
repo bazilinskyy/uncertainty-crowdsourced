@@ -18,9 +18,9 @@ class QA:
         # appen job ID
         self.job_id = job_id
 
-    def flag_users(self):
+    def ban_users(self):
         """
-        Flag users descibed in csv file self.file_cheaters from job
+        Ban users described in csv file self.file_cheaters from job
         self.job_id.
         """
         # import csv file
@@ -38,24 +38,25 @@ class QA:
                       str(self.job_id) + \
                       '/workers/' + \
                       str(row['worker_id']) + \
-                      '.json'
+                      '/ban.json'
             if not pd.isna(row['worker_code']):
-                flag_text = 'User repeatedly ignored our instructions and ' \
+                flag_text = 'reason=User repeatedly ignored our instructions and ' \
                             + 'joined job from different accounts/IP ' \
                             + 'addresses. The same code ' \
                             + str(row['worker_code']) \
                             + ' used internally in the job was reused.'
             else:
-                flag_text = 'User repeatedly ignored our instructions and ' \
+                flag_text = 'reason=User repeatedly ignored our instructions and ' \
                             + 'joined job from different accounts/IP ' \
                             + 'addresses. No worker code used internally  ' \
                             + 'was inputted (html regex validator was ' \
                             + 'bypassed).'
             params = {'flag': flag_text,
                       'key': uc.common.get_secrets('appen_api_key')}
+            headers = {'Authorization': 'Token token=' + uc.common.get_secrets('appen_api_key')}  # noqa: E501
             # send PUT request
             try:
-                r = requests.put(cmd_put, data=params)
+                r = requests.put(cmd_put, data=params, headers=headers)
             except requests.exceptions.ConnectionError:
                 logger.error('No internet connection. Could not flag user {}.',
                              str(row['worker_id']))
@@ -78,7 +79,7 @@ class QA:
 
     def reject_users(self):
         """
-        Reject users descibed in csv file self.file_cheaters from job
+        Reject users described in csv file self.file_cheaters from job
         self.job_id.
         """
         # import csv file
@@ -112,9 +113,11 @@ class QA:
             params = {'reason': reason_text,
                       'manual': 'true',
                       'key': uc.common.get_secrets('appen_api_key')}
+            headers = {'Authorization': 'Token token=' + uc.common.get_secrets('appen_api_key')}  # noqa: E501
+
             # send PUT request
             try:
-                r = requests.put(cmd_put, data=params)
+                r = requests.put(cmd_put, data=params, headers=headers)
             except requests.exceptions.ConnectionError:
                 logger.error('No internet connection. Could not reject user ' +
                              '{}.', str(row['worker_id']))
