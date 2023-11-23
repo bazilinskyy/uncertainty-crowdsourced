@@ -381,6 +381,6 @@ class Appen:
                     self.appen_data['time'].mean() / 60,
                     self.appen_data['time'].median() / 60,
                     self.appen_data['time'].std() / 60)
-        logger.info('oldest timestamp={}, newest timestamp={}.',
+        logger.info('Oldest timestamp={}, newest timestamp={}.',
                     self.appen_data['start'].min(),
                     self.appen_data['start'].max())

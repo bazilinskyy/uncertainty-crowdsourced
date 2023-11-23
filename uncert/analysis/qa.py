@@ -33,6 +33,11 @@ class QA:
         banned_counter = 0
         # loop over users in the job for flagging
         for index, row in tqdm(df.iterrows(), total=df.shape[0]):
+            # check if worker ID is not nan
+            if pd.isna(row['worker_id']):
+                logger.debug('User with NaN as worker ID detected in the list '
+                             + 'of cheaters.')
+                continue
             # make a PUT request for flagging
             cmd_put = 'https://api.appen.com/v1/jobs/' + \
                       str(self.job_id) + \
@@ -94,6 +99,11 @@ class QA:
         rejected_counter = 0
         # loop over users in the job for rejecting
         for index, row in tqdm(df.iterrows(), total=df.shape[0]):
+            # check if worker ID is not nan
+            if pd.isna(row['worker_id']):
+                logger.debug('User with NaN as worker ID detected in the list '
+                             + 'of cheaters.')
+                continue
             # make a PUT request for rejecting
             cmd_put = 'https://api.appen.com/v1/jobs/' + \
                       str(self.job_id) + \
