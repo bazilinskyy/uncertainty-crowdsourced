@@ -37,7 +37,7 @@ class QA:
             cmd_put = 'https://api.appen.com/v1/jobs/' + \
                       str(self.job_id) + \
                       '/workers/' + \
-                      str(row['worker_id']) + \
+                      str(int(row['worker_id'])) + \
                       '/ban.json'
             if not pd.isna(row['worker_code']):
                 reason_text = 'User repeatedly ignored our ' \
@@ -57,6 +57,7 @@ class QA:
             # send PUT request
             try:
                 # TODO: This API call seems to be broken and it returns 401.
+                # working cmd curl -X PUT "https://api.appen.com/v1/jobs/2190951/workers/47426294/ban.json" -H "Authorization: Token token=APIKEY" -d "reason=Pavlo Bazilinskyy"  # noqa: E501
                 r = requests.put(cmd_put, data=params, headers=headers)
             except requests.exceptions.ConnectionError:
                 logger.error('No internet connection. Could not flag user {}.',
@@ -97,7 +98,7 @@ class QA:
             cmd_put = 'https://api.appen.com/v1/jobs/' + \
                       str(self.job_id) + \
                       '/workers/' + \
-                      str(row['worker_id']) + \
+                      str(int(row['worker_id'])) + \
                       '/reject.json'
             if not pd.isna(row['worker_code']):
                 reason_text = 'User repeatedly ignored our instructions and ' \
