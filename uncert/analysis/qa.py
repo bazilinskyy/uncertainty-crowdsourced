@@ -40,13 +40,13 @@ class QA:
                       str(row['worker_id']) + \
                       '/ban.json'
             if not pd.isna(row['worker_code']):
-                reason_text = 'reason=User repeatedly ignored our ' \
+                reason_text = 'User repeatedly ignored our ' \
                             + 'instructions and joined job from different ' \
                             + 'accounts/IP addresses. The same code ' \
                             + str(row['worker_code']) \
                             + ' used internally in the job was reused.'
             else:
-                reason_text = 'reason=User repeatedly ignored our  ' \
+                reason_text = 'User repeatedly ignored our  ' \
                             + 'instructions and joined job from different  ' \
                             + 'accounts/IP addresses. No worker code used  ' \
                             + 'internally was inputted (html regex ' \
@@ -56,7 +56,7 @@ class QA:
             headers = {'Authorization': 'Token token=' + uc.common.get_secrets('appen_api_key')}  # noqa: E501
             # send PUT request
             try:
-                print(cmd_put)
+                # TODO: This API call seems to be broken and it returns 401.
                 r = requests.put(cmd_put, data=params, headers=headers)
             except requests.exceptions.ConnectionError:
                 logger.error('No internet connection. Could not flag user {}.',
