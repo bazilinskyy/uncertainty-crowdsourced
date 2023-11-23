@@ -28,9 +28,9 @@ class QA:
         # check if there are users to flag
         if df.shape[0] == 0:
             return
-        logger.info('Flagging {} users.', df.shape[0])
-        # count flagged users
-        flagged_counter = 0
+        logger.info('Banning {} users.', df.shape[0])
+        # count banned users
+        banned_counter = 0
         # loop over users in the job for flagging
         for index, row in tqdm(df.iterrows(), total=df.shape[0]):
             # make a PUT request for flagging
@@ -40,22 +40,23 @@ class QA:
                       str(row['worker_id']) + \
                       '/ban.json'
             if not pd.isna(row['worker_code']):
-                flag_text = 'reason=User repeatedly ignored our instructions and ' \
-                            + 'joined job from different accounts/IP ' \
-                            + 'addresses. The same code ' \
+                reason_text = 'reason=User repeatedly ignored our ' \
+                            + 'instructions and joined job from different ' \
+                            + 'accounts/IP addresses. The same code ' \
                             + str(row['worker_code']) \
                             + ' used internally in the job was reused.'
             else:
-                flag_text = 'reason=User repeatedly ignored our instructions and ' \
-                            + 'joined job from different accounts/IP ' \
-                            + 'addresses. No worker code used internally  ' \
-                            + 'was inputted (html regex validator was ' \
-                            + 'bypassed).'
-            params = {'flag': flag_text,
+                reason_text = 'reason=User repeatedly ignored our  ' \
+                            + 'instructions and joined job from different  ' \
+                            + 'accounts/IP addresses. No worker code used  ' \
+                            + 'internally was inputted (html regex ' \
+                            + 'validator was bypassed).'
+            params = {'reason': reason_text,
                       'key': uc.common.get_secrets('appen_api_key')}
             headers = {'Authorization': 'Token token=' + uc.common.get_secrets('appen_api_key')}  # noqa: E501
             # send PUT request
             try:
+                print(cmd_put)
                 r = requests.put(cmd_put, data=params, headers=headers)
             except requests.exceptions.ConnectionError:
                 logger.error('No internet connection. Could not flag user {}.',
@@ -65,17 +66,17 @@ class QA:
             code = r.status_code
             msg = r.content.decode()
             if (code == 200
-               and msg != 'Contributor has already been flagged'):
-                flagged_counter += 1
-            logger.debug('Flagged user {} with message \'{}\' .Returned '
+               and msg != 'Contributor has already been banned'):
+                banned_counter += 1
+            logger.debug('Banned user {} with message \'{}\'. Returned '
                          + 'code {}: {}',
                          str(row['worker_id']),
-                         flag_text,
+                         reason_text,
                          str(code),
                          r.content)
-        logger.info('Flagged {} users successfully (users not flagged '
+        logger.info('Banned {} users successfully (users not banned '
                     + 'previously).',
-                    str(flagged_counter))
+                    str(banned_counter))
 
     def reject_users(self):
         """
@@ -127,7 +128,7 @@ class QA:
             msg = r.content.decode()
             if code == 200:
                 rejected_counter += 1
-            logger.debug('Rejected user {} with message \'{}\' .Returned '
+            logger.debug('Rejected user {} with message \'{}\'. Returned '
                          + 'code {}: {}',
                          str(row['worker_id']),
                          reason_text,

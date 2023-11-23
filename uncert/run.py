@@ -15,7 +15,7 @@ FILTER_DATA = True  # filter Appen and heroku data
 CLEAN_DATA = True  # clean Appen data
 REJECT_CHEATERS = True  # reject cheaters on Appen
 UPDATE_MAPPING = True  # update mapping with keypress data
-SHOW_OUTPUT = True  # should figures be plotted
+SHOW_OUTPUT = False  # should figures be plotted
 
 # for debugging, skip processing
 # SAVE_P = False  # save pickle files with data
@@ -158,7 +158,7 @@ if __name__ == '__main__':
         # columns_drop = ['id_segment', 'set', 'video', 'extra',
         #                 'alternative_frame', 'alternative_frame.1',
         #                 'video_length', 'min_dur', 'max_dur', 'start',
-        #                 'danger_b', 'danger-p', 'look_moment', 'cross_moment',
+        #                 'danger_b', 'danger-p', 'look_moment', 'cross_moment',  # noqa: E501
         #                 'time_before_interaction', 'gesture', 'kp',
         #                 'look_frame_ms', 'cross_frame_ms', 'interaction',
         #                 'vehicle_velocity_OBD', 'vehicle_velocity_GPS',
