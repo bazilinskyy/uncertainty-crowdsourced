@@ -300,6 +300,7 @@ class Heroku:
                     for key, value in dict_row.items():
                         # worker_code does not need to be added
                         if key in self.meta_keys:
+                            data_dict[dict_row['worker_code']][key] = value
                             continue
                         # new value
                         if key + '-0' not in data_dict[dict_row['worker_code']].keys():  # noqa: E501

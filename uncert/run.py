@@ -54,8 +54,8 @@ if __name__ == '__main__':
     if REJECT_CHEATERS:
         qa = uc.analysis.QA(file_cheaters=uc.common.get_configs('file_cheaters'),  # noqa: E501
                             job_id=uc.common.get_configs('appen_job'))
-        qa.ban_users()
         qa.reject_users()
+        qa.ban_users()
     # merge heroku and appen data frames into one
     all_data = heroku_data.merge(appen_data,
                                  left_on='worker_code',

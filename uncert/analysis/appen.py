@@ -3,6 +3,8 @@ import pandas as pd
 import numpy as np
 import datetime as dt
 from collections import Counter
+from pycountry_convert import country_alpha2_to_country_name, country_name_to_country_alpha3  # noqa: E501
+
 
 import uncert as uc
 
@@ -152,11 +154,13 @@ class Appen:
     def filter_data(self, df):
         """Filter data based on the following criteria:
             1. People who did not read instructions.
-            2. People that are under 18 years of age.
-            3. People who completed the study in under 5 min.
-            4. People who completed the study from the same IP more than once
+            2. People who did not give consent.
+            3. People that are under 18 years of age.
+            4. People who completed the study in under 5 min.
+            5. People who completed the study from the same IP more than once
                (the 1st data entry is retained).
-            5. People who used the same `worker_code` multiple times.
+            6. People who used the same `worker_code` multiple times.
+            7. People with invalid `worker_id`.
         """
         logger.info('Filtering appen data.')
         # people that did not read instructions
@@ -169,24 +173,28 @@ class Appen:
                     df_2.shape[0])
         # people that are underages
         df_3 = df.loc[df['age'] < 18]
-        logger.info('Filter-a2. People that are under 18 years of age: {}',
+        logger.info('Filter-a3. People that are under 18 years of age: {}',
                     df_3.shape[0])
         # People that took less than uc.common.get_configs('allowed_min_time')
         # minutes to complete the study
         df_4 = df.loc[df['time'] < uc.common.get_configs('allowed_min_time')]
-        logger.info('Filter-a3. People who completed the study in under ' +
+        logger.info('Filter-a4. People who completed the study in under ' +
                     str(uc.common.get_configs('allowed_min_time')) +
                     ' sec: {}',
                     df_4.shape[0])
         # people that completed the study from the same IP address
         df_5 = df[df['ip'].duplicated(keep='first')]
-        logger.info('Filter-a4. People who completed the study from the ' +
+        logger.info('Filter-a5. People who completed the study from the ' +
                     'same IP: {}',
                     df_5.shape[0])
         # people that entered the same worker_code more than once
         df_6 = df[df['worker_code'].duplicated(keep='first')]
-        logger.info('Filter-a5. People who used the same worker_code: {}',
+        logger.info('Filter-a6. People who used the same worker_code: {}',
                     df_6.shape[0])
+        # people with nan for worker_id
+        df_7 = df[df['worker_id'].isnull()]
+        logger.info('Filter-a7. People who have not valid worker_id: {}',
+                    df_7.shape[0])
         # save to csv
         if self.save_csv:
             df_6 = df_6.reset_index()
@@ -195,7 +203,7 @@ class Appen:
                         self.file_cheaters_csv)
         # concatenate dfs with filtered data
         old_size = df.shape[0]
-        df_filtered = pd.concat([df_1, df_2, df_3, df_4, df_5, df_5])
+        df_filtered = pd.concat([df_1, df_2, df_3, df_4, df_5, df_6, df_7])
         # check if there are people to filter
         if not df_filtered.empty:
             # drop rows with filtered data
@@ -371,6 +379,8 @@ class Appen:
                                       how='left')
         # drop not needed columns
         df_country = df_country.drop(columns=['unit_id', 'id'])
+        # convert from to 3-letter codes
+        df_country['country'] = df_country['country'].apply(lambda x: country_name_to_country_alpha3(country_alpha2_to_country_name(x)))  # noqa: E501
         # assign to attribute
         self.countries_data = df_country
         # save to csv
