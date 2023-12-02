@@ -166,7 +166,7 @@ class Analysis:
                 if isinstance(df.iloc[0][variable], str):
                     # replace underscores with spaces
                     df[variable] = df[variable].str.replace('_', ' ')
-                    # capitlise
+                    # capitalise
                     df[variable] = df[variable].str.capitalize()
         # use index of df if no is given
         if not x:
@@ -287,29 +287,29 @@ class Analysis:
             if isinstance(df.iloc[0][x], str):  # check if string
                 # replace underscores with spaces
                 df[x] = df[x].str.replace('_', ' ')
-                # capitlise
+                # capitalise
                 df[x] = df[x].str.capitalize()
             if isinstance(df.iloc[0][y], str):  # check if string
                 # replace underscores with spaces
                 df[y] = df[y].str.replace('_', ' ')
-                # capitlise
+                # capitalise
                 df[y] = df[y].str.capitalize()
             if color and isinstance(df.iloc[0][color], str):  # check if string
                 # replace underscores with spaces
                 df[color] = df[color].str.replace('_', ' ')
-                # capitlise
+                # capitalise
                 df[color] = df[color].str.capitalize()
             if size and isinstance(df.iloc[0][size], str):  # check if string
                 # replace underscores with spaces
                 df[size] = df[size].str.replace('_', ' ')
-                # capitlise
+                # capitalise
                 df[size] = df[size].str.capitalize()
             try:
                 # check if string
                 if text and isinstance(df.iloc[0][text], str):
                     # replace underscores with spaces
                     df[text] = df[text].str.replace('_', ' ')
-                    # capitlise
+                    # capitalise
                     df[text] = df[text].str.capitalize()
             except ValueError as e:
                 logger.debug('Tried to prettify {} with exception {}', text, e)
@@ -391,19 +391,19 @@ class Analysis:
                 if isinstance(df.iloc[0][x_col], str):  # check if string
                     # replace underscores with spaces
                     df[x_col] = df[x_col].str.replace('_', ' ')
-                    # capitlise
+                    # capitalise
                     df[x_col] = df[x_col].str.capitalize()
             if isinstance(df.iloc[0][y], str):  # check if string
                 # replace underscores with spaces
                 df[y] = df[y].str.replace('_', ' ')
-                # capitlise
+                # capitalise
                 df[y] = df[y].str.capitalize()
             try:
                 # check if string
                 if text and isinstance(df.iloc[0][text], str):
                     # replace underscores with spaces
                     df[text] = df[text].str.replace('_', ' ')
-                    # capitlise
+                    # capitalise
                     df[text] = df[text].str.capitalize()
             except ValueError as e:
                 logger.debug('Tried to prettify {} with exception {}', text, e)
@@ -494,12 +494,12 @@ class Analysis:
                 if isinstance(df.iloc[0][variable], str):
                     # replace underscores with spaces
                     df[variable] = df[variable].str.replace('_', ' ')
-                    # capitlise
+                    # capitalise
                     df[variable] = df[variable].str.capitalize()
             if color and isinstance(df.iloc[0][color], str):  # check if string
                 # replace underscores with spaces
                 df[color] = df[color].str.replace('_', ' ')
-                # capitlise
+                # capitalise
                 df[color] = df[color].str.capitalize()
         # create figure
         if color:
