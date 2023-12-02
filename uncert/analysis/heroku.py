@@ -22,24 +22,28 @@ class Heroku:
     heroku_data = pd.DataFrame()
     # pandas dataframe with mapping
     mapping = pd.read_csv(uc.common.get_configs('mapping_stimuli'))
-    # resolution for keypress data
-    res = uc.common.get_configs('kp_resolution')
-    # number of stimuli
-    num_stimuli = uc.common.get_configs('num_stimuli')
-    # number of stimuli shown for each participant
-    num_stimuli_participant = uc.common.get_configs('num_stimuli_participant')
+    # pandas dataframe with questions for videos
+    qs_videos = pd.read_csv(uc.common.get_configs('questions_videos'))
+    # pandas dataframe with questions for images
+    qs_images = pd.read_csv(uc.common.get_configs('questions_images'))
+    # pandas dataframe with combined questions for videos and images
+    qs = pd.read_csv(uc.common.get_configs('questions_images'))
+    # number of video stimuli
+    num_stimuli_video = uc.common.get_configs('num_stimuli_video')
+    # number of image stimuli
+    num_stimuli_img = uc.common.get_configs('num_stimuli_img')
+    # number of repeated stimuli
+    num_stimuli_repeat = uc.common.get_configs('num_stimuli_repeat')
+    # total number of stimuli
+    num_stimuli = num_stimuli_video + num_stimuli_img + num_stimuli_repeat
     # number of repeats for each stimulus
     num_repeat = uc.common.get_configs('num_repeat')
-    # allowed number of stimuli with detected wrong duration
-    allowed_length = uc.common.get_configs('allowed_stimuli_wrong_duration')
-    # allowed number of mistakes for questions with signs
-    allowed_signs = uc.common.get_configs('allowed_mistakes_signs')
     # pickle file for saving data
     file_p = 'heroku_data.p'
     # csv file for saving data
     file_data_csv = 'heroku_data'
     # csv file for mapping of stimuli
-    file_mapping_csv = 'mapping'
+    file_mapping_csv = 'questions'
     # keys with meta information
     meta_keys = ['worker_code',
                  'browser_user_agent',
@@ -51,7 +55,8 @@ class Heroku:
                  'window_width',
                  'video_ids']
     # prefixes used for files in node.js implementation
-    prefixes = {'stimulus': 'video_'}
+    prefixes = {'video': 'video_',
+                'img': 'image_'}
     # stimulus duration
     default_dur = 0
 
@@ -108,6 +113,7 @@ class Heroku:
             prev_row_info.set_index('worker_code', inplace=True)
             # read rows in data
             for row in tqdm(data_list):  # tqdm adds progress bar
+                stim_no_path = ''
                 # use dict to store data
                 dict_row = {}
                 # load data from a single row into a list
@@ -133,6 +139,24 @@ class Heroku:
                                              data_cell['worker_code'])
                     # check if stimulus data is present
                     if 'stimulus' in data_cell.keys():
+                        # check if question detected
+                        if not isinstance(data_cell['stimulus'], list):
+                            warnings.filterwarnings("ignore", 'This pattern is interpreted as a regular expression')  # noqa: E501
+                            if ((self.qs_videos['question'].str.contains(data_cell['stimulus']).any() or  # noqa: E501
+                                 self.qs_images['question'].str.contains(data_cell['stimulus']).any()) and len(stim_name) > 2):  # noqa: E501
+                                # find short name
+                                try:
+                                    short_name = self.qs_videos.loc[self.qs_videos['question'] == data_cell['stimulus'], 'short_name'].iloc[0]  # noqa: E501
+                                except IndexError:
+                                    short_name = self.qs_images.loc[self.qs_images['question'] == data_cell['stimulus'], 'short_name'].iloc[0]  # noqa: E501
+                                # check if values were recorded previously
+                                if stim_name + '-' + short_name not in dict_row.keys():  # noqa: E501
+                                    # first value
+                                    dict_row[stim_name + '-' + short_name] = [data_cell['response']]  # noqa: E501
+                                else:
+                                    # previous values found
+                                    dict_row[stim_name + '-' + short_name].extend([data_cell['response']])  # noqa: E501
+                                # print(dict_row[stim_name + '-' + short_name])
                         # extract name of stimulus after last slash
                         # list of stimuli. use 1st
                         if isinstance(data_cell['stimulus'], list):
@@ -142,13 +166,17 @@ class Heroku:
                             stim_no_path = data_cell['stimulus'].rsplit('/', 1)[-1]  # noqa: E501
                         # remove extension
                         stim_no_path = os.path.splitext(stim_no_path)[0]
+                        # skip is videos from instructions
+                        if 'video_instruction_' in stim_no_path:
+                            continue
                         # Check if it is a block with stimulus and not an
                         # instructions block
                         if (uc.common.search_dict(self.prefixes, stim_no_path)
                                 is not None):
                             # stimulus is found
                             logger.debug('Found stimulus {}.', stim_no_path)
-                            if self.prefixes['stimulus'] in stim_no_path:
+                            if (self.prefixes['video'] in stim_no_path or
+                               self.prefixes['img'] in stim_no_path):
                                 # Record that stimulus was detected for the
                                 # cells to follow
                                 stim_name = stim_no_path
@@ -168,29 +196,6 @@ class Heroku:
                                     if stim_name + '-dur' not in dict_row.keys() and dur > 0:  # noqa: E501
                                         # first value
                                         dict_row[stim_name + '-dur'] = dur
-                    # keypresses
-                    if 'rts' in data_cell.keys() and stim_name != '':
-                        # record given keypresses
-                        responses = data_cell['rts']
-                        logger.debug('Found {} points in keypress data.',
-                                     len(responses))
-                        # extract pressed keys and rt values
-                        key = [point['key'] for point in responses]
-                        rt = [point['rt'] for point in responses]
-                        # check if values were recorded previously
-                        if stim_name + '-key' not in dict_row.keys():
-                            # first value
-                            dict_row[stim_name + '-key'] = key
-                        else:
-                            # previous values found
-                            dict_row[stim_name + '-key'].extend(key)
-                        # check if values were recorded previously
-                        if stim_name + '-rt' not in dict_row.keys():
-                            # first value
-                            dict_row[stim_name + '-rt'] = rt
-                        else:
-                            # previous values found
-                            dict_row[stim_name + '-rt'].extend(rt)
                     # questions after stimulus
                     if 'responses' in data_cell.keys() and stim_name != '':
                         # record given keypresses
@@ -247,48 +252,6 @@ class Heroku:
                         else:
                             # previous values found
                             dict_row[stim_name + '-time'].extend(time)
-                    # questions in the end
-                    if 'responses' in data_cell.keys() and stim_name == '':
-                        # record given keypresses
-                        responses_end = data_cell['responses']
-                        logger.debug('Found responses to final questions {}.',
-                                     responses_end)
-                        # extract pressed keys and rt values
-                        responses_end = ast.literal_eval(re.search('({.+})',
-                                                         responses_end).group(0))  # noqa: E501
-                        # unpack questions and answers
-                        questions = []
-                        answers = []
-                        for key, value in responses_end.items():
-                            questions.append(key)
-                            answers.append(value)
-                        # Check if inputted values were recorded previously
-                        if 'end-qs' not in dict_row.keys():
-                            dict_row['end-qs'] = questions
-                            dict_row['end-as'] = answers
-                        else:
-                            # previous values found
-                            dict_row['end-qs'].extend(questions)
-                            dict_row['end-as'].extend(answers)
-                    # question order
-                    if 'question_order' in data_cell.keys() \
-                       and stim_name == '':
-                        # unpack question order
-                        qo_str = data_cell['question_order']
-                        # remove brackets []
-                        qo_str = qo_str[1:]
-                        qo_str = qo_str[:-1]
-                        # unpack to int
-                        question_order = [int(x) for x in qo_str.split(',')]
-                        logger.debug('Found question order for final ' +
-                                     'questions {}.',
-                                     question_order)
-                        # Check if inputted values were recorded previously
-                        if 'end-qo' not in dict_row.keys():
-                            dict_row['end-qo'] = question_order
-                        else:
-                            # previous values found
-                            dict_row['end-qo'].extend(question_order)
                     # record last time_elapsed
                     if 'time_elapsed' in data_cell.keys():
                         elapsed_l = float(data_cell['time_elapsed'])
@@ -369,15 +332,37 @@ class Heroku:
         # return mapping as a dataframe
         return df
 
-    def process_stimulus_questions(self, questions):
+    def read_questions_videos(self):
+        """
+        Read questions for videos.
+        """
+        # read mapping from a csv file
+        df = pd.read_csv(uc.common.get_configs('questions_videos'))
+        # set index as stimulus_id
+        df.set_index('id', inplace=True)
+        # update attribute
+        self.qs_videos = df
+        # return mapping as a dataframe
+        return df
+
+    def read_questions_images(self):
+        """
+        Read questions for images.
+        """
+        # read mapping from a csv file
+        df = pd.read_csv(uc.common.get_configs('questions_images'))
+        # set index as stimulus_id
+        df.set_index('id', inplace=True)
+        # update attribute
+        self.qs_images = df
+        # return mapping as a dataframe
+        return df
+
+    def process_stimulus_questions(self):
         """Process questions that follow each stimulus.
 
-        Args:
-            questions (list): list of questions with types of possible values
-                              as int or suc.
-
         Returns:
-            dataframe: updated mapping dataframe.
+            dataframe: combined dataframe for all questions.
         """
         logger.info('Processing post-stimulus questions')
         # array in which arrays of video_as data is stored
@@ -446,7 +431,7 @@ class Heroku:
             q_ans = [item[i] for item in mapping_as]
             # for numeric question, add column with mean values
             if q['type'] == 'num':
-                self.mapping[q['question']] = q_ans
+                self.qs[q['question']] = q_ans
             # for textual question, add columns with counts of each value
             else:
                 # go over options and count answers with the option for each
@@ -464,14 +449,14 @@ class Heroku:
                     col_name = q['question'] + '-' + option.replace(' ', '_')
                     col_name = col_name.lower()
                     # add to mapping
-                    self.mapping[col_name] = count_option
+                    self.qs[col_name] = count_option
         # save to csv
         if self.save_csv:
             # save to csv
-            self.mapping.to_csv(uc.settings.output_dir + '/' +
-                                self.file_mapping_csv + '.csv')
+            self.qs.to_csv(uc.settings.output_dir + '/' +
+                           self.file_mapping_csv + '.csv')
         # return new mapping
-        return self.mapping
+        return self.qs
 
     def filter_data(self, df):
         """

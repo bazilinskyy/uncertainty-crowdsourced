@@ -1,11 +1,11 @@
-id,question,label_0,label_100,stimulus
-0,How <strong>certain</strong> are you that the colour that was shown is blue?,Absolutely not certain,Absolutely certain,/img/image_0.jpg
-1,How <strong>uncertain</strong> are you that the colour that was shown is blue?,Absolutely not uncertain,Absolutely uncertain,/img/image_0.jpg
-2,How <strong>certain</strong> are you that the vehicle that was shown is a white car?,Absolutely not certain,Absolutely certain,/img/image_1.jpg
-3,How <strong>uncertain</strong> are you that the vehicle that was shown is a white car?,Absolutely not uncertain,Absolutely uncertain,/img/image_1.jpg
-4,How <strong>certain</strong> are you that at least 4 people can fit in the car that was shown?,Absolutely not certain,Absolutely certain,/img/image_1.jpg
-5,How <strong>uncertain</strong> are you that at least 4 people can fit in the car that was shown?,Absolutely not uncertain,Absolutely uncertain,/img/image_1.jpg
-6,How <strong>certain</strong> are you that the picture that was shown is of an intersection with a zebra crossing (crosswalk)?,Absolutely not certain,Absolutely certain,/img/image_2.jpg
-7,How <strong>uncertain</strong> are you that the picture that was shown is of an intersection with a zebra crossing (crosswalk)?,Absolutely not uncertain,Absolutely uncertain,/img/image_2.jpg
-8,How <strong>certain</strong> are you that the picture that was shown is of an intersection?,Absolutely not certain,Absolutely certain,/img/image_3.jpg
-9,How <strong>uncertain</strong> are you that the picture that was shown is of an intersection?,Absolutely not uncertain,Absolutely uncertain,/img/image_3.jpg
+id,question,short_name,label_0,label_100,stimulus
+0,How <strong>certain</strong> are you that the colour that was shown is blue?,certain_blue,Absolutely not certain,Absolutely certain,/img/image_0.jpg
+1,How <strong>uncertain</strong> are you that the colour that was shown is blue?,uncertain_blue,Absolutely not uncertain,Absolutely uncertain,/img/image_0.jpg
+2,How <strong>certain</strong> are you that the vehicle that was shown is a white car?,certain_white,Absolutely not certain,Absolutely certain,/img/image_1.jpg
+3,How <strong>uncertain</strong> are you that the vehicle that was shown is a white car?,uncertain_white,Absolutely not uncertain,Absolutely uncertain,/img/image_1.jpg
+4,How <strong>certain</strong> are you that at least 4 people can fit in the car that was shown?,certain_people,Absolutely not certain,Absolutely certain,/img/image_1.jpg
+5,How <strong>uncertain</strong> are you that at least 4 people can fit in the car that was shown?,uncertain_people,Absolutely not uncertain,Absolutely uncertain,/img/image_1.jpg
+6,How <strong>certain</strong> are you that the picture that was shown is of an intersection with a zebra crossing (crosswalk)?,certain_zebra,Absolutely not certain,Absolutely certain,/img/image_2.jpg
+7,How <strong>uncertain</strong> are you that the picture that was shown is of an intersection with a zebra crossing (crosswalk)?,uncertain_zebra,Absolutely not uncertain,Absolutely uncertain,/img/image_2.jpg
+8,How <strong>certain</strong> are you that the picture that was shown is of an intersection?,certain_intersection,Absolutely not certain,Absolutely certain,/img/image_3.jpg
+9,How <strong>uncertain</strong> are you that the picture that was shown is of an intersection?,uncertain_intersection,Absolutely not uncertain,Absolutely uncertain,/img/image_3.jpg

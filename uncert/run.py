@@ -76,32 +76,11 @@ if __name__ == '__main__':
     if UPDATE_MAPPING:
         # read in mapping of stimuli
         mapping = heroku.read_mapping()
-        # post-trial questions to process
-        questions = [{'question': 'risky_slider',
-                      'type': 'num'},
-                     {'question': 'eye-contact',
-                      'type': 'str',
-                      'options': ['Yes',
-                                  'Yes but too late',
-                                  'No',
-                                  'I don\'t know']}]
-        # process post-trial questions and update mapping
-        mapping = heroku.process_stimulus_questions(questions)
-        mapping.rename(columns={'eye-contact-yes_but_too_late': 'EC-yes_but_too_late',  # noqa: E501
-                                'eye-contact-yes': 'EC-yes',
-                                'eye-contact-i_don\'t_know': 'EC-i_don\'t_know',  # noqa: E501
-                                'eye-contact-no': 'EC-no'},
-                       inplace=True)
-        # calculate mean of eye contact
-        mapping['EC-no-score'] = mapping['EC-no'] * 0
-        mapping['EC-yes_but_too_late-score'] = mapping['EC-yes_but_too_late'] * 0.25  # noqa: E501
-        mapping['EC-yes-score'] = mapping['EC-yes'] * 1
-        mapping['EC_score'] = mapping[['EC-yes-score',
-                                       'EC-yes_but_too_late-score',
-                                       'EC-no-score']].sum(axis=1)
-        mapping['EC_mean'] = mapping[['EC-yes-score',
-                                      'EC-yes_but_too_late-score',
-                                      'EC-no-score']].mean(axis=1)
+        # read in questions for stimuli
+        qs_videos = heroku.read_questions_videos()
+        qs_images = heroku.read_questions_images()
+        # process post-trial questions and return combined df for all stimuli
+        qs = heroku.process_stimulus_questions()
         # export to pickle
         uc.common.save_to_p(file_mapping,
                             mapping,
