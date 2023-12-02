@@ -26,8 +26,10 @@ class Appen:
     columns_mapping = {'_started_at': 'start',
                        '_created_at': 'end',
                        'about_how_many_kilometers_miles_did_you_drive_in_the_last_12_months': 'milage',  # noqa: E501
+                       'do_you_currently_have_a_valid_license_for_driving_a_car': 'license',  # noqa: E501
                        'at_which_age_did_you_obtain_your_first_license_for_driving_a_car': 'year_license',  # noqa: E501
                        'have_you_read_and_understood_the_above_instructions': 'instructions',  # noqa: E501
+                       'do_you_consent_to_participate_in_this_study_in_the_way_that_is_described_in_the_information_shown_above': 'consent',  # noqa: E501
                        'how_many_accidents_were_you_involved_in_when_driving_a_car_in_the_last_3_years_please_include_all_accidents_regardless_of_how_they_were_caused_how_slight_they_were_or_where_they_happened': 'accidents',  # noqa: E501
                        'becoming_angered_by_a_particular_type_of_driver_and_indicate_your_hostility_by_whatever_means_you_can': 'dbq1_anger',  # noqa: E501
                        'disregarding_the_speed_limit_on_a_motorway': 'dbq2_speed_motorway',  # noqa: E501
@@ -36,13 +38,17 @@ class Appen:
                        'racing_away_from_traffic_lights_with_the_intention_of_beating_the_driver_next_to_you': 'dbq5_traffic_lights',  # noqa: E501
                        'sounding_your_horn_to_indicate_your_annoyance_with_another_road_user': 'dbq6_horn',  # noqa: E501
                        'using_a_phone_in_your_hands_while_driving': 'dbq7_mobile',  # noqa: E501
-                       'if_you_answered_other_in_the_previous_question_please_decribe_the_place_where_you_located_now_below': 'place_other',  # noqa: E501
-                       'if_you_answered_other_in_the_previous_question_please_decribe_your_input_device_below': 'device_other',  # noqa: E501
+                       'doing_my_best_not_to_be_obstacle_for_other_drivers': 'dbq8_others',  # noqa: E501
+                       'if_you_answered_other_in_the_previous_question_please_describe_your_experiences_below': 'experiences_other',  # noqa: E501
+                       'if_you_answered_other_in_the_previous_question_please_describe_your_input_device_below': 'device_other',  # noqa: E501
                        'in_which_type_of_place_are_you_located_now': 'place',
                        'if_you_answered_other_in_the_previous_question_please_describe_the_place_where_you_are_located_now_below': 'place_other',  # noqa: E501
                        'in_which_year_do_you_think_that_most_cars_will_be_able_to_drive_fully_automatically_in_your_country_of_residence': 'year_ad',  # noqa: E501
                        'on_average_how_often_did_you_drive_a_vehicle_in_the_last_12_months': 'driving_freq',  # noqa: E501
                        'please_provide_any_suggestions_that_could_help_engineers_to_build_safe_and_enjoyable_automated_cars': 'suggestions_ad',  # noqa: E501
+                       'please_indicate_your_general_attitude_towards_fully_automated_cars': 'attitude_ad',  # noqa: E501
+                       'who_do_you_think_is_more_capable_of_conducting_drivingrelated_tasks': 'capability_ad',  # noqa: E501
+                       'which_options_best_describes_your_experience_with_automated_cars': 'experience_ad',  # noqa: E501
                        'type_the_code_that_you_received_at_the_end_of_the_experiment': 'worker_code',  # noqa: E501
                        'what_is_your_age': 'age',
                        'what_is_your_gender': 'gender',
@@ -51,6 +57,14 @@ class Appen:
                        'if_you_answered_other_in_the_previous_question_please_describe_your_input_device_below': 'device_other',  # noqa: E501
                        'as_a_driver_what_does_it_mean_to_you_when_a_pedestrian_makes_eye_contact_with_you': 'ec_driver',  # noqa: E501
                        'as_a_pedestrian_what_does_it_mean_to_you_when_a_driver_makes_eye_contact_with_you': 'ec_pedestrian',  # noqa: E501
+                       'during_new_experiences_i_often_experience_the_feeling_of_certainty': 'certainty_experiences',  # noqa: E501
+                       'during_new_experiences_i_often_experience_the_feeling_of_uncertainty': 'uncertainty_experiences',  # noqa: E501
+                       'i_often_experience_the_feeling_of_certainty_when_making_decisions': 'certainty_decisions',  # noqa: E501
+                       'i_often_experience_the_feeling_of_uncertainty_when_making_decisions': 'uncertainty_decisions',  # noqa: E501
+                       'i_often_have_feelings_of_certainty_about_myself': 'certainty_myself',  # noqa: E501
+                       'i_often_have_feelings_of_uncertainty_about_myself': 'uncertainty_myself',  # noqa: E501
+                       'in_my_daytoday_life_i_often_experience_the_feeling_of_certainty': 'certainty_day',  # noqa: E501
+                       'in_my_daytoday_life_i_often_experience_the_feeling_of_uncertainty': 'uncertainty_day',  # noqa: E501
                        'how_do_you_feel_about_the_following_communication_between_driver_and_pedestrian_is_important_for_road_safety': 'communication_importance'}  # noqa: E501
 
     def __init__(self,
@@ -103,6 +117,7 @@ class Appen:
             # replace linebreaks
             df = df.replace('\n', '', regex=True)
             # rename columns to readable names
+            print(df.columns)
             df.rename(columns=self.columns_mapping, inplace=True)
             # convert to time
             df['start'] = pd.to_datetime(df['start'])
@@ -148,35 +163,39 @@ class Appen:
         df_1 = df.loc[df['instructions'] == 'no']
         logger.info('Filter-a1. People who did not read instructions: {}',
                     df_1.shape[0])
-        # people that are underages
-        df_2 = df.loc[df['age'] < 18]
-        logger.info('Filter-a2. People that are under 18 years of age: {}',
+        # people that did not give consent
+        df_2 = df.loc[df['consent'] == 'no']
+        logger.info('Filter-a2. People who did not give consent: {}',
                     df_2.shape[0])
+        # people that are underages
+        df_3 = df.loc[df['age'] < 18]
+        logger.info('Filter-a2. People that are under 18 years of age: {}',
+                    df_3.shape[0])
         # People that took less than uc.common.get_configs('allowed_min_time')
         # minutes to complete the study
-        df_3 = df.loc[df['time'] < uc.common.get_configs('allowed_min_time')]
+        df_4 = df.loc[df['time'] < uc.common.get_configs('allowed_min_time')]
         logger.info('Filter-a3. People who completed the study in under ' +
                     str(uc.common.get_configs('allowed_min_time')) +
                     ' sec: {}',
-                    df_3.shape[0])
+                    df_4.shape[0])
         # people that completed the study from the same IP address
-        df_4 = df[df['ip'].duplicated(keep='first')]
+        df_5 = df[df['ip'].duplicated(keep='first')]
         logger.info('Filter-a4. People who completed the study from the ' +
                     'same IP: {}',
-                    df_4.shape[0])
-        # people that entered the same worker_code more than once
-        df_5 = df[df['worker_code'].duplicated(keep='first')]
-        logger.info('Filter-a5. People who used the same worker_code: {}',
                     df_5.shape[0])
+        # people that entered the same worker_code more than once
+        df_6 = df[df['worker_code'].duplicated(keep='first')]
+        logger.info('Filter-a5. People who used the same worker_code: {}',
+                    df_6.shape[0])
         # save to csv
         if self.save_csv:
-            df_5 = df_5.reset_index()
-            df_5.to_csv(uc.settings.output_dir + '/' + self.file_cheaters_csv)
+            df_6 = df_6.reset_index()
+            df_6.to_csv(uc.settings.output_dir + '/' + self.file_cheaters_csv)
             logger.info('Filter-a5. Saved list of cheaters to csv file {}',
                         self.file_cheaters_csv)
         # concatenate dfs with filtered data
         old_size = df.shape[0]
-        df_filtered = pd.concat([df_1, df_2, df_3, df_4, df_5])
+        df_filtered = pd.concat([df_1, df_2, df_3, df_4, df_5, df_5])
         # check if there are people to filter
         if not df_filtered.empty:
             # drop rows with filtered data
