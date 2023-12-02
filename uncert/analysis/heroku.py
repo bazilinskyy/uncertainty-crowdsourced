@@ -7,7 +7,6 @@ from tqdm import tqdm
 import re
 import ast
 import warnings
-from statistics import mean
 
 import uncert as uc
 
@@ -17,7 +16,6 @@ pd.options.mode.chained_assignment = None  # default='warn'
 logger = uc.CustomLogger(__name__)  # use custom logger
 
 
-# todo: parse browser interactions
 class Heroku:
     # pandas dataframe with extracted data
     heroku_data = pd.DataFrame()
@@ -148,13 +146,7 @@ class Heroku:
                                 # find short name
                                 short_name = self.mapping.loc[self.mapping['question'] == data_cell['stimulus'], 'short_name'].iloc[0]  # noqa: E501
                                 # check if values were recorded previously
-                                if stim_name + '-' + short_name not in dict_row.keys():  # noqa: E501
-                                    # first value
-                                    dict_row[stim_name + '-' + short_name] = [data_cell['response']]  # noqa: E501
-                                else:
-                                    # todo: check parsing of repeated stimuli. seemingly, too few detected  # noqa: E501
-                                    # previous values found
-                                    dict_row[stim_name + '-' + short_name].extend([data_cell['response']])  # noqa: E501
+                                dict_row[stim_name + '-' + short_name] = data_cell['response']  # noqa: E501
                                 # print(dict_row[stim_name + '-' + short_name])
                         # extract name of stimulus after last slash
                         # list of stimuli. use 1st
@@ -269,8 +261,8 @@ class Heroku:
                             data_dict[dict_row['worker_code']][key + '-0'] = value  # noqa: E501
                         # update old value
                         else:
-                            # traverse repetition ids untill get new repetition
-                            for rep in range(0, self.num_repeat):
+                            # traverse repetition ids until get new repetition
+                            for rep in range(0, 2):
                                 # build new key with id of repetition
                                 new_key = key + '-' + str(rep)
                                 if new_key not in data_dict[dict_row['worker_code']].keys():  # noqa: E501
@@ -308,7 +300,6 @@ class Heroku:
             uc.common.save_to_p(self.file_p, df, 'heroku data')
         # save to csv
         if self.save_csv:
-            # todo: check whith index=False is needed here
             df.to_csv(uc.settings.output_dir + '/' + self.file_data_csv +
                       '.csv', index=False)
             logger.info('Saved heroku data to csv file {}',
@@ -355,52 +346,34 @@ class Heroku:
         means = []
         stds = []
         medians = []
-        # loop through all stimuli
+        # copy heroku data to temp df
         df = self.heroku_data
-        # df.replace(r'\s+', np.nan, regex=True).replace('', np.nan)
-        # result.fillna(0, inplace=True)
-        # df = df.replace('', np.nan).fillna(0)
-        # df.loc[df.isnull()] = df.loc[df.isnull()].apply(lambda x: [])
-        # df.replace(0.0, np.nan, inplace=True)
+        # replace empty cells with nans
         df.replace(r'^\s*$', np.nan, regex=True)
+        # loop through all stimuli
         for index, row in tqdm(self.mapping.iterrows(),
                                total=self.mapping.shape[0]):
-            # calculate mean answers from all repetitions for numeric questions
-            # self.qs_videos['question'].str.contains(data_cell['stimulus']).any()
-            # video_0-driver_uncertain-0
             # extract stimulus name
             stim_no_path = row['stimulus'].rsplit('/', 1)[-1]  # noqa: E501
             stim_no_path = os.path.splitext(stim_no_path)[0]
-            # build name in heroku_data
-            name = stim_no_path + '-' + row['short_name'] + '-0'
-            # print(name)
-            # calculate mean values for each pp
+            # build names of 2 repetitions in heroku_data
+            name_0 = stim_no_path + '-' + row['short_name'] + '-0'
+            name_1 = stim_no_path + '-' + row['short_name'] + '-1'
+            # store mean, std, median values
             mean_values = []
             std_values = []
             medians_values = []
+            # calculate mean answers from all repetitions for numeric questions
             for index, row in df.iterrows():
-                # print(row[name])
                 with warnings.catch_warnings():
                     warnings.simplefilter("ignore", category=RuntimeWarning)
-                    mean_values.append(np.nanmean(row[name]))
-                    std_values.append(np.nanstd(row[name]))
-                    medians_values.append(np.nanmedian(row[name]))
-            # print(df[name])
-            # print(np.mean(df[name][0]))
-            # print(np.mean(df[name][107]))
-            # print(mean_values)
-            # print(np.mean(mean_values))
-            # print(np.nanmean(mean_values))
-            # # convert to float
-            # df[name] = [list(map(float, sublist))
-            #             for sublist in df[name]]
-            # answers[index] = np.mean(df[name], axis=0)
+                    mean_values.append(np.nanmean([row[name_0], row[name_1]]))
+                    std_values.append(np.nanstd([row[name_0], row[name_1]]))
+                    medians_values.append(np.nanmedian([row[name_0], row[name_1]]))  # noqa: E501
+            # calculate values for all pp
             means.append(np.nanmean(mean_values))
             stds.append(np.nanstd(std_values))
             medians.append(np.nanmedian(medians_values))
-            # answers[index] = np.nanmean([np.nanmean(j)
-            #                              for j in df[name]])
-            # answers[index] = *map(mean, zip(*df[name]))
         # save values for all stimuli
         self.mapping['mean'] = means
         self.mapping['std'] = stds

@@ -7,7 +7,7 @@ import uncert as uc
 uc.logs(show_level='info', show_color=True)
 logger = uc.CustomLogger(__name__)  # use custom logger
 
-# Const
+# const
 SAVE_P = True  # save pickle files with data
 LOAD_P = False  # load pickle files with data
 SAVE_CSV = True  # load csv files with data
@@ -82,7 +82,7 @@ if __name__ == '__main__':
         # export to pickle
         uc.common.save_to_p(file_mapping,
                             mapping,
-                            'mapping with keypress data')
+                            'mapping of stimuli')
     else:
         mapping = uc.common.load_from_p(file_mapping,
                                         'mapping of stimuli')
@@ -90,207 +90,113 @@ if __name__ == '__main__':
         # Output
         analysis = uc.analysis.Analysis()
         logger.info('Creating figures.')
-        # # all keypresses with confidence interval
-        # analysis.plot_kp(mapping, conf_interval=0.95)
-        # # keypresses of an individual stimulus
-        # analysis.plot_kp_video(mapping, 'video_0', conf_interval=0.95)
-        # # keypresses of all videos individually
-        # analysis.plot_kp_videos(mapping)
-        # # 1 var, all values
-        # analysis.plot_kp_variable(mapping, 'traffic_rules')
-        # # 1 var, certain values
-        # analysis.plot_kp_variable(mapping,
-        #                           'traffic_rules',
-        #                           ['ped_crossing', 'stop_sign'])
-        # # plot of multiple combined AND variables
-        # analysis.plot_video_data(mapping, 'video_5',
-        #                          ['vehicle_velocity_GPS', 'dist_to_ped'],
-        #                          yaxis_title='Distance & velocity data',
-        #                          conf_interval=0.95)
-        # analysis.plot_video_data(mapping, 'video_50', ['vehicle_velocity_GPS', 'dist_to_ped'],  # noqa: E501
-        #                          yaxis_title='Distance & velocity data', conf_interval=0.95)  # noqa: E501
-        # analysis.plot_kp_variables_and(mapping,
-        #                                plot_names=['traffic rules',
-        #                                            'no traffic rules'],
-        #                                variables_list=[[{'variable': 'traffic_rules',  # noqa: E501
-        #                                                  'value': 'stop_sign'},        # noqa: E501
-        #                                                 {'variable': 'traffic_rules',  # noqa: E501
-        #                                                  'value': 'traffic_lights'},   # noqa: E501
-        #                                                 {'variable': 'traffic_rules',  # noqa: E501
-        #                                                  'value': 'ped_crossing'}],    # noqa: E501
-        #                                                [{'variable': 'traffic_rules',  # noqa: E501
-        #                                                  'value': 'none'}]])
-        # # plot of separate variables
-        # analysis.plot_kp_variables_or(mapping,
-        #                               variables=[{'variable': 'cross_look',
-        #                                           'value': 'Crossing_Looking'},     # noqa: E501
-        #                                          {'variable': 'cross_look',
-        #                                           'value': 'notCrossing_Looking'},  # noqa: E501
-        #                                          {'variable': 'cross_look',
-        #                                           'value': 'Crossing_notLooking'},  # noqa: E501
-        #                                          {'variable': 'cross_look',
-        #                                           'value': 'nonspecific'}])
 
-        # # columns to drop in correlation matrix and scatter matrix
-        # columns_drop = ['id_segment', 'set', 'video', 'extra',
-        #                 'alternative_frame', 'alternative_frame.1',
-        #                 'video_length', 'min_dur', 'max_dur', 'start',
-        #                 'danger_b', 'danger-p', 'look_moment', 'cross_moment',  # noqa: E501
-        #                 'time_before_interaction', 'gesture', 'kp',
-        #                 'look_frame_ms', 'cross_frame_ms', 'interaction',
-        #                 'vehicle_velocity_OBD', 'vehicle_velocity_GPS',
-        #                 'EC-yes-score', 'EC-no-score', 'dist_to_ped',
-        #                 'EC-yes_but_too_late-score', 'object_count',
-        #                 'object_surface', 'object_entities', 'person_count',
-        #                 'car_count']
-        # # set nan to -1
-        # df = mapping[(mapping['dist_to_ped_at_7.0'] != 'no data found')]
-        # df = df.fillna(-1)
-        # # create correlation matrix
-        # # analysis.corr_matrix(df,
-        # #                      columns_drop=columns_drop,
-        # #                      save_file=True)
-        # # create correlation matrix
-        # analysis.scatter_matrix(df,
-        #                         columns_drop=columns_drop,
-        #                         color='traffic_rules',
-        #                         symbol='traffic_rules',
-        #                         diagonal_visible=False,
-        #                         save_file=True)
-        # # stimulus duration
-        # analysis.hist(heroku_data,
-        #               x=heroku_data.columns[heroku_data.columns.to_series().suc.contains('-dur')],  # noqa: E501
-        #               nbins=100,
-        #               pretty_text=True,
-        #               save_file=True)
-        # # browser window dimensions
-        # analysis.scatter(heroku_data,
-        #                  x='window_width',
-        #                  y='window_height',
-        #                  color='browser_name',
-        #                  pretty_text=True,
-        #                  save_file=True)
-        # analysis.heatmap(heroku_data,
-        #                  x='window_width',
-        #                  y='window_height',
-        #                  pretty_text=True,
-        #                  save_file=True)
-        # # time of participation
-        # df = appen_data
-        # df['country'] = df['country'].fillna('NaN')
-        # df['time'] = df['time'] / 60.0  # convert to min
-        # analysis.hist(df,
-        #               x=['time'],
-        #               color='country',
-        #               pretty_text=True,
-        #               save_file=True)
-        # # eye contact of driver and pedestrian
-        # analysis.scatter(appen_data,
-        #                  x='ec_driver',
-        #                  y='ec_pedestrian',
-        #                  color='year_license',
-        #                  pretty_text=True,
-        #                  save_file=True)
-        # # barchart of communication data
-        # post_qs = ['Importance of eye contact to pedestrian',
-        #            'Importance of hand gestures to pedestrian',
-        #            'Importance of eye contact to driver',
-        #            'Importance of light signaling to driver',
-        #            'Importance of waiting for car slow down']
-        # analysis.communication(all_data,
-        #                        pre_q='communication_importance',
-        #                        post_qs=post_qs,
-        #                        save_file=True)
-        # # histogram for driving frequency
-        # analysis.hist(appen_data,
-        #               x=['driving_freq'],
-        #               pretty_text=True,
-        #               save_file=True)
-        # # histogram for the year of license
-        # analysis.hist(appen_data,
-        #               x=['year_license'],
-        #               pretty_text=True,
-        #               save_file=True)
-        # # histogram for the mode of transportation
-        # analysis.hist(appen_data,
-        #               x=['mode_transportation'],
-        #               pretty_text=True,
-        #               save_file=True)
-        # # histogram for the input device
-        # analysis.hist(appen_data,
-        #               x=['device'],
-        #               pretty_text=True,
-        #               save_file=True)
-        # # histogram for milage
-        # analysis.hist(appen_data,
-        #               x=['milage'],
-        #               pretty_text=True,
-        #               save_file=True)
-        # # histogram for the place of participant
-        # analysis.hist(appen_data,
-        #               x=['place'],
-        #               pretty_text=True,
-        #               save_file=True)
-        # # histogram for the eye contact of driver
-        # analysis.hist(appen_data,
-        #               x=['ec_driver'],
-        #               pretty_text=True,
-        #               save_file=True)
-        # # histogram for the eye contact of pedestrian
-        # analysis.hist(appen_data,
-        #               x=['ec_pedestrian'],
-        #               pretty_text=True,
-        #               save_file=True)
-        # # grouped barchart of DBQ data
-        # analysis.hist(appen_data,
-        #               x=['dbq1_anger',
-        #                  'dbq2_speed_motorway',
-        #                  'dbq3_speed_residential',
-        #                  'dbq4_headway',
-        #                  'dbq5_traffic_lights',
-        #                  'dbq6_horn',
-        #                  'dbq7_mobile'],
-        #               marginal='violin',
-        #               pretty_text=True,
-        #               save_file=True)
-        # # post-trial questions. level of danger
-        # analysis.bar(mapping,
-        #              y=['looking_fails'],
-        #              show_all_xticks=True,
-        #              xaxis_title='Video ID',
-        #              yaxis_title='% participants that wrongly' +
-        #                          ' indicated looking behaviour',
-        #              save_file=True)
-        # # post-trial questions. bar chart for eye contact
-        # analysis.bar(mapping,
-        #              y=['risky_slider'],
-        #              show_all_xticks=True,
-        #              xaxis_title='Video ID',
-        #              yaxis_title='Risk score',
-        #              save_file=True)
-        # # post-trial questions. bar chart for eye contact
-        # analysis.bar(mapping,
-        #              y=['EC-yes',
-        #                 'EC-yes_but_too_late',
-        #                 'EC-no',
-        #                 'EC-i_don\'t_know'],
-        #              stacked=True,
-        #              show_all_xticks=True,
-        #              xaxis_title='Video ID',
-        #              yaxis_title='Eye contact score ' +
-        #                          '(No=0, Yes but too late=0.25, Yes=1)',
-        #              pretty_text=True,
-        #              save_file=True)
-        # # post-trial questions. hist for eye contact
-        # analysis.bar(mapping,
-        #              y=['EC_score'],
-        #              stacked=True,
-        #              show_all_xticks=True,
-        #              xaxis_title='Video ID',
-        #              yaxis_title='Eye contact score ' +
-        #                          '(No=0, Yes but too late=0.25, Yes=1)',
-        #              pretty_text=True,
-        #              save_file=True)
+        # columns to drop in correlation matrix and scatter matrix
+        columns_drop = ['short_name', 'id', 'question', 'short_name',
+                        'label_0', 'label_100', 'stimulus', 'video_length',
+                        'description', 'comments', 'partner_video']
+        # copy mapping to a temp df
+        df = mapping
+        # convert type of vehicle to num
+        df['vehicle_type'] = df['vehicle_type'].map({'AV': 0, 'MVD': 1})
+        # set nan to -1
+        df = df.fillna(-1)
+        # create correlation matrix
+        analysis.corr_matrix(df,
+                             columns_drop=columns_drop,
+                             save_file=True)
+        # create correlation matrix
+        analysis.scatter_matrix(df,
+                                columns_drop=columns_drop,
+                                color='vehicle_type',
+                                symbol='vehicle_type',
+                                diagonal_visible=False,
+                                save_file=True)
+        # stimulus duration
+        analysis.hist(heroku_data,
+                      x=heroku_data.columns[heroku_data.columns.to_series().str.contains('-dur')],  # noqa: E501
+                      nbins=100,
+                      pretty_text=True,
+                      save_file=True)
+        # browser window dimensions
+        analysis.scatter(heroku_data,
+                         x='window_width',
+                         y='window_height',
+                         color='browser_name',
+                         pretty_text=True,
+                         save_file=True)
+        # time of participation
+        df = appen_data
+        df['country'] = df['country'].fillna('NaN')
+        df['time'] = df['time'] / 60.0  # convert to min
+        analysis.hist(df,
+                      x=['time'],
+                      color='country',
+                      pretty_text=True,
+                      save_file=True)
+        # questions about AD
+        analysis.scatter(appen_data,
+                         x='capability_ad',
+                         y='experience_ad',
+                         color='year_license',
+                         pretty_text=True,
+                         save_file=True)
+        # questions about AD
+        analysis.scatter(appen_data,
+                         x='attitude_ad',
+                         y='experience_ad',
+                         color='age',
+                         pretty_text=True,
+                         save_file=True)
+        # histogram for driving frequency
+        analysis.hist(appen_data,
+                      x=['driving_freq'],
+                      pretty_text=True,
+                      save_file=True)
+        # histogram for the year of license
+        analysis.hist(appen_data,
+                      x=['year_license'],
+                      pretty_text=True,
+                      save_file=True)
+        # histogram for the mode of transportation
+        analysis.hist(appen_data,
+                      x=['mode_transportation'],
+                      pretty_text=True,
+                      save_file=True)
+        # histogram for the input device
+        analysis.hist(appen_data,
+                      x=['device'],
+                      pretty_text=True,
+                      save_file=True)
+        # histogram for mileage
+        analysis.hist(appen_data,
+                      x=['milage'],
+                      pretty_text=True,
+                      save_file=True)
+        # histogram for the place of participant
+        analysis.hist(appen_data,
+                      x=['place'],
+                      pretty_text=True,
+                      save_file=True)
+        # grouped barchart of DBQ data
+        analysis.hist(appen_data,
+                      x=['dbq1_anger',
+                         'dbq2_speed_motorway',
+                         'dbq3_speed_residential',
+                         'dbq4_headway',
+                         'dbq5_traffic_lights',
+                         'dbq6_horn',
+                         'dbq7_mobile'],
+                      marginal='violin',
+                      pretty_text=True,
+                      save_file=True)
+        # post-trial questions
+        analysis.bar(mapping,
+                     y=['mean'],
+                     show_all_xticks=True,
+                     xaxis_title='Stimulus',
+                     yaxis_title='Mean',
+                     save_file=True)
         # # scatter plot of risk / eye contact without traffic rules involved
         # analysis.scatter(mapping[(mapping['cross_look'] != 'notCrossing_Looking') &  # noqa: E501
         #                          (mapping['cross_look'] != 'notCrossing_notLooking') &  # noqa: E501
