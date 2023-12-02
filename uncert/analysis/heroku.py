@@ -7,6 +7,7 @@ from tqdm import tqdm
 import re
 import ast
 import warnings
+from statistics import mean
 
 import uncert as uc
 
@@ -20,14 +21,12 @@ logger = uc.CustomLogger(__name__)  # use custom logger
 class Heroku:
     # pandas dataframe with extracted data
     heroku_data = pd.DataFrame()
-    # pandas dataframe with mapping
-    mapping = pd.read_csv(uc.common.get_configs('mapping_stimuli'))
     # pandas dataframe with questions for videos
     qs_videos = pd.read_csv(uc.common.get_configs('questions_videos'))
     # pandas dataframe with questions for images
     qs_images = pd.read_csv(uc.common.get_configs('questions_images'))
-    # pandas dataframe with combined questions for videos and images
-    qs = pd.read_csv(uc.common.get_configs('questions_images'))
+    # pandas dataframe with combined information for videos and images
+    mapping = None
     # number of video stimuli
     num_stimuli_video = uc.common.get_configs('num_stimuli_video')
     # number of image stimuli
@@ -35,7 +34,6 @@ class Heroku:
     # number of repeated stimuli
     num_stimuli_repeat = uc.common.get_configs('num_stimuli_repeat')
     # total number of stimuli
-    num_stimuli = num_stimuli_video + num_stimuli_img + num_stimuli_repeat
     # number of repeats for each stimulus
     num_repeat = uc.common.get_configs('num_repeat')
     # pickle file for saving data
@@ -43,7 +41,7 @@ class Heroku:
     # csv file for saving data
     file_data_csv = 'heroku_data'
     # csv file for mapping of stimuli
-    file_mapping_csv = 'questions'
+    file_mapping_csv = 'mapping'
     # keys with meta information
     meta_keys = ['worker_code',
                  'browser_user_agent',
@@ -73,6 +71,9 @@ class Heroku:
         self.load_p = load_p
         # save data as csv file
         self.save_csv = save_csv
+        # merge questions for videos and images
+        self.mapping = pd.concat([self.qs_videos, self.qs_images],
+                                 ignore_index=True)
 
     def set_data(self, heroku_data):
         """Setter for the data object.
@@ -142,18 +143,16 @@ class Heroku:
                         # check if question detected
                         if not isinstance(data_cell['stimulus'], list):
                             warnings.filterwarnings("ignore", 'This pattern is interpreted as a regular expression')  # noqa: E501
-                            if ((self.qs_videos['question'].str.contains(data_cell['stimulus']).any() or  # noqa: E501
-                                 self.qs_images['question'].str.contains(data_cell['stimulus']).any()) and len(stim_name) > 2):  # noqa: E501
+                            if (self.mapping['question'].str.contains(data_cell['stimulus']).any() and  # noqa: E501
+                               len(stim_name) > 2):  # noqa: E501
                                 # find short name
-                                try:
-                                    short_name = self.qs_videos.loc[self.qs_videos['question'] == data_cell['stimulus'], 'short_name'].iloc[0]  # noqa: E501
-                                except IndexError:
-                                    short_name = self.qs_images.loc[self.qs_images['question'] == data_cell['stimulus'], 'short_name'].iloc[0]  # noqa: E501
+                                short_name = self.mapping.loc[self.mapping['question'] == data_cell['stimulus'], 'short_name'].iloc[0]  # noqa: E501
                                 # check if values were recorded previously
                                 if stim_name + '-' + short_name not in dict_row.keys():  # noqa: E501
                                     # first value
                                     dict_row[stim_name + '-' + short_name] = [data_cell['response']]  # noqa: E501
                                 else:
+                                    # todo: check parsing of repeated stimuli. seemingly, too few detected  # noqa: E501
                                     # previous values found
                                     dict_row[stim_name + '-' + short_name].extend([data_cell['response']])  # noqa: E501
                                 # print(dict_row[stim_name + '-' + short_name])
@@ -319,43 +318,30 @@ class Heroku:
         # return df with data
         return df
 
-    def read_mapping(self):
-        """
-        Read mapping.
-        """
-        # read mapping from a csv file
-        df = pd.read_csv(uc.common.get_configs('mapping_stimuli'))
-        # set index as stimulus_id
-        df.set_index('video_id', inplace=True)
-        # update attribute
-        self.mapping = df
-        # return mapping as a dataframe
-        return df
-
     def read_questions_videos(self):
         """
         Read questions for videos.
         """
-        # read mapping from a csv file
+        # read information from a csv file
         df = pd.read_csv(uc.common.get_configs('questions_videos'))
         # set index as stimulus_id
         df.set_index('id', inplace=True)
         # update attribute
         self.qs_videos = df
-        # return mapping as a dataframe
+        # return information as a dataframe
         return df
 
     def read_questions_images(self):
         """
         Read questions for images.
         """
-        # read mapping from a csv file
+        # read information from a csv file
         df = pd.read_csv(uc.common.get_configs('questions_images'))
         # set index as stimulus_id
         df.set_index('id', inplace=True)
         # update attribute
         self.qs_images = df
-        # return mapping as a dataframe
+        # return information as a dataframe
         return df
 
     def process_stimulus_questions(self):
@@ -365,98 +351,67 @@ class Heroku:
             dataframe: combined dataframe for all questions.
         """
         logger.info('Processing post-stimulus questions')
-        # array in which arrays of video_as data is stored
-        mapping_as = []
+        # arrays for storing values for each stimulus
+        means = []
+        stds = []
+        medians = []
         # loop through all stimuli
-        for num in tqdm(range(self.num_stimuli)):
-            # calculate length of of array with answers
-            length = 0
-            for q in questions:
-                # 1 column required for numeric data
-                # numberic answer, create 1 column to store mean value
-                if q['type'] == 'num':
-                    length = length + 1
-                # strings as answers, create columns to store counts
-                elif q['type'] == 'str':
-                    length = length + len(q['options'])
-                else:
-                    logger.error('Wrong type of data {} in question {}' +
-                                 'provided.', q['type'], q['question'])
-                    return -1
-            # array in which data of a single stimulus is stored
-            answers = [[[] for i in range(self.heroku_data.shape[0])]
-                       for i in range(len(questions))]
-            # for number of repetitions in survey, add extra number
-            for rep in range(self.num_repeat):
-                # add suffix with repetition ID
-                video_as = 'video_' + str(num) + '-as-' + str(rep)
-                video_order = 'video_' + str(num) + '-qs-' + str(rep)
-                # loop over columns
-                for col_name, col_data in self.heroku_data.items():
-                    # when col_name equals video, then check
-                    if col_name == video_as:
-                        # loop over rows in column
-                        for pp, row in enumerate(col_data):
-                            # filter out empty values
-                            if type(row) == list:
-                                order = self.heroku_data.iloc[pp][video_order]  # noqa: E501
-                                # check if injection question is present
-                                if 'injection' in order:
-                                    # delete injection
-                                    del row[order.index('injection')]
-                                    del order[order.index('injection')]
-                                # loop through questions
-                                for i, q in enumerate(questions):
-                                    # extract answer
-                                    ans = row[order.index(q['question'])]
-                                    # store answer from repetition
-                                    answers[i][pp].append(ans)
+        df = self.heroku_data
+        # df.replace(r'\s+', np.nan, regex=True).replace('', np.nan)
+        # result.fillna(0, inplace=True)
+        # df = df.replace('', np.nan).fillna(0)
+        # df.loc[df.isnull()] = df.loc[df.isnull()].apply(lambda x: [])
+        # df.replace(0.0, np.nan, inplace=True)
+        df.replace(r'^\s*$', np.nan, regex=True)
+        for index, row in tqdm(self.mapping.iterrows(),
+                               total=self.mapping.shape[0]):
             # calculate mean answers from all repetitions for numeric questions
-            for i, q in enumerate(questions):
-                if q['type'] == 'num' and answers[i]:
-                    # convert to float
-                    answers[i] = [list(map(float, sublist))
-                                  for sublist in answers[i]]
-                    # calculate mean of mean of responses of each participant
-                    with warnings.catch_warnings():
-                        warnings.simplefilter('ignore',
-                                              category=RuntimeWarning)
-                        answers[i] = np.nanmean([np.nanmean(j)
-                                                 for j in answers[i]])
-            # save question data in array
-            mapping_as.append(answers)
-        # add column with data to current mapping file
-        for i, q in enumerate(questions):
-            # extract answers for the given question
-            q_ans = [item[i] for item in mapping_as]
-            # for numeric question, add column with mean values
-            if q['type'] == 'num':
-                self.qs[q['question']] = q_ans
-            # for textual question, add columns with counts of each value
-            else:
-                # go over options and count answers with the option for each
-                # stimulus
-                for option in q['options']:
-                    # store counts in list
-                    count_option = []
-                    # go over each answer
-                    for ans in q_ans:
-                        # flatten list of answers
-                        ans = [item for sublist in ans for item in sublist]
-                        # add count for answers for the given option
-                        count_option.append(ans.count(option))
-                    # build name of column
-                    col_name = q['question'] + '-' + option.replace(' ', '_')
-                    col_name = col_name.lower()
-                    # add to mapping
-                    self.qs[col_name] = count_option
+            # self.qs_videos['question'].str.contains(data_cell['stimulus']).any()
+            # video_0-driver_uncertain-0
+            # extract stimulus name
+            stim_no_path = row['stimulus'].rsplit('/', 1)[-1]  # noqa: E501
+            stim_no_path = os.path.splitext(stim_no_path)[0]
+            # build name in heroku_data
+            name = stim_no_path + '-' + row['short_name'] + '-0'
+            # print(name)
+            # calculate mean values for each pp
+            mean_values = []
+            std_values = []
+            medians_values = []
+            for index, row in df.iterrows():
+                # print(row[name])
+                with warnings.catch_warnings():
+                    warnings.simplefilter("ignore", category=RuntimeWarning)
+                    mean_values.append(np.nanmean(row[name]))
+                    std_values.append(np.nanstd(row[name]))
+                    medians_values.append(np.nanmedian(row[name]))
+            # print(df[name])
+            # print(np.mean(df[name][0]))
+            # print(np.mean(df[name][107]))
+            # print(mean_values)
+            # print(np.mean(mean_values))
+            # print(np.nanmean(mean_values))
+            # # convert to float
+            # df[name] = [list(map(float, sublist))
+            #             for sublist in df[name]]
+            # answers[index] = np.mean(df[name], axis=0)
+            means.append(np.nanmean(mean_values))
+            stds.append(np.nanstd(std_values))
+            medians.append(np.nanmedian(medians_values))
+            # answers[index] = np.nanmean([np.nanmean(j)
+            #                              for j in df[name]])
+            # answers[index] = *map(mean, zip(*df[name]))
+        # save values for all stimuli
+        self.mapping['mean'] = means
+        self.mapping['std'] = stds
+        self.mapping['median'] = medians
         # save to csv
         if self.save_csv:
             # save to csv
-            self.qs.to_csv(uc.settings.output_dir + '/' +
-                           self.file_mapping_csv + '.csv')
+            self.mapping.to_csv(uc.settings.output_dir + '/' +
+                                self.file_mapping_csv + '.csv')
         # return new mapping
-        return self.qs
+        return self.mapping
 
     def filter_data(self, df):
         """

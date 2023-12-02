@@ -15,7 +15,7 @@ FILTER_DATA = True  # filter Appen and heroku data
 CLEAN_DATA = True  # clean Appen data
 REJECT_CHEATERS = False  # reject cheaters on Appen
 UPDATE_MAPPING = True  # update mapping with keypress data
-SHOW_OUTPUT = False  # should figures be plotted
+SHOW_OUTPUT = True  # should figures be plotted
 
 # for debugging, skip processing
 # SAVE_P = False  # save pickle files with data
@@ -74,13 +74,11 @@ if __name__ == '__main__':
     countries_data = appen.process_countries()
     # update mapping with keypress data
     if UPDATE_MAPPING:
-        # read in mapping of stimuli
-        mapping = heroku.read_mapping()
         # read in questions for stimuli
         qs_videos = heroku.read_questions_videos()
         qs_images = heroku.read_questions_images()
         # process post-trial questions and return combined df for all stimuli
-        qs = heroku.process_stimulus_questions()
+        mapping = heroku.process_stimulus_questions()
         # export to pickle
         uc.common.save_to_p(file_mapping,
                             mapping,
