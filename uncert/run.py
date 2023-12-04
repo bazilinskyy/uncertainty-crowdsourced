@@ -20,7 +20,7 @@ logger = uc.CustomLogger(__name__)  # use custom logger
 # for debugging, skip processing
 SAVE_P = False  # save pickle files with data
 LOAD_P = True  # load pickle files with data
-SAVE_CSV = False  # load csv files with data
+SAVE_CSV = True  # load csv files with data
 FILTER_DATA = False  # filter Appen and heroku data
 CLEAN_DATA = False  # clean Appen data
 REJECT_CHEATERS = False  # reject cheaters on Appen
