@@ -1,6 +1,7 @@
 # by Pavlo Bazilinskyy <pavlo.bazilinskyy@gmail.com>
 import pandas as pd
 import numpy as np
+import os
 import datetime as dt
 from collections import Counter
 from pycountry_convert import country_alpha2_to_country_name, country_name_to_country_alpha3  # noqa: E501
@@ -143,7 +144,7 @@ class Appen:
             uc.common.save_to_p(self.file_p, df, 'appen data')
         # save to csv
         if self.save_csv:
-            df.to_csv(uc.settings.output_dir + '/' + self.file_csv)
+            df.to_csv(os.path.join(uc.settings.output_dir, self.file_csv))
             logger.info('Saved appen data to csv file {}', self.file_csv)
         # assign to attribute
         self.appen_data = df
@@ -193,7 +194,8 @@ class Appen:
         # save to csv
         if self.save_csv:
             df_6 = df_6.reset_index()
-            df_6.to_csv(uc.settings.output_dir + '/' + self.file_cheaters_csv)
+            df_6.to_csv(os.path.join(uc.settings.output_dir,
+                        self.file_cheaters_csv))
             logger.info('Filter-a6. Saved list of cheaters to csv file {}',
                         self.file_cheaters_csv)
         # people with nan for worker_id
@@ -385,8 +387,8 @@ class Appen:
         self.countries_data = df_country
         # save to csv
         if self.save_csv:
-            df_country.to_csv(uc.settings.output_dir + '/'
-                              + self.file_country_csv)
+            df_country.to_csv(os.path.join(uc.settings.output_dir,
+                              self.file_country_csv))
             logger.info('Saved country data to csv file {}', self.file_csv)
         # return df with data
         return df_country
