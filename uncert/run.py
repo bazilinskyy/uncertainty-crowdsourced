@@ -9,7 +9,7 @@ logger = uc.CustomLogger(__name__)  # use custom logger
 
 # const
 # SAVE_P = True  # save pickle files with data
-# LOAD_P = True  # load pickle files with data
+# LOAD_P = False  # load pickle files with data
 # SAVE_CSV = True  # load csv files with data
 # FILTER_DATA = True  # filter Appen and heroku data
 # CLEAN_DATA = True  # clean Appen data
