@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 import matplotlib._pylab_helpers
 from scipy import stats
 import numpy as np
-import os
 
 
 import uncert as uc
@@ -30,7 +29,7 @@ FILTER_DATA = False  # filter Appen and heroku data
 CLEAN_DATA = False  # clean Appen data
 REJECT_CHEATERS = False  # reject cheaters on Appen
 UPDATE_MAPPING = False  # update mapping with keypress data
-SHOW_OUTPUT = False  # should figures be plotted
+SHOW_OUTPUT = True  # should figures be plotted
 SHOW_STATS = True  # should figures be plotted
 
 file_mapping = 'mapping.p'  # file to save updated mapping
@@ -108,7 +107,7 @@ if __name__ == '__main__':
                         'worker_id', 'country', 'region', 'city', 'ip', 'answers_hidden', 'consent', 'instructions',
                         'place_other', 'experiences_other', 'device_other', 'place', 'year_ad', 'suggestions_ad',
                         'device', 'item', 'browser_app_name', 'browser_full_version', 'browser_major_version',
-                        'browser_name', 'browser_user_agent',
+                        'browser_name', 'browser_user_agent', 'window_height', 'window_width',
                         'image_0-dur-0', 'image_0-dur-1', 'image_0-event-0', 'image_0-event-1', 'image_0-time-0', 'image_0-time-1',  # noqa: E501
                         'image_1-dur-0', 'image_1-dur-1', 'image_1-event-0', 'image_1-event-1', 'image_1-time-0', 'image_1-time-1',  # noqa: E501
                         'image_2-dur-0', 'image_2-dur-1', 'image_2-event-0', 'image_2-event-1', 'image_2-time-0', 'image_2-time-1',  # noqa: E501
