@@ -18,8 +18,8 @@ logger = uc.CustomLogger(__name__)  # use custom logger
 # CLEAN_DATA = True  # clean Appen data
 # REJECT_CHEATERS = False  # reject cheaters on Appen
 # UPDATE_MAPPING = True  # update mapping with keypress data
-# SHOW_OUTPUT = False  # should figures be plotted
 # SHOW_STATS = True  # should figures be plotted
+# SHOW_OUTPUT = True  # should figures be plotted
 
 # for debugging, skip processing
 SAVE_P = False  # save pickle files with data
@@ -29,8 +29,8 @@ FILTER_DATA = False  # filter Appen and heroku data
 CLEAN_DATA = False  # clean Appen data
 REJECT_CHEATERS = False  # reject cheaters on Appen
 UPDATE_MAPPING = False  # update mapping with keypress data
-SHOW_OUTPUT = True  # should figures be plotted
 SHOW_STATS = True  # should figures be plotted
+SHOW_OUTPUT = True  # should figures be plotted
 
 file_mapping = 'mapping.p'  # file to save updated mapping
 
@@ -79,6 +79,38 @@ if __name__ == '__main__':
         uc.common.save_to_p(file_mapping, mapping, 'mapping of stimuli')
     else:
         mapping = uc.common.load_from_p(file_mapping, 'mapping of stimuli')
+    if SHOW_STATS:
+        # Statistics
+        # copy mapping to a temp df
+        df = mapping.copy()
+        # convert type of vehicle to num
+        df['vehicle_type'] = df['vehicle_type'].map({'AV': 0, 'MDV': 1})
+        # 1. Kolmogorov-Smirnov test
+        logger.info('Kolmogorov-Smirnov test for raw answers of stimulus responses: {}.',
+                    stats.kstest(list(df['raw_answers'].explode()), 'norm'))
+        logger.info('Kolmogorov-Smirnov test for STD of stimulus responses: {}.', stats.kstest(df['std'], 'norm'))
+        logger.info('Kolmogorov-Smirnov test for mean of stimulus responses: {}.', stats.kstest(df['mean'], 'norm'))
+        logger.info('Kolmogorov-Smirnov test for median of stimulus responses: {}.',
+                    stats.kstest(df['median'], 'norm'))
+        # 2. A paired t-test between all the uncertainty of each sample group  (manually driven vs. fully automated).
+        group_av = df.where(df.vehicle_type == 0).dropna()['mean']
+        group_mdv = df.where(df.vehicle_type == 1).dropna()['mean']
+        logger.info('A paired t-test between all the uncertainty of manually driven vs. fully automated: {}.',
+                    stats.ttest_ind(group_av, group_mdv))
+        # 3. Wilcoxon signed-rank test between all the uncertainty of each sample group (manually driven vs. fully
+        # automated).
+        group_av = df.where(df.vehicle_type == 0).dropna()['std']
+        group_mdv = df.where(df.vehicle_type == 1).dropna()['std']
+        logger.info('Wilcoxon signed-rank test for STD of stimulus responses: {}.',
+                    stats.wilcoxon(group_av, group_mdv))
+        group_av = df.where(df.vehicle_type == 0).dropna()['mean']
+        group_mdv = df.where(df.vehicle_type == 1).dropna()['mean']
+        logger.info('Wilcoxon signed-rank test for mean of stimulus responses: {}.',
+                    stats.wilcoxon(group_av, group_mdv))
+        group_av = df.where(df.vehicle_type == 0).dropna()['median']
+        group_mdv = df.where(df.vehicle_type == 1).dropna()['median']
+        logger.info('Wilcoxon signed-rank test for median of stimulus responses: {}.',
+                    stats.wilcoxon(group_av, group_mdv))
     if SHOW_OUTPUT:
         # Output
         analysis = uc.analysis.Analysis()
@@ -87,7 +119,7 @@ if __name__ == '__main__':
         columns_drop = ['short_name', 'id', 'question', 'short_name', 'label_0', 'label_100', 'stimulus',
                         'video_length', 'description', 'comments', 'partner_video', 'raw_answers']
         # copy mapping to a temp df
-        df = mapping
+        df = mapping.copy()
         # convert type of vehicle to num
         df['vehicle_type'] = df['vehicle_type'].map({'AV': 0, 'MDV': 1})
         # set nan to -1
@@ -133,7 +165,7 @@ if __name__ == '__main__':
                         'video_8-dur-0', 'video_8-dur-1', 'video_8-event-0', 'video_8-event-1', 'video_8-time-0', 'video_8-time-1',  # noqa: E501
                         'video_9-dur-0', 'video_9-dur-1', 'video_9-event-0', 'video_9-event-1', 'video_9-time-0', 'video_9-time-1']  # noqa: E501
         # copy mapping to a temp df
-        df = all_data
+        df = all_data.copy()
         # todo: check order of options in appen
         # convert columns to num values
         df['milage'] = df['milage'].map({'0_km__mi': 0,
@@ -415,7 +447,7 @@ if __name__ == '__main__':
                          pretty_text=True,
                          save_file=True)
         # time of participation
-        df = appen_data
+        df = appen_data.copy()
         df['country'] = df['country'].fillna('NaN')
         df['time'] = df['time'] / 60.0  # convert to min
         analysis.hist(df,
@@ -642,36 +674,3 @@ if __name__ == '__main__':
         # show figures, if any
         if figures:
             plt.show()
-
-    if SHOW_STATS:
-        # Statistics
-        # copy mapping to a temp df
-        df = mapping
-        # convert type of vehicle to num
-        df['vehicle_type'] = df['vehicle_type'].map({'AV': 0, 'MDV': 1})
-        # 1. Kolmogorov-Smirnov test
-        logger.info('Kolmogorov-Smirnov test for raw answers of stimulus responses: {}.',
-                    stats.kstest(list(df['raw_answers'].explode()), 'norm'))
-        logger.info('Kolmogorov-Smirnov test for STD of stimulus responses: {}.', stats.kstest(df['std'], 'norm'))
-        logger.info('Kolmogorov-Smirnov test for mean of stimulus responses: {}.', stats.kstest(df['mean'], 'norm'))
-        logger.info('Kolmogorov-Smirnov test for median of stimulus responses: {}.',
-                    stats.kstest(df['median'], 'norm'))
-        # 2. A paired t-test between all the uncertainty of each sample group  (manually driven vs. fully automated).
-        group_av = df.where(df.vehicle_type == 0).dropna()['mean']
-        group_mdv = df.where(df.vehicle_type == 1).dropna()['mean']
-        logger.info('A paired t-test between all the uncertainty of manually driven vs. fully automated: {}.',
-                    stats.ttest_ind(group_av, group_mdv))
-        # 3. Wilcoxon signed-rank test between all the uncertainty of each sample group (manually driven vs. fully
-        # automated).
-        group_av = df.where(df.vehicle_type == 0).dropna()['std']
-        group_mdv = df.where(df.vehicle_type == 1).dropna()['std']
-        logger.info('Wilcoxon signed-rank test for STD of stimulus responses: {}.',
-                    stats.wilcoxon(group_av, group_mdv))
-        group_av = df.where(df.vehicle_type == 0).dropna()['mean']
-        group_mdv = df.where(df.vehicle_type == 1).dropna()['mean']
-        logger.info('Wilcoxon signed-rank test for mean of stimulus responses: {}.',
-                    stats.wilcoxon(group_av, group_mdv))
-        group_av = df.where(df.vehicle_type == 0).dropna()['median']
-        group_mdv = df.where(df.vehicle_type == 1).dropna()['median']
-        logger.info('Wilcoxon signed-rank test for median of stimulus responses: {}.',
-                    stats.wilcoxon(group_av, group_mdv))
