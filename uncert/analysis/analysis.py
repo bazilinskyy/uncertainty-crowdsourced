@@ -35,8 +35,7 @@ class Analysis:
         # set font to Times
         plt.rc('font', family='serif')
 
-    # TODO: fix error with value of string not used as float
-    def corr_matrix(self, df, columns_drop, save_file=False):
+    def corr_matrix(self, df, columns_drop, save_file=False, filename='_corr_matrix.jpg', figsize=(34, 20)):
         """
         Output correlation matrix.
 
@@ -44,12 +43,14 @@ class Analysis:
             df (dataframe): mapping dataframe.
             columns_drop (list): columns dataframes in to ignore.
             save_file (bool, optional): flag for saving an html file with plot.
+            filename (str, optional): name of file to save.
+            filename (list, optional): size of figure.
         """
         logger.info('Creating correlation matrix.')
         # drop columns
         df = df.drop(columns=columns_drop)
+        df.to_csv(os.path.join(uc.settings.output_dir, 'all_data.csv'), index=False)
         # create correlation matrix
-        print(list(df))
         corr = df.corr()
         # create mask
         mask = np.zeros_like(corr)
@@ -68,7 +69,7 @@ class Analysis:
         plt.rc('figure', titlesize=l_font)  # fontsize of the figure title
         plt.rc('axes', titlesize=m_font)    # fontsize of the subplot title
         # create figure
-        fig = plt.figure(figsize=(34, 20))
+        fig = plt.figure(figsize=figsize)
         g = sns.heatmap(corr,
                         annot=True,
                         mask=mask,
@@ -82,14 +83,13 @@ class Analysis:
             self.save_fig('all',
                           fig,
                           self.folder,
-                          '_corr_matrix.jpg',
+                          filename,
                           pad_inches=0.05)
         # revert font
         self.reset_font()
 
-    def scatter_matrix(self, df, columns_drop, color=None, symbol=None,
-                       diagonal_visible=False, xaxis_title=None,
-                       yaxis_title=None, save_file=False):
+    def scatter_matrix(self, df, columns_drop, color=None, symbol=None,  diagonal_visible=False, xaxis_title=None,
+                       yaxis_title=None, save_file=False, filename='scatter_matrix'):
         """
         Output scatter matrix.
 
@@ -104,6 +104,7 @@ class Analysis:
             xaxis_title (str, optional): title for x axis.
             yaxis_title (str, optional): title for y axis.
             save_file (bool, optional): flag for saving an html file with plot.
+            filename (str, optional): name of file to save.
         """
         logger.info('Creating scatter matrix.')
         # drop columns
@@ -126,7 +127,7 @@ class Analysis:
             fig.update_traces(diagonal_visible=False)
         # save file
         if save_file:
-            self.save_plotly(fig, 'scatter_matrix', self.folder)
+            self.save_plotly(fig, filename, self.folder)
         # open it in localhost instead
         else:
             fig.show()

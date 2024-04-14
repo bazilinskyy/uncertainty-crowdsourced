@@ -302,8 +302,7 @@ class Heroku:
         if self.save_csv:
             df.to_csv(os.path.join(uc.settings.output_dir, self.file_data_csv),
                       index=False)
-            logger.info('Saved heroku data to csv file {}',
-                        self.file_data_csv + '.csv')
+            logger.info('Saved heroku data to csv file {}', self.file_data_csv + '.csv')
         # update attribute
         self.heroku_data = df
         # return df with data
