@@ -2,6 +2,7 @@
 import matplotlib.pyplot as plt
 import matplotlib._pylab_helpers
 from scipy import stats
+from statsmodels.sandbox.stats.multicomp import multipletests
 
 import uncert as uc
 
@@ -362,13 +363,16 @@ if __name__ == '__main__':
         # copy mapping to a temp df
         df = mapping
         # convert type of vehicle to num
-        df['vehicle_type'] = df['vehicle_type'].map({'AV': 0, 'MVD': 1})
-        # set nan to -1
-        df = df.fillna(-1)
-        # Kolmogorov-Smirnov Test
+        df['vehicle_type'] = df['vehicle_type'].map({'AV': 0, 'MDV': 1})
+        # 1. Kolmogorov-Smirnov Test
         logger.info('Kolmogorov-Smirnov Test for raw answers of stimulus responses: {}.',
                     stats.kstest(list(df['raw_answers'].explode()), 'norm'))
         logger.info('Kolmogorov-Smirnov Test for STD of stimulus responses: {}.', stats.kstest(df['std'], 'norm'))
         logger.info('Kolmogorov-Smirnov Test for mean of stimulus responses: {}.', stats.kstest(df['mean'], 'norm'))
         logger.info('Kolmogorov-Smirnov Test for median of stimulus responses: {}.',
                     stats.kstest(df['median'], 'norm'))
+        # 2. A paired t-test between all the uncertainty of each sample group  (manually driven vs. fully automated).
+        group_av = df.where(df.vehicle_type == 0).dropna()['mean']
+        group_mdv = df.where(df.vehicle_type == 1).dropna()['mean']
+        logger.info('A paired t-test between all the uncertainty of manually driven vs. fully automated: {}.',
+                    stats.ttest_ind(group_av, group_mdv))
