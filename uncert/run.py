@@ -1,6 +1,7 @@
 # by Pavlo Bazilinskyy <pavlo.bazilinskyy@gmail.com>
 import matplotlib.pyplot as plt
 import matplotlib._pylab_helpers
+from scipy import stats
 
 import uncert as uc
 
@@ -13,9 +14,10 @@ logger = uc.CustomLogger(__name__)  # use custom logger
 # SAVE_CSV = True  # load csv files with data
 # FILTER_DATA = True  # filter Appen and heroku data
 # CLEAN_DATA = True  # clean Appen data
-# REJECT_CHEATERS = True  # reject cheaters on Appen
+# REJECT_CHEATERS = False  # reject cheaters on Appen
 # UPDATE_MAPPING = True  # update mapping with keypress data
-# SHOW_OUTPUT = True  # should figures be plotted
+# SHOW_OUTPUT = False  # should figures be plotted
+# SHOW_STATS = True  # should figures be plotted
 
 # for debugging, skip processing
 SAVE_P = False  # save pickle files with data
@@ -25,7 +27,8 @@ FILTER_DATA = False  # filter Appen and heroku data
 CLEAN_DATA = False  # clean Appen data
 REJECT_CHEATERS = False  # reject cheaters on Appen
 UPDATE_MAPPING = False  # update mapping with keypress data
-SHOW_OUTPUT = True  # should figures be plotted
+SHOW_OUTPUT = False  # should figures be plotted
+SHOW_STATS = True  # should figures be plotted
 
 file_mapping = 'mapping.p'  # file to save updated mapping
 
@@ -52,7 +55,7 @@ if __name__ == '__main__':
     appen_data_keys = appen_data.keys()
     # flag and reject cheaters
     if REJECT_CHEATERS:
-        qa = uc.analysis.QA(file_cheaters=uc.common.get_configs('file_cheaters'),  # noqa: E501
+        qa = uc.analysis.QA(file_cheaters=uc.common.get_configs('file_cheaters'),
                             job_id=uc.common.get_configs('appen_job'))
         qa.reject_users()
         qa.ban_users()
@@ -114,7 +117,7 @@ if __name__ == '__main__':
                                 save_file=True)
         # stimulus duration
         analysis.hist(heroku_data,
-                      x=heroku_data.columns[heroku_data.columns.to_series().str.contains('-dur')],  # noqa: E501
+                      x=heroku_data.columns[heroku_data.columns.to_series().str.contains('-dur')],
                       nbins=100,
                       pretty_text=True,
                       save_file=True)
@@ -353,3 +356,19 @@ if __name__ == '__main__':
         # show figures, if any
         if figures:
             plt.show()
+
+    if SHOW_STATS:
+        # Statistics
+        # copy mapping to a temp df
+        df = mapping
+        # convert type of vehicle to num
+        df['vehicle_type'] = df['vehicle_type'].map({'AV': 0, 'MVD': 1})
+        # set nan to -1
+        df = df.fillna(-1)
+        # Kolmogorov-Smirnov Test
+        logger.info('Kolmogorov-Smirnov Test for raw answers of stimulus responses: {}.',
+                    stats.kstest(list(df['raw_answers'].explode()), 'norm'))
+        logger.info('Kolmogorov-Smirnov Test for STD of stimulus responses: {}.', stats.kstest(df['std'], 'norm'))
+        logger.info('Kolmogorov-Smirnov Test for mean of stimulus responses: {}.', stats.kstest(df['mean'], 'norm'))
+        logger.info('Kolmogorov-Smirnov Test for median of stimulus responses: {}.',
+                    stats.kstest(df['median'], 'norm'))

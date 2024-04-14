@@ -343,6 +343,7 @@ class Heroku:
         """
         logger.info('Processing post-stimulus questions')
         # arrays for storing values for each stimulus
+        raw_answers = []
         means = []
         stds = []
         medians = []
@@ -354,27 +355,36 @@ class Heroku:
         for index, row in tqdm(self.mapping.iterrows(),
                                total=self.mapping.shape[0]):
             # extract stimulus name
-            stim_no_path = row['stimulus'].rsplit('/', 1)[-1]  # noqa: E501
+            stim_no_path = row['stimulus'].rsplit('/', 1)[-1]
             stim_no_path = os.path.splitext(stim_no_path)[0]
             # build names of 2 repetitions in heroku_data
             name_0 = stim_no_path + '-' + row['short_name'] + '-0'
             name_1 = stim_no_path + '-' + row['short_name'] + '-1'
             # store mean, std, median values
+            raw_answers_values = []
             mean_values = []
             std_values = []
             medians_values = []
             # calculate mean answers from all repetitions for numeric questions
             for index, row in df.iterrows():
+                # print(name_0, " ", row[name_0])
+                # print(name_1, " ", row[name_1])
                 with warnings.catch_warnings():
                     warnings.simplefilter("ignore", category=RuntimeWarning)
+                    if not np.isnan(row[name_0]):
+                        raw_answers_values.append(row[name_0])
+                    if not np.isnan(row[name_1]):
+                        raw_answers_values.append(row[name_1])
                     mean_values.append(np.nanmean([row[name_0], row[name_1]]))
                     std_values.append(np.nanstd([row[name_0], row[name_1]]))
-                    medians_values.append(np.nanmedian([row[name_0], row[name_1]]))  # noqa: E501
+                    medians_values.append(np.nanmedian([row[name_0], row[name_1]]))
             # calculate values for all pp
+            raw_answers.append(raw_answers_values)
             means.append(np.nanmean(mean_values))
             stds.append(np.nanstd(std_values))
             medians.append(np.nanmedian(medians_values))
         # save values for all stimuli
+        self.mapping['raw_answers'] = raw_answers
         self.mapping['mean'] = means
         self.mapping['std'] = stds
         self.mapping['median'] = medians
