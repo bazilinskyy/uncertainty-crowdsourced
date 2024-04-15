@@ -18,16 +18,16 @@ In this crowdsourcing survey, participants were presented with 20 video and 4 im
 ![Example of video](figures/video_0.gif?raw=true).
 An example of one of the videos included in the crowdsourcing survey.
 
-![Image 0](figures/image_0?raw=true).
+![Image 0](figures/image_0.jpg?raw=true).
 Stimulus `image_0` included in the crowdsourcing survey.
 
-![Image 1](figures/image_1?raw=true).
+![Image 1](figures/image_1.jpg?raw=true).
 Stimulus `image_1` included in the crowdsourcing survey.
 
-![Image 2](figures/image_2?raw=true).
+![Image 2](figures/image_2.jpg?raw=true).
 Stimulus `image_2` included in the crowdsourcing survey.
 
-![Image 3](figures/image_3?raw=true).
+![Image 3](figures/image_3.jpg?raw=true).
 Stimulus `image_3` included in the crowdsourcing survey.
 
 ## Crowdsourcing job on appen
@@ -57,13 +57,13 @@ All static figures below link to their corresponding dynamic and clickable versi
 ![correlation matrix](figures/all_corr_matrix_mapping.jpg?raw=true)
 Correlation matrix on stimulus level.
 
-[![scatter matrix](figures/scatter_matrix.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/scatter_matrix_mapping.html)  
+[![scatter matrix](figures/scatter_matrix_mapping.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/scatter_matrix_mapping.html)  
 Scatter matrix on stimulus level.
 
 ![correlation matrix](figures/all_corr_matrix_all_data.jpg?raw=true)
 Correlation matrix on participant level.
 
-[![scatter matrix](figures/scatter_matrix.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/scatter_matrix_all_data.html)  
+[![scatter matrix](figures/scatter_matrix_all_data.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/scatter_matrix_all_data.html)  
 Scatter matrix on participant level.
 
 #### Uncertainty
