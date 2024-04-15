@@ -15,19 +15,19 @@ We use [heroku](https://www.heroku.com) to host the node.js implementation. The 
 ## Measuring perceived risk
 In this crowdsourcing survey, participants were presented with 20 video and 4 image stimuli (see below for examples). The participants had to report how certain or uncertain they felt about the stimuli.
 
-![Example of video](https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/video_0.gif?raw=true).
+![Example of video](figures/video_0.gif?raw=true).
 An example of one of the videos included in the crowdsourcing survey.
 
-![Image 0](https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/public/img/image_0?raw=true).
+![Image 0](figures/image_0?raw=true).
 Stimulus `image_0` included in the crowdsourcing survey.
 
-![Image 1](https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/public/img/image_1?raw=true).
+![Image 1](figures/image_1?raw=true).
 Stimulus `image_1` included in the crowdsourcing survey.
 
-![Image 2](https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/public/img/image_2?raw=true).
+![Image 2](figures/image_2?raw=true).
 Stimulus `image_2` included in the crowdsourcing survey.
 
-![Image 3](https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/public/img/image_3?raw=true).
+![Image 3](figures/image_3?raw=true).
 Stimulus `image_3` included in the crowdsourcing survey.
 
 ## Crowdsourcing job on appen
@@ -53,17 +53,14 @@ Analysis can be started by running `python uncertainty-crowdsourcing/uncert/run.
 ### Visualisation
 All static figures below link to their corresponding dynamic and clickable versions in html format.
 
-![change of keypresses, objects, velocity over time](https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/dynamic.gif?raw=true)  
-Visualisation of how dynamic variables (keypresses, objects, velocity) change over time.
-
 #### Correlation and scatter matrices
-![correlation matrix](https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/all_corr_matrix_mapping.jpg?raw=true)  
+![correlation matrix](figures/all_corr_matrix_mapping.jpg?raw=true)
 Correlation matrix on stimulus level.
 
 [![scatter matrix](figures/scatter_matrix.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/scatter_matrix_mapping.html)  
 Scatter matrix on stimulus level.
 
-![correlation matrix](https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/all_corr_matrix_all_data.jpg?raw=true)  
+![correlation matrix](figures/all_corr_matrix_all_data.jpg?raw=true)
 Correlation matrix on participant level.
 
 [![scatter matrix](figures/scatter_matrix.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/scatter_matrix_all_data.html)  
