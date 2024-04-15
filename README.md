@@ -15,19 +15,24 @@ We use [heroku](https://www.heroku.com) to host the node.js implementation. The 
 ## Measuring perceived risk
 In this crowdsourcing survey, participants were presented with 20 video and 4 image stimuli (see below for examples). The participants had to report how certain or uncertain they felt about the stimuli.
 
-![Example of video](figures/video_0.gif?raw=true).
+![Example of video](figures/video_0.gif?raw=true)
+
 An example of one of the videos included in the crowdsourcing survey.
 
-![Image 0](figures/image_0.jpg?raw=true).
+![Image 0](figures/image_0.jpg?raw=true)
+
 Stimulus `image_0` included in the crowdsourcing survey.
 
-![Image 1](figures/image_1.jpg?raw=true).
+![Image 1](figures/image_1.jpg?raw=true)
+
 Stimulus `image_1` included in the crowdsourcing survey.
 
-![Image 2](figures/image_2.jpg?raw=true).
+![Image 2](figures/image_2.jpg?raw=true)
+
 Stimulus `image_2` included in the crowdsourcing survey.
 
-![Image 3](figures/image_3.jpg?raw=true).
+![Image 3](figures/image_3.jpg?raw=true)
+
 Stimulus `image_3` included in the crowdsourcing survey.
 
 ## Crowdsourcing job on appen
