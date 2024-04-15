@@ -16,6 +16,7 @@ We use [heroku](https://www.heroku.com) to host the node.js implementation. The 
 In this crowdsourcing survey, participants were presented with 20 video and 4 image stimuli (see below for examples). The participants had to report how certain or uncertain they felt about the stimuli.
 
 ![Example of video](figures/video_0.gif?raw=true)
+
 An example of one of the videos included in the crowdsourcing survey.
 
 ![Image 0](figures/image_0.jpg?raw=true)
