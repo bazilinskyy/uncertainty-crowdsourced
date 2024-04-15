@@ -389,9 +389,7 @@ class Heroku:
         self.mapping['median'] = medians
         # save to csv
         if self.save_csv:
-            # save to csv
-            self.mapping.to_csv(os.path.join(uc.settings.output_dir,
-                                             self.file_mapping_csv))
+            self.mapping.to_csv(os.path.join(uc.settings.output_dir, self.file_mapping_csv))
         # return new mapping
         return self.mapping
 

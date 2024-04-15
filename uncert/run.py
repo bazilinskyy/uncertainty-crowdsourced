@@ -113,7 +113,7 @@ if __name__ == '__main__':
                     stats.wilcoxon(group_av, group_mdv))
     if SHOW_OUTPUT:
         # Output
-        analysis = uc.analysis.Analysis()
+        analysis = uc.analysis.Analysis(save_csv=SAVE_CSV)
         logger.info('Creating figures.')
         # columns to drop in correlation matrix and scatter matrix
         columns_drop = ['short_name', 'id', 'question', 'short_name', 'label_0', 'label_100', 'stimulus',
@@ -166,7 +166,6 @@ if __name__ == '__main__':
                         'video_9-dur-0', 'video_9-dur-1', 'video_9-event-0', 'video_9-event-1', 'video_9-time-0', 'video_9-time-1']  # noqa: E501
         # copy mapping to a temp df
         df = all_data.copy()
-        # todo: check order of options in appen
         # convert columns to num values
         df['milage'] = df['milage'].map({'0_km__mi': 0,
                                          '1__1000_km_1__621_mi': 1,
@@ -268,7 +267,7 @@ if __name__ == '__main__':
                                                      'once_a_month_to_once_a_week': 2,
                                                      '1_to_3_days_a_week': 3,
                                                      '4_to_6_days_a_week': 4,
-                                                     'every_day': 4,
+                                                     'every_day': 5,
                                                      'i_prefer_not_to_respond': np.nan})
         df['attitude_ad'] = df['attitude_ad'].map({'very_negative': 0,
                                                    'negative': 1,
@@ -281,8 +280,8 @@ if __name__ == '__main__':
                                          'i_prefer_not_to_respond': np.nan})
         df['mode_transportation'] = df['mode_transportation'].map({'private_vehicle': 0,
                                                                    'public_transportation': 1,
-                                                                   'walkingcycling': 2,
-                                                                   'motorcycle': 3,
+                                                                   'motorcycle': 2,
+                                                                   'walkingcycling': 3,
                                                                    'other': 4,
                                                                    'i_prefer_not_to_respond': np.nan})
         df['experience_ad'] = df['experience_ad'].map({'i_have_encountered_automated_cars_while_driving': 0,
@@ -315,13 +314,12 @@ if __name__ == '__main__':
         df['accidents'] = df['accidents'].map({'0': 0,
                                                '1': 1,
                                                '2': 2,
-                                               '3': 2,
-                                               '4': 2,
-                                               '5': 2,
+                                               '3': 3,
+                                               '4': 4,
+                                               '5': 5,
                                                'more_than_5': 6,
                                                'i_prefer_not_to_respond': np.nan})
-
-        # calculate mean responses
+        # calculate mean responses for individual stimuli
         df['image_0-certain_blue'] = df[['image_0-certain_blue-0', 'image_0-certain_blue-1']].mean(axis=1)
         df = df.drop(columns=['image_0-certain_blue-0', 'image_0-certain_blue-1'])
         df['image_0-uncertain_blue'] = df[['image_0-uncertain_blue-0', 'image_0-uncertain_blue-1']].mean(axis=1)
@@ -422,6 +420,9 @@ if __name__ == '__main__':
         df = df.drop(columns=['video_9-driver_certain-0', 'video_9-driver_certain-1'])
         df['video_9-driver_uncertain'] = df[['video_9-driver_uncertain-0', 'video_9-driver_uncertain-1']].mean(axis=1)
         df = df.drop(columns=['video_9-driver_uncertain-0', 'video_9-driver_uncertain-1'])
+        # calculate mean responses for (un-)certainty
+        df['certainty'] = df[[col for col in df.columns if '-certain_' in col]].mean(axis=1)
+        df['uncertainty'] = df[[col for col in df.columns if '-uncertain_' in col]].mean(axis=1)
         # set nan to -1
         df = df.fillna(-1)
         # create correlation matrix for all data

@@ -31,9 +31,11 @@ class Analysis:
     # folder for output
     folder = '/figures/'
 
-    def __init__(self):
+    def __init__(self, save_csv: bool):
         # set font to Times
         plt.rc('font', family='serif')
+        # save data as csv file
+        self.save_csv = save_csv
 
     def corr_matrix(self, df, columns_drop, save_file=False, filename='_corr_matrix.jpg', figsize=(34, 20)):
         """
@@ -49,7 +51,9 @@ class Analysis:
         logger.info('Creating correlation matrix.')
         # drop columns
         df = df.drop(columns=columns_drop)
-        df.to_csv(os.path.join(uc.settings.output_dir, 'all_data.csv'), index=False)
+        # save to csv
+        if self.save_csv:
+            df.to_csv(os.path.join(uc.settings.output_dir, 'all_data.csv'), index=False)
         # create correlation matrix
         corr = df.corr()
         # create mask
