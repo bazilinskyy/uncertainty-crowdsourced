@@ -458,7 +458,6 @@ if __name__ == '__main__':
         # stimulus duration
         analysis.hist(heroku_data,
                       x=heroku_data.columns[heroku_data.columns.to_series().str.contains('-dur')],
-                      color='country',
                       nbins=100,
                       pretty_text=True,
                       save_file=True)
@@ -554,7 +553,6 @@ if __name__ == '__main__':
                          'certainty_experiences'
                          ],
                       yaxis_title='Number of participations who chose the option',
-                      color='attitude_ad',
                       pretty_text=True,
                       marginal=None,
                       save_file=True)
@@ -649,7 +647,6 @@ if __name__ == '__main__':
                       marginal='violin',
                       yaxis_title='Number of participations who chose the option',
                       pretty_text=True,
-                      color='attitude_ad',
                       save_file=True)
         # Post-trial questions on (un)certainty
         analysis.bar(mapping,
