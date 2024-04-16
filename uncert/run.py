@@ -88,15 +88,17 @@ if __name__ == '__main__':
         df['vehicle_type'] = df['vehicle_type'].map({'AV': 0, 'MDV': 1})
         # 1. Kolmogorov-Smirnov test
         logger.info('Kolmogorov-Smirnov test for raw answers of stimulus responses: {}.',
-                    stats.kstest(list(df['raw_answers'].explode()), 'norm'))
-        logger.info('Kolmogorov-Smirnov test for STD of stimulus responses: {}.', stats.kstest(df['std'], 'norm'))
-        logger.info('Kolmogorov-Smirnov test for mean of stimulus responses: {}.', stats.kstest(df['mean'], 'norm'))
+                    stats.ks_1samp(list(df['raw_answers'].explode()), stats.norm.cdf))
+        logger.info('Kolmogorov-Smirnov test for STD of stimulus responses: {}.',
+                    stats.ks_1samp(df['std'], stats.norm.cdf))
+        logger.info('Kolmogorov-Smirnov test for mean of stimulus responses: {}.',
+                    stats.ks_1samp(df['mean'], stats.norm.cdf))
         logger.info('Kolmogorov-Smirnov test for median of stimulus responses: {}.',
-                    stats.kstest(df['median'], 'norm'))
+                    stats.ks_1samp(df['median'], stats.norm.cdf))
         # pairs of stimuli
         for index, row in df.iterrows():
             logger.info('Kolmogorov-Smirnov test for responses for stimulus {}: {}.',
-                        index, stats.kstest(row['raw_answers'], 'norm'))
+                        index, stats.ks_1samp(row['raw_answers'], stats.norm.cdf))
         # 2. A paired t-test between all the uncertainty of each sample group  (manually driven vs. fully automated).
         group_a = df.where(df.vehicle_type == 0).dropna()['mean']
         group_b = df.where(df.vehicle_type == 1).dropna()['mean']
