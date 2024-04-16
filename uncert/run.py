@@ -510,7 +510,6 @@ if __name__ == '__main__':
         counts_df = pd.DataFrame(counts.items(), columns=['option', 'count'])
         counts_df = counts_df.set_index('option')
         analysis.bar(counts_df,
-                     # x='option',
                      y=['count'],
                      yaxis_title='Number of participations who chose the option',
                      pretty_text=True,
@@ -656,7 +655,6 @@ if __name__ == '__main__':
                      yaxis_title='Mean of response on questions on (un)certainty of stimulus',
                      save_file=True)
         # mean uncertainty score vs certainty score
-        # todo: add separate columns for AV and MDV uncertainty
         analysis.scatter(df,
                          x='uncertainty',
                          y='certainty',
