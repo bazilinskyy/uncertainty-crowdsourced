@@ -31,7 +31,7 @@ CLEAN_DATA = False  # clean Appen data
 REJECT_CHEATERS = False  # reject cheaters on Appen
 UPDATE_MAPPING = False  # update mapping with keypress data
 SHOW_STATS = True  # should figures be plotted
-SHOW_OUTPUT = True  # should figures be plotted
+SHOW_OUTPUT = False  # should figures be plotted
 
 file_mapping = 'mapping.p'  # file to save updated mapping
 
@@ -93,25 +93,43 @@ if __name__ == '__main__':
         logger.info('Kolmogorov-Smirnov test for mean of stimulus responses: {}.', stats.kstest(df['mean'], 'norm'))
         logger.info('Kolmogorov-Smirnov test for median of stimulus responses: {}.',
                     stats.kstest(df['median'], 'norm'))
+        # pairs of stimuli
+        for index, row in df.iterrows():
+            logger.info('Kolmogorov-Smirnov test for responses for stimulus {}: {}.',
+                        index, stats.kstest(row['raw_answers'], 'norm'))
         # 2. A paired t-test between all the uncertainty of each sample group  (manually driven vs. fully automated).
-        group_av = df.where(df.vehicle_type == 0).dropna()['mean']
-        group_mdv = df.where(df.vehicle_type == 1).dropna()['mean']
+        group_a = df.where(df.vehicle_type == 0).dropna()['mean']
+        group_b = df.where(df.vehicle_type == 1).dropna()['mean']
         logger.info('A paired t-test between all the uncertainty of manually driven vs. fully automated: {}.',
-                    stats.ttest_ind(group_av, group_mdv))
+                    stats.ttest_ind(group_a, group_b))
+        # pairs of stimuli
+        for stimulus in range(20, 30):
+            group_a = df.loc[stimulus].dropna()['raw_answers']
+            group_b = df.loc[stimulus+10].dropna()['raw_answers']
+            logger.info('A paired t-test for stimuli {} and {}: {}.',
+                        stimulus,
+                        stimulus + 10,
+                        stats.ttest_ind(group_a, group_b))
         # 3. Wilcoxon signed-rank test between all the uncertainty of each sample group (manually driven vs. fully
         # automated).
-        group_av = df.where(df.vehicle_type == 0).dropna()['std']
-        group_mdv = df.where(df.vehicle_type == 1).dropna()['std']
-        logger.info('Wilcoxon signed-rank test for STD of stimulus responses: {}.',
-                    stats.wilcoxon(group_av, group_mdv))
-        group_av = df.where(df.vehicle_type == 0).dropna()['mean']
-        group_mdv = df.where(df.vehicle_type == 1).dropna()['mean']
-        logger.info('Wilcoxon signed-rank test for mean of stimulus responses: {}.',
-                    stats.wilcoxon(group_av, group_mdv))
-        group_av = df.where(df.vehicle_type == 0).dropna()['median']
-        group_mdv = df.where(df.vehicle_type == 1).dropna()['median']
+        group_a = df.where(df.vehicle_type == 0).dropna()['mean']
+        group_b = df.where(df.vehicle_type == 1).dropna()['mean']
+        logger.info('Wilcoxon signed-rank test for mean of stimulus responses: {}.', stats.wilcoxon(group_a, group_b))
+        group_a = df.where(df.vehicle_type == 0).dropna()['std']
+        group_b = df.where(df.vehicle_type == 1).dropna()['std']
+        logger.info('Wilcoxon signed-rank test for STD of stimulus responses: {}.', stats.wilcoxon(group_a, group_b))
+        group_a = df.where(df.vehicle_type == 0).dropna()['median']
+        group_b = df.where(df.vehicle_type == 1).dropna()['median']
         logger.info('Wilcoxon signed-rank test for median of stimulus responses: {}.',
-                    stats.wilcoxon(group_av, group_mdv))
+                    stats.wilcoxon(group_a, group_b))
+        # pairs of stimuli
+        for stimulus in range(20, 30):
+            group_a = df.loc[stimulus].dropna()['raw_answers']
+            group_b = df.loc[stimulus+10].dropna()['raw_answers']
+            logger.info('Wilcoxon signed-rank test for stimuli {} and {}: {}.',
+                        stimulus,
+                        stimulus + 10,
+                        stats.mannwhitneyu(group_a, group_b))
     if SHOW_OUTPUT:
         # Output
         analysis = uc.analysis.Analysis(save_csv=SAVE_CSV)
