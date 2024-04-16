@@ -644,7 +644,7 @@ if __name__ == '__main__':
                          'dbq5_traffic_lights',
                          'dbq6_horn',
                          'dbq7_mobile'],
-                      marginal='violin',
+                      marginal=None,
                       yaxis_title='Number of participations who chose the option',
                       pretty_text=True,
                       save_file=True)
