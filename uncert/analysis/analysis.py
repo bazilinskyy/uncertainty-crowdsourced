@@ -469,7 +469,7 @@ class Analysis:
 
     def hist(self, df, x, nbins=None, color=None, pretty_text=False,
              marginal='rug', xaxis_title=None, yaxis_title=None,
-             save_file=True):
+             show_legend=True, save_file=True):
         """
         Output histogram of time of participation.
 
@@ -477,13 +477,14 @@ class Analysis:
             df (dataframe): dataframe with data from heroku.
             x (list): column names of dataframe to plot.
             nbins (int, optional): number of bins in histogram.
-            color (str, optional): dataframe column to assign color of circles.
+            color (str, optional): dataframe column to assign colour of bars.
             pretty_text (bool, optional): prettify ticks by replacing _ with
-                                          spaces and capitilisng each value.
+                                          spaces and capitalising each value.
             marginal (str, optional): type of marginal on x axis. Can be
                                       'histogram', 'rug', 'box', or 'violin'.
             xaxis_title (str, optional): title for x axis.
             yaxis_title (str, optional): title for y axis.
+            show_legend (bool, optional): showing legend.
             save_file (bool, optional): flag for saving an html file with plot.
         """
         logger.info('Creating histogram for x={}.', x)
@@ -518,6 +519,9 @@ class Analysis:
         fig.update_layout(template=self.template,
                           xaxis_title=xaxis_title,
                           yaxis_title=yaxis_title)
+        # show legend if more than 1 variable is outputted
+        if not show_legend:
+            fig.update_layout(showlegend=False)
         # save file
         if save_file:
             self.save_plotly(fig,

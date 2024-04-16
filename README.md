@@ -71,12 +71,48 @@ Scatter matrix on participant level.
 [![uncertainty](figures/scores.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/scores.html)  
 Scores of uncertainty.
 
+[![uncertainty vs certainty](figures/scatter_uncertainty-certainty.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/scatter_uncertainty-certainty.html)  
+Uncertainty vs certainty.
+
+[![uncertainty vs capability of ad](figures/scatter_uncertainty-capability_ad.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/scatter_uncertainty-capability_ad.html)  
+Uncertainty vs capability of AD.
+
+[![uncertainty vs attitude towards automated driving](figures/scatter_uncertainty-attitude_ad.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/scatter_uncertainty-attitude_ad.html)  
+Uncertainty vs attitude towards automated driving.
+
+[![certainty vs capability of ad](figures/scatter_certainty-capability_ad.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/certainty-crowdsourcing/blob/main/figures/scatter_certainty-capability_ad.html)  
+Certainty vs capability of AD.
+
+[![certainty vs towards automated driving](figures/scatter_certainty-attitude_ad.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/certainty-crowdsourcing/blob/main/figures/scatter_certainty-attitude_ad.html)  
+Certainty vs attitude towards automated driving.
+
 #### Information on participants
+[![age of obtaining first driving license](figures/hist_year_license.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/hist_year_license.html)  
+Age of obtaining first driving license.
+
 [![driving frequency](figures/hist_driving_freq.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/hist_driving_freq.html)  
 Driving frequency.
 
+[![number of accidents](figures/hist_accidents.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/hist_accidents.html)  
+Number of accidents in the last 3 years.
+
+[![driving frequency](figures/hist_milage.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/hist_milage.html)  
+Driving mileage during the last 12 months.
+
 [![driving behaviour questionnaire](figures/hist_dbq.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/hist_dbq.html)  
 Driving behaviour questionnaire (DBQ).
+
+[![experience of automated driving](figures/bar_experience_ad.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/bar_experience_ad.html)  
+Experience of automated driving.
+
+[![attitude towards automated driving](figures/hist_attitude_ad.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/hist_attitude_ad.html)  
+Attitude towards automated driving.
+
+[![who do you think is more capable of conducting driving-related tasks](figures/hist_capability_ad.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/hist_capability_ad.html)  
+Opinion on who is more capable of conducting driving-related tasks.
+
+[![feeling of (un)certainty](figures/hist_certainty_uncertainty.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/hist_certainty_uncertainty.html)  
+Feeling of (un)certainty.
 
 [![time of participation](figures/hist_time.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/hist_time.html)  
 Time of participation.
@@ -90,7 +126,7 @@ Map of years of having a license.
 [![map of prediction of year of introduction of automated cars](figures/map_year_ad.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/map_year_ad.html)  
 Map of prediction of the year of introduction of automated cars in the country of residence.
 
-[![map of age](figures/map_age.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/map_age.html)  
+[![map of age](figures/map_age.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/map_age.html)
 Map of age of participants.
 
 [![map of gender](figures/map_gender.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/map_gender.html)  
@@ -99,6 +135,15 @@ Map of distribution of gender.
 #### Technical characteristics of participants
 [![dimensions of browser](figures/scatter_window_width-window_height.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/scatter_window_width-window_height.html)  
 Dimensions of browser.
+
+[![input device](figures/hist_device.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/hist_device.html)  
+Input device.
+
+[![place of participation](figures/hist_place.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/hist_place.html)  
+Place of participation.
+
+[![duration of stimuli](figures/hist_dur.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/hist_dur.html)  
+Duration of stimuli.
 
 ### Configuration of project
 Configuration of the project needs to be defined in `uncertainty-crowdsourced/config`. Please use the `default.config` file for the required structure of the file. If no custom config file is provided, `default.config` is used. The config file has the following parameters:

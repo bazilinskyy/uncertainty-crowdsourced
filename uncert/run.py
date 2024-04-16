@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import matplotlib._pylab_helpers
 from scipy import stats
 import numpy as np
+import pandas as pd
 
 
 import uncert as uc
@@ -126,7 +127,7 @@ if __name__ == '__main__':
         df = df.fillna(-1)
         # create correlation matrix for mapping
         analysis.corr_matrix(df, columns_drop=columns_drop, save_file=True, filename='_corr_matrix_mapping.jpg')
-        # create correlation matrix
+        # create correlation matrix for mapping
         analysis.scatter_matrix(df,
                                 columns_drop=columns_drop,
                                 color='vehicle_type',
@@ -425,10 +426,10 @@ if __name__ == '__main__':
         df['uncertainty'] = df[[col for col in df.columns if '-uncertain_' in col]].mean(axis=1)
         # set nan to -1
         df = df.fillna(-1)
-        # create correlation matrix for all data
+        # # create correlation matrix for all data
         analysis.corr_matrix(df, columns_drop=columns_drop, save_file=True, filename='_corr_matrix_all_data.jpg',
                              figsize=(100, 70))
-        # create correlation matrix
+        # create correlation matrix for all data
         analysis.scatter_matrix(df,
                                 columns_drop=columns_drop,
                                 diagonal_visible=False,
@@ -437,6 +438,7 @@ if __name__ == '__main__':
         # stimulus duration
         analysis.hist(heroku_data,
                       x=heroku_data.columns[heroku_data.columns.to_series().str.contains('-dur')],
+                      color='country',
                       nbins=100,
                       pretty_text=True,
                       save_file=True)
@@ -448,57 +450,172 @@ if __name__ == '__main__':
                          pretty_text=True,
                          save_file=True)
         # time of participation
-        df = appen_data.copy()
-        df['country'] = df['country'].fillna('NaN')
-        df['time'] = df['time'] / 60.0  # convert to min
-        analysis.hist(df,
+        time = appen_data.copy()
+        time['country'] = time['country'].fillna('NaN')
+        time['time'] = time['time'] / 60.0  # convert to min
+        analysis.hist(time,
                       x=['time'],
                       color='country',
                       pretty_text=True,
+                      # marginal='box',
                       save_file=True)
-        # questions about AD
-        analysis.scatter(appen_data,
-                         x='capability_ad',
-                         y='experience_ad',
-                         color='year_license',
-                         pretty_text=True,
-                         save_file=True)
-        # questions about AD
-        analysis.scatter(appen_data,
-                         x='attitude_ad',
-                         y='experience_ad',
-                         color='age',
-                         pretty_text=True,
-                         save_file=True)
-        # histogram for driving frequency
+        # 1. "Which option(s) best describe(s) your experience with automated cars?""
+        # store counts for individual options of the checkbox
+        counts = {'I have never used or been in automated cars': 0,
+                  'I have experience with driving a car with automated functions': 0,
+                  'I have had a ride in an automated car as a passenger': 0,
+                  'I have encountered automated cars while driving': 0,
+                  'I work in a related field': 0,
+                  'Other': 0,
+                  'I prefer not to respond': 0
+                  }
+        # loop through all pp
+        for index, row in appen_data.iterrows():
+            try:
+                if 'i_have_never_used_or_been_in_automated_cars' in row['experience_ad']:
+                    counts['I have never used or been in automated cars'] += 1
+                if 'i_have_experience_with_driving_a_car_with_automated_functions' in row['experience_ad']:
+                    counts['I have experience with driving a car with automated functions'] += 1
+                if 'i_have_had_a_ride_in_an_automated_car_as_a_passenger' in row['experience_ad']:
+                    counts['I have had a ride in an automated car as a passenger'] += 1
+                if 'i_have_encountered_automated_cars_while_driving' in row['experience_ad']:
+                    counts['I have encountered automated cars while driving'] += 1
+                if 'i_work_in_a_related_field' in row['experience_ad']:
+                    counts['I work in a related field'] += 1
+                if 'other' in row['experience_ad']:
+                    counts['Other'] += 1
+                if 'i_prefer_not_to_respond' in row['experience_ad']:
+                    counts['I prefer not to respond'] += 1
+            except TypeError:
+                continue
+        counts_df = pd.DataFrame(counts.items(), columns=['option', 'count'])
+        counts_df = counts_df.set_index('option')
+        analysis.bar(counts_df,
+                     # x='option',
+                     y=['count'],
+                     yaxis_title='Number of participations who chose the option',
+                     pretty_text=True,
+                     save_file=True)
+        # 2. Please indicate your general attitude towards fully automated cars.
         analysis.hist(appen_data,
-                      x=['driving_freq'],
+                      x=['attitude_ad'],
+                      yaxis_title='Number of participations who chose the option',
+                      color='capability_ad',
                       pretty_text=True,
+                      marginal=None,
                       save_file=True)
-        # histogram for the year of license
+        logger.info('Please indicate your general attitude towards fully automated cars?: M={:.2f}, SD={:.2f},'
+                    + ' Median={:.2f}.',
+                    df['attitude_ad'].mean(), df['attitude_ad'].std(), df['attitude_ad'].median())
+        # 3. Who do you think is more capable of conducting driving-related tasks?
+        analysis.hist(appen_data,
+                      x=['capability_ad'],
+                      yaxis_title='Number of participations who chose the option',
+                      color='attitude_ad',
+                      pretty_text=True,
+                      marginal=None,
+                      save_file=True)
+        # scatter attitude_ad and capability_ad
+        logger.info('Who do you think is more capable of conducting driving-related tasks?: M={:.2f}, SD={:.2f},'
+                    + ' Median={:.2f}.',
+                    df['capability_ad'].mean(), df['capability_ad'].std(), df['capability_ad'].median())
+        # 4. In my day-to-day life, I often experience the feeling of (un)certainty.
+        # 5. I often have feelings of (un)certainty about myself.
+        # 6. I often experience the feeling of (un)certainty when making decisions.
+        # 7. During new experiences, I often experience the feeling of (un)certainty. 
+        analysis.hist(appen_data,
+                      x=['uncertainty_day',
+                         'uncertainty_myself',
+                         'uncertainty_decisions',
+                         'uncertainty_experiences',
+                         'certainty_day',
+                         'certainty_myself',
+                         'certainty_decisions',
+                         'certainty_experiences'
+                         ],
+                      yaxis_title='Number of participations who chose the option',
+                      color='attitude_ad',
+                      pretty_text=True,
+                      marginal=None,
+                      save_file=True)
+        logger.info('In my day-to-day life, I often experience the feeling of certainty: M={:.2f}, SD={:.2f},'
+                    + ' Median={:.2f}.',
+                    df['certainty_day'].mean(), df['certainty_day'].std(), df['certainty_day'].median())
+        logger.info('I often have feelings of certainty about myself: M={:.2f}, SD={:.2f}, Median={:.2f}.',
+                    df['certainty_myself'].mean(), df['certainty_myself'].std(), df['certainty_myself'].median())
+        logger.info('I often have feelings of certainty about myself: M={:.2f}, SD={:.2f}, Median={:.2f}.',
+                    df['certainty_decisions'].mean(),
+                    df['certainty_decisions'].std(),
+                    df['certainty_decisions'].median())
+        logger.info('During new experiences, I often experience the feeling of certainty: M={:.2f}, SD={:.2f}, '
+                    + 'Median={:.2f}.', df['certainty_experiences'].mean(), df['certainty_experiences'].std(),
+                    df['certainty_experiences'].median())
+        logger.info('In my day-to-day life, I often experience the feeling of certainty: M={:.2f}, SD={:.2f},'
+                    + ' Median={:.2f}.', df['certainty_day'].mean(), df['certainty_day'].std(),
+                    df['certainty_day'].median())
+        logger.info('I often have feelings of certainty about myself: M={:.2f}, SD={:.2f}, Median={:.2f}.',
+                    df['certainty_myself'].mean(), df['certainty_myself'].std(), df['certainty_myself'].median())
+        logger.info('I often have feelings of certainty about myself: M={:.2f}, SD={:.2f}, Median={:.2f}.',
+                    df['certainty_decisions'].mean(), df['certainty_decisions'].std(),
+                    df['certainty_decisions'].median())
+        logger.info('During new experiences, I often experience the feeling of certainty: M={:.2f}, SD={:.2f}, '
+                    + 'Median={:.2f}.', df['certainty_experiences'].mean(), df['certainty_experiences'].std(),
+                    df['certainty_experiences'].median())
+        # 8. At which age did you obtain your first license for driving a car?
         analysis.hist(appen_data,
                       x=['year_license'],
                       pretty_text=True,
+                      yaxis_title='Number of participations who chose the option',
+                      color='attitude_ad',
+                      marginal=None,
                       save_file=True)
-        # histogram for the mode of transportation
+        logger.info('Age of obtaining first driving license: M={:.2f}, SD={:.2f}, Median={:.2f}.',
+                    df['year_license'].mean(), df['year_license'].std(), df['year_license'].median())
+        # 9. On average, how often did you drive a vehicle in the last 12 months?
         analysis.hist(appen_data,
-                      x=['mode_transportation'],
+                      x=['driving_freq'],
+                      yaxis_title='Number of participations who chose the option',
                       pretty_text=True,
+                      color='attitude_ad',
+                      marginal=None,
                       save_file=True)
+        logger.info('On average, how often did you drive a vehicle in the last 12 months?: M={:.2f}, SD={:.2f}, '
+                    + 'Median={:.2f}.', df['driving_freq'].mean(), df['driving_freq'].std(),
+                    df['driving_freq'].median())
+        # 10. About how many kilometers (miles) did you drive in the last 12 months?
+        analysis.hist(appen_data,
+                      x=['milage'],
+                      yaxis_title='Number of participations who chose the option',
+                      pretty_text=True,
+                      color='attitude_ad',
+                      marginal=None,
+                      save_file=True)
+        logger.info('About how many kilometers (miles) did you drive in the last 12 months?: M={:.2f}, SD={:.2f}, '
+                    + 'Median={:.2f}.', df['milage'].mean(), df['milage'].std(), df['milage'].median())
+        # 11. How many accidents were you involved in when driving a car in the last 3 years?
+        analysis.hist(appen_data,
+                      x=['accidents'],
+                      yaxis_title='Number of participations who chose the option',
+                      pretty_text=True,
+                      color='attitude_ad',
+                      marginal=None,
+                      save_file=True)
+        logger.info('How many accidents were you involved in when driving a car in the last 3 years?: M={:.2f}, '
+                    + 'SD={:.2f}, Median={:.2f}.', df['accidents'].mean(), df['accidents'].std(),
+                    df['accidents'].median())
         # histogram for the input device
         analysis.hist(appen_data,
                       x=['device'],
                       pretty_text=True,
-                      save_file=True)
-        # histogram for mileage
-        analysis.hist(appen_data,
-                      x=['milage'],
-                      pretty_text=True,
+                      color='country',
+                      marginal=None,
                       save_file=True)
         # histogram for the place of participant
         analysis.hist(appen_data,
                       x=['place'],
                       pretty_text=True,
+                      color='country',
+                      marginal=None,
                       save_file=True)
         # grouped barchart of DBQ data
         analysis.hist(appen_data,
@@ -510,154 +627,67 @@ if __name__ == '__main__':
                          'dbq6_horn',
                          'dbq7_mobile'],
                       marginal='violin',
+                      yaxis_title='Number of participations who chose the option',
                       pretty_text=True,
+                      color='attitude_ad',
                       save_file=True)
-        # post-trial questions
+        # Post-trial questions on (un)certainty
         analysis.bar(mapping,
                      y=['mean'],
                      show_all_xticks=True,
                      xaxis_title='Stimulus',
-                     yaxis_title='Mean',
+                     yaxis_title='Mean of response on questions on (un)certainty of stimulus',
                      save_file=True)
-        # # scatter plot of risk / eye contact without traffic rules involved
-        # analysis.scatter(mapping[(mapping['cross_look'] != 'notCrossing_Looking') &
-        #                          (mapping['cross_look'] != 'notCrossing_notLooking') &
-        #                          (mapping['velocity_risk'] != 'No velocity data found')],
-        #                  x='EC_score',
-        #                  y='risky_slider',
-        #                  # color='traffic_rules',
-        #                  trendline='ols',
-        #                  hover_data=['risky_slider',
-        #                              'EC_score',
-        #                              'EC_mean',
-        #                              'EC-yes',
-        #                              'EC-yes_but_too_late',
-        #                              'EC-no',
-        #                              'EC-i_don\'t_know',
-        #                              'cross_look',
-        #                              'traffic_rules'],
-        #                  # pretty_text=True,
-        #                  xaxis_title='Eye contact score '
-        #                              + '(No=0, Yes but too late=0.25, Yes=1)',
-        #                  yaxis_title='The riskiness of behaviour in video'
-        #                              + ' (0-100)',
-        #                  # xaxis_range=[-10, 100],
-        #                  # yaxis_range=[-1, 20],
-        #                  save_file=True)
-        # # scatter of velocity vs eye contact
-        # analysis.scatter(mapping[(mapping['cross_look'] != 'notCrossing_Looking') &
-        #                          (mapping['cross_look'] != 'notCrossing_notLooking') &
-        #                          (mapping['velocity_risk'] != 'No velocity data found')],
-        #                  x='velocity_risk',
-        #                  y='risky_slider',
-        #                  # color='traffic_rules',
-        #                  trendline='ols',
-        #                  hover_data=['risky_slider',
-        #                              'EC_score',
-        #                              'EC_mean',
-        #                              'EC-yes',
-        #                              'EC-yes_but_too_late',
-        #                              'EC-no',
-        #                              'EC-i_don\'t_know',
-        #                              'cross_look',
-        #                              'traffic_rules'],
-        #                  # pretty_text=True,
-        #                  xaxis_title='Velocity (avg) at keypresses',
-        #                  yaxis_title='The riskiness of behaviour in video'
-        #                              + ' (0-100)',
-        #                  # xaxis_range=[-10, 100],
-        #                  # yaxis_range=[-1, 20],
-        #                  save_file=True)
-        # # scatter plot of risk and eye contact without traffic rules involved
-        # analysis.scatter_mult(mapping,
-        #                       x=['EC-yes',
-        #                          'EC-yes_but_too_late',
-        #                          'EC-no',
-        #                          'EC-i_don\'t_know'],
-        #                       y='risky_slider',
-        #                       trendline='ols',
-        #                       hover_data=['risky_slider',
-        #                                   'EC-yes',
-        #                                   'EC-yes_but_too_late',
-        #                                   'EC-no',
-        #                                   'EC-i_don\'t_know',
-        #                                   'cross_look',
-        #                                   'traffic_rules'],
-        #                       xaxis_title='Subjective eye contact (n)',
-        #                       yaxis_title='Mean risk slider (0-100)',
-        #                       marginal_x='rug',
-        #                       marginal_y=None,
-        #                       save_file=True)
-        # # scatter plot of risk and percentage of participants indicating eye
-        # # contact
-        # analysis.scatter_mult(mapping,
-        #                       x=['EC-yes',
-        #                           'EC-yes_but_too_late',
-        #                           'EC-no',
-        #                           'EC-i_don\'t_know'],
-        #                       y='avg_kp',
-        #                       trendline='ols',
-        #                       xaxis_title='Percentage of participants indicating eye contact (%)',
-        #                       yaxis_title='Mean keypresses (%)',
-        #                       marginal_y=None,
-        #                       marginal_x='rug',
-        #                       save_file=True)
-        # # todo: add comment
-        # analysis.scatter(mapping[mapping['avg_dist'] != ''],
-        #                  x='avg_dist',
-        #                  y='risky_slider',
-        #                  trendline='ols',
-        #                  xaxis_title='Mean distance to pedestrian (m)',
-        #                  yaxis_title='Mean risk slider (0-100)',
-        #                  marginal_x='rug',
-        #                  save_file=True)
-        # # todo: add comment
-        # analysis.scatter(mapping[mapping['avg_dist'] != ''],
-        #                  x='avg_velocity',
-        #                  y='avg_kp',
-        #                  trendline='ols',
-        #                  xaxis_title='Mean speed of the vehicle (km/h)',
-        #                  yaxis_title='Mean risk slider (0-100)',
-        #                  marginal_x='rug',
-        #                  save_file=True)
-        # # todo: add comment
-        # analysis.scatter_mult(mapping[mapping['avg_person'] != ''],
-        #                       x=['avg_object', 'avg_person', 'avg_car'],
-        #                       y='risky_slider',
-        #                       trendline='ols',
-        #                       xaxis_title='Object count',
-        #                       yaxis_title='Mean risk slider (0-100)',
-        #                       marginal_y=None,
-        #                       marginal_x='rug',
-        #                       save_file=True)
-        # # todo: add comment
-        # analysis.scatter_mult(mapping[mapping['avg_person'] != ''],
-        #                       x=['avg_object', 'avg_person', 'avg_car'],
-        #                       y='avg_kp',
-        #                       trendline='ols',
-        #                       xaxis_title='Object count',
-        #                       yaxis_title='Mean keypresses (%)',
-        #                       marginal_y=None,
-        #                       marginal_x='rug',
-        #                       save_file=True)
-        # # todo: add comment
-        # analysis.scatter(mapping[mapping['avg_obj_surface'] != ''],
-        #                  x='avg_obj_surface',
-        #                  y='avg_kp',
-        #                  trendline='ols',
-        #                  xaxis_title='Mean object surface (0-1)',
-        #                  yaxis_title='Mean keypresses (%)',
-        #                  marginal_x='rug',
-        #                  save_file=True)
-        # # todo: add comment
-        # analysis.scatter(mapping[mapping['avg_obj_surface'] != ''],
-        #                  x='avg_obj_surface',
-        #                  y='risky_slider',
-        #                  trendline='ols',
-        #                  xaxis_title='Mean object surface (0-1)',
-        #                  yaxis_title='Mean risk slider (0-100)',
-        #                  marginal_x='rug',
-        #                  save_file=True)
+        # mean uncertainty score vs certainty score
+        # todo: add separate columns for AV and MDV uncertainty
+        analysis.scatter(df,
+                         x='uncertainty',
+                         y='certainty',
+                         trendline='ols',
+                         hover_data=['experience_ad',
+                                     'attitude_ad',
+                                     'milage',
+                                     'year_license',
+                                     'license',
+                                     'accidents'
+                                     ],
+                         color='attitude_ad',
+                         pretty_text=True,
+                         save_file=True)
+        # mean uncertainty score vs capability_ad
+        analysis.scatter(df,
+                         x='uncertainty',
+                         y='capability_ad',
+                         hover_data='certainty',
+                         color='year_license',
+                         pretty_text=True,
+                         save_file=True)
+        # mean uncertainty score vs attitude_ad
+        analysis.scatter(df,
+                         x='uncertainty',
+                         y='attitude_ad',
+                         hover_data='certainty',
+                         marker_size='',
+                         color='age',
+                         pretty_text=True,
+                         save_file=True)
+        # mean certainty score vs capability_ad
+        analysis.scatter(df,
+                         x='certainty',
+                         y='capability_ad',
+                         hover_data='certainty',
+                         color='year_license',
+                         pretty_text=True,
+                         save_file=True)
+        # mean certainty score vs attitude_ad
+        analysis.scatter(df,
+                         x='certainty',
+                         y='attitude_ad',
+                         hover_data='certainty',
+                         marker_size='',
+                         color='age',
+                         pretty_text=True,
+                         save_file=True)
         # map of participants
         analysis.map(countries_data, color='counts', save_file=True)
         # map of mean age per country
