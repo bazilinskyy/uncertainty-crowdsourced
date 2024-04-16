@@ -540,7 +540,7 @@ if __name__ == '__main__':
         # 4. In my day-to-day life, I often experience the feeling of (un)certainty.
         # 5. I often have feelings of (un)certainty about myself.
         # 6. I often experience the feeling of (un)certainty when making decisions.
-        # 7. During new experiences, I often experience the feeling of (un)certainty. 
+        # 7. During new experiences, I often experience the feeling of (un)certainty.
         analysis.hist(appen_data,
                       x=['uncertainty_day',
                          'uncertainty_myself',
