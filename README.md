@@ -80,10 +80,10 @@ Uncertainty vs capability of AD.
 [![uncertainty vs attitude towards automated driving](figures/scatter_uncertainty-attitude_ad.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourced/blob/main/figures/scatter_uncertainty-attitude_ad.html)  
 Uncertainty vs attitude towards automated driving.
 
-[![certainty vs capability of ad](figures/scatter_certainty-capability_ad.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/certainty-crowdsourcing/blob/main/figures/scatter_certainty-capability_ad.html)  
+[![certainty vs capability of ad](figures/scatter_certainty-capability_ad.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourced/blob/main/figures/scatter_certainty-capability_ad.html)  
 Certainty vs capability of AD.
 
-[![certainty vs towards automated driving](figures/scatter_certainty-attitude_ad.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/certainty-crowdsourcing/blob/main/figures/scatter_certainty-attitude_ad.html)  
+[![certainty vs towards automated driving](figures/scatter_certainty-attitude_ad.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourced/blob/main/figures/scatter_certainty-attitude_ad.html)  
 Certainty vs attitude towards automated driving.
 
 #### Information on participants
