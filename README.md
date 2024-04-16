@@ -7,7 +7,7 @@ Tested with Python 3.9.12. To setup the environment run these two commands in a 
 - `pip install -e uncertainty-crowdsourced` will setup the project as a package accessible in the environment.
 - `pip install -r uncertainty-crowdsourced/requirements.txt` will install required packages.
 
-For QA, the API key of appen needs to be placed in file `uncertainty-crowdsourcing/secret`. The file needs to be formatted as `uncertainty-crowdsourcing/secret example`.
+For QA, the API key of appen needs to be placed in file `uncertainty-crowdsourced/secret`. The file needs to be formatted as `uncertainty-crowdsourced/secret example`.
 
 ## Implementation on heroku
 We use [heroku](https://www.heroku.com) to host the node.js implementation. The demo of the implementation may be viewed [here](https://uncertainty-crowdsourced-fc75d40fe544.herokuapp.com/?debug=true&save_data=false). Implementation supports images and/or videos as stimuli.
@@ -32,7 +32,7 @@ Stimulus `image_2` included in the crowdsourcing survey.
 Stimulus `image_3` included in the crowdsourcing survey.
 
 ## Crowdsourcing job on appen
-We use [appen](http://appen.com) to run a crowdsourcing job. You need to create a client account to be able to create a launch crowdsourcing job. Preview of the appen job used in this experiment is available [here](https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/public/appen/survey.pdf?raw=true).
+We use [appen](http://appen.com) to run a crowdsourcing job. You need to create a client account to be able to create a launch crowdsourcing job. Preview of the appen job used in this experiment is available [here](https://github.com/bazilinskyy/uncertainty-crowdsourced/blob/main/public/appen/survey.pdf?raw=true).
 
 ### Filtering of appen data
 Data from appen is filtered based on the following criteria:
@@ -49,7 +49,7 @@ Data from appen is anonymised in the following way:
 2. IDs are anonymised by subtracting the given ID from `config.mask_id`.
 
 ## Analysis
-Analysis can be started by running `python uncertainty-crowdsourcing/uncert/run.py`. A number of CSV files used for data processing are saved in `uncertainty-crowdsourcing/_output`. Visualisations of all data are saved in `uncertainty-crowdsourcing/_output/figures/`.
+Analysis can be started by running `python uncertainty-crowdsourced/uncert/run.py`. A number of CSV files used for data processing are saved in `uncertainty-crowdsourced/_output`. Visualisations of all data are saved in `uncertainty-crowdsourced/_output/figures/`.
 
 ### Visualisation
 All static figures below link to their corresponding dynamic and clickable versions in html format.
@@ -58,26 +58,26 @@ All static figures below link to their corresponding dynamic and clickable versi
 ![correlation matrix](figures/all_corr_matrix_mapping.jpg?raw=true)
 Correlation matrix on stimulus level.
 
-[![scatter matrix](figures/scatter_matrix_mapping.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/scatter_matrix_mapping.html)  
+[![scatter matrix](figures/scatter_matrix_mapping.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourced/blob/main/figures/scatter_matrix_mapping.html)  
 Scatter matrix on stimulus level.
 
 ![correlation matrix](figures/all_corr_matrix_all_data.jpg?raw=true)
 Correlation matrix on participant level.
 
-[![scatter matrix](figures/scatter_matrix_all_data.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/scatter_matrix_all_data.html)  
+[![scatter matrix](figures/scatter_matrix_all_data.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourced/blob/main/figures/scatter_matrix_all_data.html)  
 Scatter matrix on participant level.
 
 #### Uncertainty
-[![uncertainty](figures/scores.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/scores.html)  
+[![uncertainty](figures/scores.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourced/blob/main/figures/scores.html)  
 Scores of uncertainty.
 
-[![uncertainty vs certainty](figures/scatter_uncertainty-certainty.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/scatter_uncertainty-certainty.html)  
+[![uncertainty vs certainty](figures/scatter_uncertainty-certainty.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourced/blob/main/figures/scatter_uncertainty-certainty.html)  
 Uncertainty vs certainty.
 
-[![uncertainty vs capability of ad](figures/scatter_uncertainty-capability_ad.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/scatter_uncertainty-capability_ad.html)  
+[![uncertainty vs capability of ad](figures/scatter_uncertainty-capability_ad.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourced/blob/main/figures/scatter_uncertainty-capability_ad.html)  
 Uncertainty vs capability of AD.
 
-[![uncertainty vs attitude towards automated driving](figures/scatter_uncertainty-attitude_ad.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/scatter_uncertainty-attitude_ad.html)  
+[![uncertainty vs attitude towards automated driving](figures/scatter_uncertainty-attitude_ad.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourced/blob/main/figures/scatter_uncertainty-attitude_ad.html)  
 Uncertainty vs attitude towards automated driving.
 
 [![certainty vs capability of ad](figures/scatter_certainty-capability_ad.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/certainty-crowdsourcing/blob/main/figures/scatter_certainty-capability_ad.html)  
@@ -87,62 +87,62 @@ Certainty vs capability of AD.
 Certainty vs attitude towards automated driving.
 
 #### Information on participants
-[![age of obtaining first driving license](figures/hist_year_license.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/hist_year_license.html)  
+[![age of obtaining first driving license](figures/hist_year_license.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourced/blob/main/figures/hist_year_license.html)  
 Age of obtaining first driving license.
 
-[![driving frequency](figures/hist_driving_freq.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/hist_driving_freq.html)  
+[![driving frequency](figures/hist_driving_freq.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourced/blob/main/figures/hist_driving_freq.html)  
 Driving frequency.
 
-[![number of accidents](figures/hist_accidents.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/hist_accidents.html)  
+[![number of accidents](figures/hist_accidents.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourced/blob/main/figures/hist_accidents.html)  
 Number of accidents in the last 3 years.
 
-[![driving frequency](figures/hist_milage.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/hist_milage.html)  
+[![driving frequency](figures/hist_milage.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourced/blob/main/figures/hist_milage.html)  
 Driving mileage during the last 12 months.
 
-[![driving behaviour questionnaire](figures/hist_dbq.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/hist_dbq.html)  
+[![driving behaviour questionnaire](figures/hist_dbq.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourced/blob/main/figures/hist_dbq.html)  
 Driving behaviour questionnaire (DBQ).
 
-[![experience of automated driving](figures/bar_experience_ad.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/bar_experience_ad.html)  
+[![experience of automated driving](figures/bar_experience_ad.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourced/blob/main/figures/bar_experience_ad.html)  
 Experience of automated driving.
 
-[![attitude towards automated driving](figures/hist_attitude_ad.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/hist_attitude_ad.html)  
+[![attitude towards automated driving](figures/hist_attitude_ad.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourced/blob/main/figures/hist_attitude_ad.html)  
 Attitude towards automated driving.
 
-[![who do you think is more capable of conducting driving-related tasks](figures/hist_capability_ad.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/hist_capability_ad.html)  
+[![who do you think is more capable of conducting driving-related tasks](figures/hist_capability_ad.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourced/blob/main/figures/hist_capability_ad.html)  
 Opinion on who is more capable of conducting driving-related tasks.
 
-[![feeling of (un)certainty](figures/hist_certainty_uncertainty.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/hist_certainty_uncertainty.html)  
+[![feeling of (un)certainty](figures/hist_certainty_uncertainty.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourced/blob/main/figures/hist_certainty_uncertainty.html)  
 Feeling of (un)certainty.
 
-[![time of participation](figures/hist_time.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/hist_time.html)  
+[![time of participation](figures/hist_time.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourced/blob/main/figures/hist_time.html)  
 Time of participation.
 
-[![map of counts of participants](figures/map_counts.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/map_counts.html)  
+[![map of counts of participants](figures/map_counts.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourced/blob/main/figures/map_counts.html)  
 Map of counts of participants.
 
-[![map of years of having a license](figures/map_year_license.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/map_year_license.html)  
+[![map of years of having a license](figures/map_year_license.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourced/blob/main/figures/map_year_license.html)  
 Map of years of having a license.
 
-[![map of prediction of year of introduction of automated cars](figures/map_year_ad.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/map_year_ad.html)  
+[![map of prediction of year of introduction of automated cars](figures/map_year_ad.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourced/blob/main/figures/map_year_ad.html)  
 Map of prediction of the year of introduction of automated cars in the country of residence.
 
-[![map of age](figures/map_age.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/map_age.html)
+[![map of age](figures/map_age.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourced/blob/main/figures/map_age.html)
 Map of age of participants.
 
-[![map of gender](figures/map_gender.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/map_gender.html)  
+[![map of gender](figures/map_gender.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourced/blob/main/figures/map_gender.html)  
 Map of distribution of gender.
 
 #### Technical characteristics of participants
-[![dimensions of browser](figures/scatter_window_width-window_height.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/scatter_window_width-window_height.html)  
+[![dimensions of browser](figures/scatter_window_width-window_height.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourced/blob/main/figures/scatter_window_width-window_height.html)  
 Dimensions of browser.
 
-[![input device](figures/hist_device.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/hist_device.html)  
+[![input device](figures/hist_device.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourced/blob/main/figures/hist_device.html)  
 Input device.
 
-[![place of participation](figures/hist_place.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/hist_place.html)  
+[![place of participation](figures/hist_place.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourced/blob/main/figures/hist_place.html)  
 Place of participation.
 
-[![duration of stimuli](figures/hist_dur.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourcing/blob/main/figures/hist_dur.html)  
+[![duration of stimuli](figures/hist_dur.png)](https://htmlpreview.github.io/?https://github.com/bazilinskyy/uncertainty-crowdsourced/blob/main/figures/hist_dur.html)  
 Duration of stimuli.
 
 ### Configuration of project
